@@ -3,6 +3,7 @@ package ro.unibuc.elearning.platform.pojo;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class User {
     @NotNull
@@ -19,11 +20,7 @@ public class User {
         this.birthDate = birthDate;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.id = co;
-    }
-
-    static {
-        co++;
+        this.id = ++co;
     }
 
     public @NotNull String getUserName() {
@@ -58,4 +55,27 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getId() == user.getId() && getUserName().equals(user.getUserName()) && getBirthDate().equals(user.getBirthDate()) && Objects.equals(getAddress(), user.getAddress()) && Objects.equals(getPhoneNumber(), user.getPhoneNumber());
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", id=" + id +
+                ", birthDate=" + birthDate +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUserName(), getId(), getBirthDate(), getAddress(), getPhoneNumber());
+    }
 }

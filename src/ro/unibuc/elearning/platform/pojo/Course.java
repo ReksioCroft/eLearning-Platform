@@ -2,6 +2,8 @@ package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class Course {
     protected final int id;
     @NotNull
@@ -15,17 +17,13 @@ public class Course {
         this.teacher = teacher;
         this.courseName = courseName;
         this.description = description;
-        this.id = co;
+        this.id = ++co;
     }
 
     public Course(@NotNull User teacher, @NotNull String courseName) {
         this.teacher = teacher;
         this.courseName = courseName;
-        this.id = co;
-    }
-
-    static {
-        co++;
+        this.id = ++co;
     }
 
     public String getDescription() {
@@ -34,6 +32,29 @@ public class Course {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", teacher=" + teacher +
+                ", courseName='" + courseName + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Course)) return false;
+        Course course = (Course) o;
+        return getId() == course.getId() && getTeacher().equals(course.getTeacher()) && getCourseName().equals(course.getCourseName()) && Objects.equals(getDescription(), course.getDescription());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTeacher(), getCourseName(), getDescription());
     }
 
     public @NotNull User getTeacher() {

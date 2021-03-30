@@ -9,4 +9,5 @@ public class Student extends User {
     public Student(@NotNull String userName, Date birthDate, String address, String phoneNumber) {
         super(userName, birthDate, address, phoneNumber);
     }
+
 }

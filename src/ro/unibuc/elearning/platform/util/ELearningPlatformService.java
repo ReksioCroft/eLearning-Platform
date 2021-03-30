@@ -10,9 +10,13 @@ public class ELearningPlatformService implements AdminInterface {
 
     @Override
     public void addUser(Scanner cin) {
+        System.out.println("name");
         String name = cin.next();
+        System.out.println("Date yyyy-MM-dd");
         Date date = parseDate(cin);
+        System.out.println("address");
         String address = cin.next();
+        System.out.println("phone");
         String phoneNumber = cin.next();
         User user = new User(name, date, address, phoneNumber);
         users.add(user);
@@ -20,9 +24,12 @@ public class ELearningPlatformService implements AdminInterface {
 
     @Override
     public void addCourse(Scanner cin) {
+        System.out.println("id prof");
         int teacherId = cin.nextInt();
         User teacher = findUser(teacherId);
+        System.out.println("nume curs");
         String courseName = cin.next();
+        System.out.println("desc");
         String description = cin.next();
         Course course = new Course(teacher, courseName, description);
         courses.add(course);
@@ -30,8 +37,10 @@ public class ELearningPlatformService implements AdminInterface {
 
     @Override
     public void addQuizz(Scanner cin) {
+        System.out.println("id curs");
         int courseId = cin.nextInt();
         Course course = findCourse(courseId);
+        System.out.println("quizz description");
         String quizzContent = cin.next();
         Quizz quizz = new Quizz(course, quizzContent);
         quizzes.add(quizz);
@@ -39,9 +48,13 @@ public class ELearningPlatformService implements AdminInterface {
 
     @Override
     public void addStudent(Scanner cin) {
+        System.out.println("username");
         String userName = cin.next();
+        System.out.println("date yyyy-MM-dd");
         Date birthDate = parseDate(cin);
+        System.out.println("adress");
         String address = cin.next();
+        System.out.println("phone");
         String phoneNumber = cin.next();
         Student student = new Student(userName, birthDate, address, phoneNumber);
         users.add(student);
@@ -49,9 +62,12 @@ public class ELearningPlatformService implements AdminInterface {
 
     @Override
     public void addStudentCourseRepartition(Scanner cin) {
+        System.out.println("date yyyy-MM-dd");
         Date startDate = parseDate(cin);
+        System.out.println("id curs");
         int idCourse = cin.nextInt();
         Course course = findCourse(idCourse);
+        System.out.println("id studdent");
         int idStudent = cin.nextInt();
         Student student = (Student) findUser(idStudent);
         StudentCourseRepartition studentCourseRepartition = new StudentCourseRepartition(startDate, course, student);
