@@ -38,4 +38,8 @@ public interface AdminInterface {
     Quizz findQuizz(int quizzId);
 
     User findUser(int userId);
+
+    ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByStudent(int studentId);
+
+    ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByCourse(int courseId);
 }

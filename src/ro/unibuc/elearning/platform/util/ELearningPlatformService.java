@@ -85,5 +85,24 @@ public class ELearningPlatformService implements AdminInterface {
         return null;
     }
 
+    @Override
+    public ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByStudent(int studentId) {
+        ArrayList<StudentCourseRepartition> ans = new ArrayList<>();
+        for (StudentCourseRepartition studentCourseRepartition : studentCourseRepartitions) {
+            if (studentCourseRepartition.getStudent().getId() == studentId)
+                ans.add(studentCourseRepartition);
+        }
+        return ans;
+    }
+
+    @Override
+    public ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByCourse(int courseId) {
+        ArrayList<StudentCourseRepartition> ans = new ArrayList<>();
+        for (StudentCourseRepartition studentCourseRepartition : studentCourseRepartitions) {
+            if (studentCourseRepartition.getCourse().getId() == courseId)
+                ans.add(studentCourseRepartition);
+        }
+        return ans;
+    }
 
 }
