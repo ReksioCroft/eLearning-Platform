@@ -1,4 +1,4 @@
-package ro.unibuc.elearning.platform;
+package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,13 +15,13 @@ public class Course {
         this.teacher = teacher;
         this.courseName = courseName;
         this.description = description;
-        this.id=co;
+        this.id = co;
     }
 
     public Course(@NotNull User teacher, @NotNull String courseName) {
         this.teacher = teacher;
         this.courseName = courseName;
-        this.id=co;
+        this.id = co;
     }
 
     static {
@@ -38,6 +38,10 @@ public class Course {
 
     public @NotNull User getTeacher() {
         return teacher;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public @NotNull String getCourseName() {

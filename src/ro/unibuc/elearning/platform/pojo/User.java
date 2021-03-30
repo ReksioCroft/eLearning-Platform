@@ -1,4 +1,4 @@
-package ro.unibuc.elearning.platform;
+package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
