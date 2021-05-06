@@ -4,13 +4,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-public class Course {
-    protected final int id;
+public final class Course {
+    final int id;
     @NotNull
-    protected final User teacher;
+    final User teacher;
     @NotNull
-    protected final String courseName;
-    protected String description;
+    final String courseName;
+    String description;
     private static int co = 0;
 
     public Course(@NotNull User teacher, @NotNull String courseName, String description) {

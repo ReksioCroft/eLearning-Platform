@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public interface AdminInterface {
     ArrayList<Course> courses = new ArrayList<>();
-    ArrayList<Quizz> quizzes = new ArrayList<>();
-    ArrayList<StudentCourseRepartition> studentCourseRepartitions = new ArrayList<>();
+    ArrayList<Quiz> quizzes = new ArrayList<>();
+    ArrayList<UserCourseRepartition> userCourseRepartitions = new ArrayList<>();
     ArrayList<User> users = new ArrayList<>();
 
     default Date parseDate(Scanner cin) {
@@ -23,23 +23,23 @@ public interface AdminInterface {
         }
     }
 
-    void addUser(Scanner cin);
+    void addTeacher(Scanner cin);
 
     void addCourse(Scanner cin);
 
-    void addQuizz(Scanner cin);
+    void addQuiz(Scanner cin);
 
     void addStudent(Scanner cin);
 
-    void addStudentCourseRepartition(Scanner cin);
+    void addUserCourseRepartition(Scanner cin);
 
     Course findCourse(int courseId);
 
-    Quizz findQuizz(int quizzId);
+    Quiz findQuiz(int quizId);
 
     User findUser(int userId);
 
-    ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByStudent(int studentId);
+    ArrayList<UserCourseRepartition> findStudentCourseRepartitionByUserId(int userId);
 
-    ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByCourse(int courseId);
+    ArrayList<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
 }

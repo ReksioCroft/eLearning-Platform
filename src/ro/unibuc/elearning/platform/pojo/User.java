@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
-public class User {
+public abstract class User {
     @NotNull
     protected String userName;
     protected final int id;

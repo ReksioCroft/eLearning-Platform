@@ -9,16 +9,18 @@ import java.util.Scanner;
 public class ELearningPlatformService implements AdminInterface {
 
     @Override
-    public void addUser(Scanner cin) {
+    public void addTeacher(Scanner cin) {
         System.out.println("name");
         String name = cin.next();
         System.out.println("Date yyyy-MM-dd");
         Date date = parseDate(cin);
+        System.out.println("rank");
+        String rank = cin.next();
         System.out.println("address");
         String address = cin.next();
         System.out.println("phone");
         String phoneNumber = cin.next();
-        User user = new User(name, date, address, phoneNumber);
+        User user = new Teacher(name, date, rank, address, phoneNumber);
         users.add(user);
     }
 
@@ -27,7 +29,7 @@ public class ELearningPlatformService implements AdminInterface {
         System.out.println("id prof");
         int teacherId = cin.nextInt();
         User teacher = findUser(teacherId);
-        System.out.println("nume curs");
+        System.out.println("course name");
         String courseName = cin.next();
         System.out.println("desc");
         String description = cin.next();
@@ -36,14 +38,14 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public void addQuizz(Scanner cin) {
+    public void addQuiz(Scanner cin) {
         System.out.println("id curs");
         int courseId = cin.nextInt();
         Course course = findCourse(courseId);
-        System.out.println("quizz description");
-        String quizzContent = cin.next();
-        Quizz quizz = new Quizz(course, quizzContent);
-        quizzes.add(quizz);
+        System.out.println("quiz description");
+        String quizContent = cin.next();
+        Quiz quiz = new Quiz(course, quizContent);
+        quizzes.add(quiz);
     }
 
     @Override
@@ -52,7 +54,7 @@ public class ELearningPlatformService implements AdminInterface {
         String userName = cin.next();
         System.out.println("date yyyy-MM-dd");
         Date birthDate = parseDate(cin);
-        System.out.println("adress");
+        System.out.println("address");
         String address = cin.next();
         System.out.println("phone");
         String phoneNumber = cin.next();
@@ -61,24 +63,24 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public void addStudentCourseRepartition(Scanner cin) {
+    public void addUserCourseRepartition(Scanner cin) {
         System.out.println("date yyyy-MM-dd");
         Date startDate = parseDate(cin);
         System.out.println("id curs");
         int idCourse = cin.nextInt();
         Course course = findCourse(idCourse);
-        System.out.println("id studdent");
+        System.out.println("id student");
         int idStudent = cin.nextInt();
         Student student = (Student) findUser(idStudent);
-        StudentCourseRepartition studentCourseRepartition = new StudentCourseRepartition(startDate, course, student);
-        studentCourseRepartitions.add(studentCourseRepartition);
+        UserCourseRepartition userCourseRepartition = new UserCourseRepartition(startDate, course, student);
+        userCourseRepartitions.add(userCourseRepartition);
     }
 
     @Override
-    public Quizz findQuizz(int quizzId) {
-        for (Quizz quizz : quizzes) {
-            if (quizz.getId() == quizzId)
-                return quizz;
+    public Quiz findQuiz(int quizId) {
+        for (Quiz quiz : quizzes) {
+            if (quiz.getId() == quizId)
+                return quiz;
         }
         return null;
     }
@@ -102,21 +104,21 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByStudent(int studentId) {
-        ArrayList<StudentCourseRepartition> ans = new ArrayList<>();
-        for (StudentCourseRepartition studentCourseRepartition : studentCourseRepartitions) {
-            if (studentCourseRepartition.getStudent().getId() == studentId)
-                ans.add(studentCourseRepartition);
+    public ArrayList<UserCourseRepartition> findStudentCourseRepartitionByUserId(int userId) {
+        ArrayList<UserCourseRepartition> ans = new ArrayList<>();
+        for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
+            if (userCourseRepartition.getUser().getId() == userId)
+                ans.add(userCourseRepartition);
         }
         return ans;
     }
 
     @Override
-    public ArrayList<StudentCourseRepartition> findStudentCourseRepartitionByCourse(int courseId) {
-        ArrayList<StudentCourseRepartition> ans = new ArrayList<>();
-        for (StudentCourseRepartition studentCourseRepartition : studentCourseRepartitions) {
-            if (studentCourseRepartition.getCourse().getId() == courseId)
-                ans.add(studentCourseRepartition);
+    public ArrayList<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId) {
+        ArrayList<UserCourseRepartition> ans = new ArrayList<>();
+        for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
+            if (userCourseRepartition.getCourse().getId() == courseId)
+                ans.add(userCourseRepartition);
         }
         return ans;
     }
