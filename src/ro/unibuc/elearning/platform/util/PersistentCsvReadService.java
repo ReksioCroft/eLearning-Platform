@@ -3,7 +3,6 @@ package ro.unibuc.elearning.platform.util;
 import ro.unibuc.elearning.platform.pojo.*;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -23,6 +22,10 @@ public class PersistentCsvReadService {
         readUserCourseRepartition(eLearningPlatformService);
         readQuizzes(eLearningPlatformService);
         readFeedbacks(eLearningPlatformService);
+        User.setCo(eLearningPlatformService.users.size());
+        Course.setCo(eLearningPlatformService.courses.size());
+        AnonymousCourseFeedback.setCo(eLearningPlatformService.feedbacks.size());
+        Quiz.setCo(eLearningPlatformService.quizzes.size());
     }
 
     private void readFeedbacks(ELearningPlatformService eLearningPlatformService) {
@@ -31,9 +34,10 @@ public class PersistentCsvReadService {
             while (fin.hasNext()) {
                 String s = fin.nextLine();
                 String[] args = s.replaceAll(" ", "").split(",");
-                int courseId = Integer.parseInt(args[0]);
+                int id = Integer.parseInt(args[0]);
+                int courseId = Integer.parseInt(args[1]);
                 Course course = eLearningPlatformService.findCourseById(courseId);
-                AnonymousCourseFeedback feedback = new AnonymousCourseFeedback(course, args[1]);
+                AnonymousCourseFeedback feedback = new AnonymousCourseFeedback(id, course, args[2]);
                 eLearningPlatformService.feedbacks.add(feedback);
             }
             fin.close();
@@ -48,10 +52,11 @@ public class PersistentCsvReadService {
             while (fin.hasNext()) {
                 String s = fin.nextLine();
                 String[] args = s.replaceAll(" ", "").split(",");
-                Date date = eLearningPlatformService.parseDate(args[1]);
-                int teacherId = Integer.parseInt(args[2]);
+                int id = Integer.parseInt(args[0]);
+                Date date = eLearningPlatformService.parseDate(args[2]);
+                int teacherId = Integer.parseInt(args[3]);
                 Teacher teacher = (Teacher) eLearningPlatformService.findUserById(teacherId);
-                TeachingAssistant teachingAssistant = new TeachingAssistant(args[0], date, teacher, args[3], args[4]);
+                TeachingAssistant teachingAssistant = new TeachingAssistant(id, args[1], date, teacher, args[4], args[5]);
                 eLearningPlatformService.users.add(teachingAssistant);
             }
             fin.close();
@@ -66,9 +71,10 @@ public class PersistentCsvReadService {
             while (fin.hasNext()) {
                 String s = fin.nextLine();
                 String[] args = s.replaceAll(" ", "").split(",");
-                int courseId = Integer.parseInt(args[0]);
+                int id = Integer.parseInt(args[0]);
+                int courseId = Integer.parseInt(args[1]);
                 Course course = eLearningPlatformService.findCourseById(courseId);
-                Quiz quiz = new Quiz(course, args[1]);
+                Quiz quiz = new Quiz(id, course, args[2]);
                 eLearningPlatformService.quizzes.add(quiz);
             }
             fin.close();
@@ -105,9 +111,10 @@ public class PersistentCsvReadService {
             while (fin.hasNext()) {
                 String s = fin.nextLine();
                 String[] args = s.replaceAll(" ", "").split(",");
-                int teacherId = Integer.parseInt(args[0]);
+                int id = Integer.parseInt(args[0]);
+                int teacherId = Integer.parseInt(args[1]);
                 Teacher teacher = (Teacher) eLearningPlatformService.findUserById(teacherId);
-                Course course = new Course(teacher, args[1], args[2]);
+                Course course = new Course(id, teacher, args[2], args[3]);
                 eLearningPlatformService.courses.add(course);
             }
             fin.close();
@@ -122,8 +129,9 @@ public class PersistentCsvReadService {
             while (fin.hasNext()) {
                 String s = fin.nextLine();
                 String[] args = s.replaceAll(" ", "").split(",");
-                Date date = eLearningPlatformService.parseDate(args[1]);
-                Student student = new Student(args[0], date, args[2], args[3]);
+                int id = Integer.parseInt(args[0]);
+                Date date = eLearningPlatformService.parseDate(args[2]);
+                Student student = new Student(id, args[1], date, args[3], args[4]);
                 eLearningPlatformService.users.add(student);
             }
             fin.close();
@@ -138,8 +146,9 @@ public class PersistentCsvReadService {
             while (fin.hasNext()) {
                 String s = fin.nextLine();
                 String[] args = s.replaceAll(" ", "").split(",");
-                Date date = eLearningPlatformService.parseDate(args[1]);
-                Teacher teacher = new Teacher(args[0], date, args[2], args[3], args[4]);
+                int id = Integer.parseInt(args[0]);
+                Date date = eLearningPlatformService.parseDate(args[2]);
+                Teacher teacher = new Teacher(id, args[1], date, args[3], args[4], args[5]);
                 eLearningPlatformService.users.add(teacher);
             }
             fin.close();

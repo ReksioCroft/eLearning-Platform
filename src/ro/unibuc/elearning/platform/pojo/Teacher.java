@@ -13,6 +13,11 @@ public final class Teacher extends User {
         this.rank = rank;
     }
 
+    public Teacher(int id, @NotNull String userName, @NotNull Date birthDate, @NotNull String rank, @NotNull String address, @NotNull String phoneNumber) {
+        super(id, userName, birthDate, address, phoneNumber);
+        this.rank = rank;
+    }
+
     public @NotNull String getRank() {
         return rank;
     }
@@ -48,6 +53,6 @@ public final class Teacher extends User {
     }
 
     public String toStringCsv() {
-        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + rank + ", " + address + ", " + phoneNumber;
+        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + rank + ", " + address + ", " + phoneNumber;
     }
 }

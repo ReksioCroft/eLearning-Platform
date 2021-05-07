@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static java.lang.Math.max;
+
 public final class Quiz {
     final int id;
     @NotNull
@@ -16,6 +18,17 @@ public final class Quiz {
         this.course = course;
         this.quiz = quiz;
         this.id = ++co;
+    }
+
+    public Quiz(int id, @NotNull Course course, @NotNull String quiz) {
+        this.course = course;
+        this.quiz = quiz;
+        this.id = id;
+        co = max(id + 1, co);
+    }
+
+    public static void setCo(int co) {
+        Quiz.co = co;
     }
 
     public void updateQuiz(@NotNull String quiz) {
@@ -44,7 +57,7 @@ public final class Quiz {
     }
 
     public String toStringCsv() {
-        return course.id + ", " + quiz;
+        return id + ", " + course.id + ", " + quiz;
     }
 
     @Override

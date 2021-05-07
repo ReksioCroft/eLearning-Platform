@@ -50,12 +50,12 @@ public final class UserCourseRepartition {
     public String toString() {
         return "UserCourseRepartition{" +
                 "course=" + course +
-                ", startDate=" + simpleDateFormat.format(startDate)  +
+                ", startDate=" + simpleDateFormat.format(startDate) +
                 ", user=" + user +
                 '}';
     }
 
     public String toStringCsv() {
-        return course.id + ", " + simpleDateFormat.format(startDate)   + ", " + user.id;
+        return course.id + ", " + simpleDateFormat.format(startDate) + ", " + user.id;
     }
 }

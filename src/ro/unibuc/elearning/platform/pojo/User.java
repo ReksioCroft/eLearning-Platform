@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+import static java.lang.Math.max;
+
 public abstract class User {
     @NotNull
     protected String userName;
@@ -25,6 +27,15 @@ public abstract class User {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.id = ++co;
+    }
+
+    public User(int id, @NotNull String userName, @NotNull Date birthDate, @NotNull String address, @NotNull String phoneNumber) {
+        this.userName = userName;
+        this.birthDate = birthDate;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.id = id;
+        co = max(co, id + 1);
     }
 
     public @NotNull String getUserName() {
@@ -57,6 +68,10 @@ public abstract class User {
 
     public void setPhoneNumber(@NotNull String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public static void setCo(int co) {
+        User.co = co;
     }
 
     @Override

@@ -4,33 +4,42 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+import static java.lang.Math.max;
+
 public final class Course {
     final int id;
     @NotNull
     final User teacher;
     @NotNull
     final String courseName;
+    @NotNull
     String description;
     private static int co = 0;
 
-    public Course(@NotNull User teacher, @NotNull String courseName, String description) {
+    public Course(@NotNull User teacher, @NotNull String courseName, @NotNull String description) {
         this.teacher = teacher;
         this.courseName = courseName;
         this.description = description;
         this.id = ++co;
     }
 
-    public Course(@NotNull User teacher, @NotNull String courseName) {
+    public Course(int id, @NotNull User teacher, @NotNull String courseName, @NotNull String description) {
         this.teacher = teacher;
         this.courseName = courseName;
-        this.id = ++co;
+        this.description = description;
+        this.id = id;
+        co = max(id + 1, co);
     }
 
-    public String getDescription() {
+    public static void setCo(int co) {
+        Course.co = co;
+    }
+
+    public @NotNull String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(@NotNull String description) {
         this.description = description;
     }
 
@@ -45,7 +54,7 @@ public final class Course {
     }
 
     public String toStringCsv() {
-        return teacher.id + ", " + courseName + ", " + description;
+        return id + ", " + teacher.id + ", " + courseName + ", " + description;
     }
 
     @Override
@@ -53,7 +62,7 @@ public final class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return id == course.id && teacher.equals(course.teacher) && courseName.equals(course.courseName) && Objects.equals(description, course.description);
+        return id == course.id && teacher.equals(course.teacher) && courseName.equals(course.courseName) && description.equals(course.description);
     }
 
     @Override

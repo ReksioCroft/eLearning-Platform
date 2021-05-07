@@ -14,6 +14,11 @@ public final class TeachingAssistant extends User {
         this.supervisorTeacher = supervisorTeacher;
     }
 
+    public TeachingAssistant(int id, @NotNull String userName, @NotNull Date birthDate, @NotNull Teacher supervisorTeacher, @NotNull String address, @NotNull String phoneNumber) {
+        super(id, userName, birthDate, address, phoneNumber);
+        this.supervisorTeacher = supervisorTeacher;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -41,6 +46,6 @@ public final class TeachingAssistant extends User {
     }
 
     public String toStringCsv() {
-        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + supervisorTeacher.id + " ," + address + ", " + phoneNumber;
+        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + supervisorTeacher.id + " ," + address + ", " + phoneNumber;
     }
 }

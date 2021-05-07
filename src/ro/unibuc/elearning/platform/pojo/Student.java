@@ -10,6 +10,10 @@ public final class Student extends User {
         super(userName, birthDate, address, phoneNumber);
     }
 
+    public Student(int id, @NotNull String userName, @NotNull Date birthDate, @NotNull String address, @NotNull String phoneNumber) {
+        super(id, userName, birthDate, address, phoneNumber);
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -22,7 +26,7 @@ public final class Student extends User {
     }
 
     public String toStringCsv() {
-        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + address + '\'' + ", " + phoneNumber;
+        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + address + '\'' + ", " + phoneNumber;
     }
 
 }

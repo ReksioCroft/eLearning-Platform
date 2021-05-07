@@ -46,7 +46,7 @@ public class ELearningPlatformService implements AdminInterface {
         System.out.println("course name");
         String courseName = in.next();
         System.out.println("desc");
-        String description = in.nextLine();
+        String description = in.next();
         Course course = new Course(teacher, courseName, description);
         courses.add(course);
         return persistentCsvWriteService.writeCourse(course);
