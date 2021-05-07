@@ -11,11 +11,13 @@ public abstract class User {
     protected final int id;
     @NotNull
     protected final Date birthDate;
+    @NotNull
     protected String address;
+    @NotNull
     protected String phoneNumber;
     private static int co = 0;
 
-    public User(@NotNull String userName, @NotNull Date birthDate, String address, String phoneNumber) {
+    public User(@NotNull String userName, @NotNull Date birthDate, @NotNull String address, @NotNull String phoneNumber) {
         this.userName = userName;
         this.birthDate = birthDate;
         this.address = address;
@@ -39,19 +41,19 @@ public abstract class User {
         return birthDate;
     }
 
-    public String getAddress() {
+    public @NotNull String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(@NotNull String address) {
         this.address = address;
     }
 
-    public String getPhoneNumber() {
+    public @NotNull String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(@NotNull String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

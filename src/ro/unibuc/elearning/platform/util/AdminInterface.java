@@ -13,6 +13,7 @@ public interface AdminInterface {
     ArrayList<Quiz> quizzes = new ArrayList<>();
     ArrayList<UserCourseRepartition> userCourseRepartitions = new ArrayList<>();
     ArrayList<User> users = new ArrayList<>();
+    ArrayList<AnonymousCourseFeedback> feedbacks = new ArrayList<>();
 
     default Date parseDate(Scanner cin) {
         try {
@@ -23,23 +24,35 @@ public interface AdminInterface {
         }
     }
 
-    void addTeacher(Scanner cin);
+    default void clearALL() {
+        courses.clear();
+        quizzes.clear();
+        userCourseRepartitions.clear();
+        users.clear();
+        feedbacks.clear();
+    }
 
-    void addCourse(Scanner cin);
+    Teacher addTeacher(Scanner in);
 
-    void addQuiz(Scanner cin);
+    Course addCourse(Scanner in);
 
-    void addStudent(Scanner cin);
+    Quiz addQuiz(Scanner in);
 
-    void addUserCourseRepartition(Scanner cin);
+    Student addStudent(Scanner in);
 
-    Course findCourse(int courseId);
+    UserCourseRepartition addUserCourseRepartition(Scanner in);
 
-    Quiz findQuiz(int quizId);
+    AnonymousCourseFeedback addFeedback(Scanner in);
 
-    User findUser(int userId);
+    TeachingAssistant addTeachingAssistant(Scanner in);
 
-    ArrayList<UserCourseRepartition> findStudentCourseRepartitionByUserId(int userId);
+    Course findCourseById(int courseId);
+
+    Quiz findQuizById(int quizId);
+
+    User findUserById(int userId);
+
+    ArrayList<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId);
 
     ArrayList<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
 }

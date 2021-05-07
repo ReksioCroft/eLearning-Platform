@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner cin = new Scanner(System.in);
         ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+
         System.out.println("Type option");
         int opt = cin.nextInt();
         while (opt > 0) {
@@ -39,7 +40,7 @@ public class Main {
                         System.out.println("find user");
                         System.out.println("Type id user");
                         int id = cin.nextInt();
-                        User user = eLearningPlatformService.findUser(id);
+                        User user = eLearningPlatformService.findUserById(id);
                         if (user != null)
                             System.out.println(user);
                         break;
@@ -48,7 +49,7 @@ public class Main {
                         System.out.println("find course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        Course course = eLearningPlatformService.findCourse(id);
+                        Course course = eLearningPlatformService.findCourseById(id);
                         if (course != null)
                             System.out.println(course);
                         break;
@@ -57,7 +58,7 @@ public class Main {
                         System.out.println("find student");
                         System.out.println("Type id student");
                         int id = cin.nextInt();
-                        Student student = (Student) eLearningPlatformService.findUser(id);
+                        Student student = (Student) eLearningPlatformService.findUserById(id);
                         if (student != null)
                             System.out.println(student);
                         break;
@@ -66,7 +67,7 @@ public class Main {
                         System.out.println("find quiz");
                         System.out.println("Type id quiz");
                         int id = cin.nextInt();
-                        Quiz quiz = eLearningPlatformService.findQuiz(id);
+                        Quiz quiz = eLearningPlatformService.findQuizById(id);
                         if (quiz != null)
                             System.out.println(quiz);
                         break;
@@ -80,10 +81,10 @@ public class Main {
                         break;
                     }
                     case 11: {
-                        System.out.println("show repartitions of a student");
+                        System.out.println("show repartitions of a specific student");
                         System.out.println("Type id student");
                         int id = cin.nextInt();
-                        ArrayList<UserCourseRepartition> eLearningPlatformServices = eLearningPlatformService.findStudentCourseRepartitionByUserId(id);
+                        ArrayList<UserCourseRepartition> eLearningPlatformServices = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
                         System.out.println(eLearningPlatformServices.toString());
                         break;
                     }

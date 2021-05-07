@@ -10,4 +10,16 @@ public final class Student extends User {
         super(userName, birthDate, address, phoneNumber);
     }
 
+    @Override
+    public String toString() {
+        return "Student{" +
+                "userName='" + userName + '\'' +
+                ", id=" + id +
+                ", birthDate=" + birthDate +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
+    }
+
+
 }
