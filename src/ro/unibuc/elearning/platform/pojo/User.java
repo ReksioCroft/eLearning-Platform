@@ -2,6 +2,7 @@ package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,6 +17,7 @@ public abstract class User {
     @NotNull
     protected String phoneNumber;
     private static int co = 0;
+    protected static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public User(@NotNull String userName, @NotNull Date birthDate, @NotNull String address, @NotNull String phoneNumber) {
         this.userName = userName;
@@ -70,7 +72,7 @@ public abstract class User {
         return "User{" +
                 "userName='" + userName + '\'' +
                 ", id=" + id +
-                ", birthDate=" + birthDate +
+                ", birthDate=" + simpleDateFormat.format(birthDate) +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';

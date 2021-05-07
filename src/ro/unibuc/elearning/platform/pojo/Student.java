@@ -6,7 +6,7 @@ import java.util.Date;
 
 public final class Student extends User {
 
-    public Student(@NotNull String userName, Date birthDate, String address, String phoneNumber) {
+    public Student(@NotNull String userName, @NotNull Date birthDate, @NotNull String address, @NotNull String phoneNumber) {
         super(userName, birthDate, address, phoneNumber);
     }
 
@@ -15,11 +15,14 @@ public final class Student extends User {
         return "Student{" +
                 "userName='" + userName + '\'' +
                 ", id=" + id +
-                ", birthDate=" + birthDate +
+                ", birthDate=" + simpleDateFormat.format(birthDate) +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
     }
 
+    public String toStringCsv() {
+        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + address + '\'' + ", " + phoneNumber;
+    }
 
 }

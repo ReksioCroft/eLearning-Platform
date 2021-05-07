@@ -44,6 +44,10 @@ public final class Course {
                 '}';
     }
 
+    public String toStringCsv() {
+        return teacher.id + ", " + courseName + ", " + description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

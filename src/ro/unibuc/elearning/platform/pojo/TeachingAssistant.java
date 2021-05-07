@@ -34,9 +34,13 @@ public final class TeachingAssistant extends User {
                 "supervisorTeacher=" + supervisorTeacher +
                 ", userName='" + userName + '\'' +
                 ", id=" + id +
-                ", birthDate=" + birthDate +
+                ", birthDate=" + simpleDateFormat.format(birthDate) +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    public String toStringCsv() {
+        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + supervisorTeacher.id + ", " + address + ", " + phoneNumber;
     }
 }

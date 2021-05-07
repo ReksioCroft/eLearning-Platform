@@ -8,7 +8,7 @@ import java.util.Objects;
 public final class Teacher extends User {
     @NotNull String rank;
 
-    public Teacher(@NotNull String userName, @NotNull Date birthDate, @NotNull String rank, String address, String phoneNumber) {
+    public Teacher(@NotNull String userName, @NotNull Date birthDate, @NotNull String rank, @NotNull String address, @NotNull String phoneNumber) {
         super(userName, birthDate, address, phoneNumber);
         this.rank = rank;
     }
@@ -38,12 +38,16 @@ public final class Teacher extends User {
     @Override
     public String toString() {
         return "Teacher{" +
-                "rank='" + rank + '\'' +
-                ", userName='" + userName + '\'' +
+                "userName='" + userName + '\'' +
                 ", id=" + id +
-                ", birthDate=" + birthDate +
+                ", rank='" + rank + '\'' +
+                ", birthDate=" + simpleDateFormat.format(birthDate) +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 '}';
+    }
+
+    public String toStringCsv() {
+        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + rank + ", " + address + ", " + phoneNumber;
     }
 }

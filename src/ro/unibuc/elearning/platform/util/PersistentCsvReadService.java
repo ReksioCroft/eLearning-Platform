@@ -4,11 +4,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class PersistanceCsvReadService {
-    private static PersistanceCsvReadService instance;
+public class PersistentCsvReadService {
+    private static PersistentCsvReadService instance;
+    public final ELearningPlatformService eLearningPlatformService;
 
-    private PersistanceCsvReadService() {
-        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+    private PersistentCsvReadService() {
+        eLearningPlatformService = new ELearningPlatformService();
         eLearningPlatformService.clearALL();
         readTeachers(eLearningPlatformService);
         readTeachingAssistants(eLearningPlatformService);
@@ -103,9 +104,9 @@ public class PersistanceCsvReadService {
         }
     }
 
-    public static PersistanceCsvReadService getInstance() {
+    public static PersistentCsvReadService getInstance() {
         if (instance == null)
-            instance = new PersistanceCsvReadService();
+            instance = new PersistentCsvReadService();
         return instance;
     }
 }

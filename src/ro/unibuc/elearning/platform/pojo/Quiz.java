@@ -43,6 +43,10 @@ public final class Quiz {
                 '}';
     }
 
+    public String toStringCsv() {
+        return course.id + ", " + quiz;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

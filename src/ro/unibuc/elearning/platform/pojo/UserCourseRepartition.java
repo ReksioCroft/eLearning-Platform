@@ -3,6 +3,7 @@ package ro.unibuc.elearning.platform.pojo;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Date;
+import java.util.Objects;
 
 public final class UserCourseRepartition {
     @NotNull
@@ -28,5 +29,31 @@ public final class UserCourseRepartition {
 
     public @NotNull User getUser() {
         return user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserCourseRepartition that = (UserCourseRepartition) o;
+        return startDate.equals(that.startDate) && course.equals(that.course) && user.equals(that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(startDate, course, user);
+    }
+
+    @Override
+    public String toString() {
+        return "UserCourseRepartition{" +
+                "startDate=" + startDate +
+                ", course=" + course +
+                ", user=" + user +
+                '}';
+    }
+
+    public String toStringCsv() {
+        return startDate + ", " + course.id + ", " + user.id;
     }
 }
