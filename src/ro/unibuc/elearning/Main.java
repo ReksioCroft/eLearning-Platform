@@ -12,7 +12,6 @@ public class Main {
         Scanner cin = new Scanner(System.in);
         PersistentCsvReadService persistentCsvReadService = PersistentCsvReadService.getInstance();
         ELearningPlatformService eLearningPlatformService = persistentCsvReadService.eLearningPlatformService;
-        eLearningPlatformService.setDebug(true);
         System.out.println("Type option");
         int opt = cin.nextInt();
         while (opt > 0) {
@@ -23,22 +22,30 @@ public class Main {
                         eLearningPlatformService.addTeacher(cin);
                         break;
                     case 2:
-                        System.out.println("add course");
-                        eLearningPlatformService.addCourse(cin);
-                        break;
-                    case 3:
-                        System.out.println("add quiz");
-                        eLearningPlatformService.addQuiz(cin);
-                        break;
-                    case 4:
                         System.out.println("add student");
                         eLearningPlatformService.addStudent(cin);
                         break;
+                    case 3:
+                        System.out.println("add teaching assistant");
+                        eLearningPlatformService.addTeachingAssistant(cin);
+                        break;
+                    case 4:
+                        System.out.println("add course");
+                        eLearningPlatformService.addCourse(cin);
+                        break;
                     case 5:
-                        System.out.println("add a repartition of a student to a course");
+                        System.out.println("add quiz");
+                        eLearningPlatformService.addQuiz(cin);
+                        break;
+                    case 6:
+                        System.out.println("add Feedback");
+                        eLearningPlatformService.addFeedback(cin);
+                        break;
+                    case 7:
+                        System.out.println("add a repartition of an user to a course");
                         eLearningPlatformService.addUserCourseRepartition(cin);
                         break;
-                    case 6: {
+                    case 8: {
                         System.out.println("find user");
                         System.out.println("Type id user");
                         int id = cin.nextInt();
@@ -47,7 +54,7 @@ public class Main {
                             System.out.println(user);
                         break;
                     }
-                    case 7: {
+                    case 9: {
                         System.out.println("find course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
@@ -56,16 +63,7 @@ public class Main {
                             System.out.println(course);
                         break;
                     }
-                    case 8: {
-                        System.out.println("find student");
-                        System.out.println("Type id student");
-                        int id = cin.nextInt();
-                        Student student = (Student) eLearningPlatformService.findUserById(id);
-                        if (student != null)
-                            System.out.println(student);
-                        break;
-                    }
-                    case 9: {
+                    case 10: {
                         System.out.println("find quiz");
                         System.out.println("Type id quiz");
                         int id = cin.nextInt();
@@ -74,27 +72,35 @@ public class Main {
                             System.out.println(quiz);
                         break;
                     }
-                    case 10: {
+                    case 11: {
                         System.out.println("show repartitions to a course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        ArrayList<UserCourseRepartition> eLearningPlatformServices = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
-                        System.out.println(eLearningPlatformServices.toString());
+                        ArrayList<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
+                        System.out.println(userCourseRepartitions.toString());
                         break;
                     }
-                    case 11: {
+                    case 12: {
                         System.out.println("show repartitions of a specific student");
                         System.out.println("Type id student");
                         int id = cin.nextInt();
-                        ArrayList<UserCourseRepartition> eLearningPlatformServices = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
-                        System.out.println(eLearningPlatformServices.toString());
+                        ArrayList<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
+                        System.out.println(userCourseRepartitions.toString());
                         break;
                     }
-                    case 12:
+                    case 13: {
+                        System.out.println("show feedbacks of a specific course");
+                        System.out.println("Type id course");
+                        int id = cin.nextInt();
+                        ArrayList<AnonymousCourseFeedback> feedbacks = eLearningPlatformService.findFeedbacksByCourseId(id);
+                        System.out.println(feedbacks.toString());
+                        break;
+                    }
+                    case 14:
                         System.out.println("Users: ");
                         System.out.println(ELearningPlatformService.users);
                         break;
-                    case 13:
+                    case 15:
                         System.out.println("Courses: ");
                         System.out.println(ELearningPlatformService.courses);
                         break;
@@ -103,7 +109,7 @@ public class Main {
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("!Error: " + e.getMessage());
+                e.printStackTrace();
             }
             System.out.println("Type option");
             opt = cin.nextInt();

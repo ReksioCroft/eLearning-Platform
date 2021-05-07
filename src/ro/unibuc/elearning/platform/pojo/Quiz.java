@@ -50,13 +50,13 @@ public final class Quiz {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Quiz)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Quiz quiz1 = (Quiz) o;
-        return getId() == quiz1.getId() && getCourse().equals(quiz1.getCourse()) && getQuiz().equals(quiz1.getQuiz());
+        return id == quiz1.id && course.equals(quiz1.course) && quiz.equals(quiz1.quiz);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCourse(), getQuiz());
+        return Objects.hash(id, course, quiz);
     }
 }

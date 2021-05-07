@@ -2,6 +2,7 @@ package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ public final class UserCourseRepartition {
     final Course course;
     @NotNull
     final User user;
+    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public UserCourseRepartition(@NotNull Date startDate, @NotNull Course course, @NotNull User user) {
         this.startDate = startDate;
@@ -47,13 +49,13 @@ public final class UserCourseRepartition {
     @Override
     public String toString() {
         return "UserCourseRepartition{" +
-                "startDate=" + startDate +
-                ", course=" + course +
+                "course=" + course +
+                ", startDate=" + simpleDateFormat.format(startDate)  +
                 ", user=" + user +
                 '}';
     }
 
     public String toStringCsv() {
-        return startDate + ", " + course.id + ", " + user.id;
+        return course.id + ", " + simpleDateFormat.format(startDate)   + ", " + user.id;
     }
 }

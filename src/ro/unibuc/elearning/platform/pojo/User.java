@@ -60,14 +60,6 @@ public abstract class User {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return getId() == user.getId() && getUserName().equals(user.getUserName()) && getBirthDate().equals(user.getBirthDate()) && Objects.equals(getAddress(), user.getAddress()) && Objects.equals(getPhoneNumber(), user.getPhoneNumber());
-    }
-
-    @Override
     public String toString() {
         return "User{" +
                 "userName='" + userName + '\'' +
@@ -79,7 +71,15 @@ public abstract class User {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && userName.equals(user.userName) && birthDate.equals(user.birthDate) && address.equals(user.address) && phoneNumber.equals(user.phoneNumber);
+    }
+
+    @Override
     public int hashCode() {
-        return Objects.hash(getUserName(), getId(), getBirthDate(), getAddress(), getPhoneNumber());
+        return Objects.hash(userName, id, birthDate, address, phoneNumber);
     }
 }

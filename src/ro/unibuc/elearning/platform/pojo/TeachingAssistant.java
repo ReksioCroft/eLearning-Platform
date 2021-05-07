@@ -41,6 +41,6 @@ public final class TeachingAssistant extends User {
     }
 
     public String toStringCsv() {
-        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + supervisorTeacher.id + ", " + address + ", " + phoneNumber;
+        return userName + ", " + simpleDateFormat.format(birthDate) + ", " + supervisorTeacher.id + " ," + address + ", " + phoneNumber;
     }
 }

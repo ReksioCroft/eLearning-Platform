@@ -24,6 +24,14 @@ public interface AdminInterface {
         }
     }
 
+    default Date parseDate(String date) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
     default void clearALL() {
         courses.clear();
         quizzes.clear();
@@ -32,19 +40,19 @@ public interface AdminInterface {
         feedbacks.clear();
     }
 
-    Teacher addTeacher(Scanner in);
+    Teacher addTeacher(Scanner in) throws Exception;
 
     Course addCourse(Scanner in);
 
     Quiz addQuiz(Scanner in);
 
-    Student addStudent(Scanner in);
+    Student addStudent(Scanner in) throws Exception;
 
     UserCourseRepartition addUserCourseRepartition(Scanner in);
 
     AnonymousCourseFeedback addFeedback(Scanner in);
 
-    TeachingAssistant addTeachingAssistant(Scanner in);
+    TeachingAssistant addTeachingAssistant(Scanner in) throws Exception;
 
     Course findCourseById(int courseId);
 
@@ -55,4 +63,6 @@ public interface AdminInterface {
     ArrayList<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId);
 
     ArrayList<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
+
+    ArrayList<AnonymousCourseFeedback> findFeedbacksByCourseId(int courseId);
 }

@@ -51,14 +51,14 @@ public final class Course {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Course)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return getId() == course.getId() && getTeacher().equals(course.getTeacher()) && getCourseName().equals(course.getCourseName()) && Objects.equals(getDescription(), course.getDescription());
+        return id == course.id && teacher.equals(course.teacher) && courseName.equals(course.courseName) && Objects.equals(description, course.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTeacher(), getCourseName(), getDescription());
+        return Objects.hash(id, teacher, courseName, description);
     }
 
     public @NotNull User getTeacher() {
