@@ -3,7 +3,6 @@ package ro.unibuc.elearning;
 import ro.unibuc.elearning.platform.dao.Repository;
 import ro.unibuc.elearning.platform.pojo.*;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
-import ro.unibuc.elearning.platform.util.PersistentCsvReadService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -11,9 +10,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner cin = new Scanner(System.in);
-        PersistentCsvReadService persistentCsvReadService = PersistentCsvReadService.getInstance();
-        ELearningPlatformService eLearningPlatformService = persistentCsvReadService.eLearningPlatformService;
-        Repository repository = Repository.getInstance();
+        // PersistentCsvReadService persistentCsvReadService = PersistentCsvReadService.getInstance();
+        //ELearningPlatformService eLearningPlatformService = persistentCsvReadService.eLearningPlatformService;
+        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+        Repository repository = Repository.getRepository();
         System.out.println("Type option");
         int opt = cin.nextInt();
         while (opt > 0) {

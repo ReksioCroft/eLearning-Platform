@@ -2,7 +2,7 @@ package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public final class TeachingAssistant extends User {
@@ -31,6 +31,10 @@ public final class TeachingAssistant extends User {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), supervisorTeacher);
+    }
+
+    public @NotNull Teacher getSupervisorTeacher() {
+        return supervisorTeacher;
     }
 
     @Override

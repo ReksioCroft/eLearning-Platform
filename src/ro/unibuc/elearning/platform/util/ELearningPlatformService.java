@@ -1,9 +1,10 @@
 package ro.unibuc.elearning.platform.util;
 
+import ro.unibuc.elearning.platform.dao.Repository;
 import ro.unibuc.elearning.platform.pojo.*;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class ELearningPlatformService implements AdminInterface {
@@ -35,6 +36,7 @@ public class ELearningPlatformService implements AdminInterface {
 
         Teacher teacher = new Teacher(name, date, rank, address, phoneNumber);
         users.add(teacher);
+        Repository.getRepository().getTeacherDao().writeTeacher(teacher);
         return persistentCsvWriteService.writeTeacher(teacher);
     }
 
@@ -49,6 +51,7 @@ public class ELearningPlatformService implements AdminInterface {
         String description = in.next();
         Course course = new Course(teacher, courseName, description);
         courses.add(course);
+        Repository.getRepository().getCourseDao().writeCourse(course);
         return persistentCsvWriteService.writeCourse(course);
     }
 
@@ -61,6 +64,7 @@ public class ELearningPlatformService implements AdminInterface {
         String quizContent = in.next();
         Quiz quiz = new Quiz(course, quizContent);
         quizzes.add(quiz);
+        Repository.getRepository().getQuizDao().writeQuiz(quiz);
         return persistentCsvWriteService.writeQuiz(quiz);
     }
 
@@ -79,6 +83,7 @@ public class ELearningPlatformService implements AdminInterface {
         }
         Student student = new Student(userName, birthDate, address, phoneNumber);
         users.add(student);
+        Repository.getRepository().getStudentDao().writeStudent(student);
         return persistentCsvWriteService.writeStudent(student);
     }
 
@@ -96,6 +101,7 @@ public class ELearningPlatformService implements AdminInterface {
         Student student = (Student) findUserById(idStudent);
         UserCourseRepartition userCourseRepartition = new UserCourseRepartition(startDate, course, student);
         userCourseRepartitions.add(userCourseRepartition);
+        Repository.getRepository().getUserCourseRepartitionDao().writeUserCourseRepartition(userCourseRepartition);
         return persistentCsvWriteService.writeUserCourseRepartition(userCourseRepartition);
     }
 
@@ -108,6 +114,7 @@ public class ELearningPlatformService implements AdminInterface {
         String feedbackContent = in.next();
         AnonymousCourseFeedback feedback = new AnonymousCourseFeedback(course, feedbackContent);
         feedbacks.add(feedback);
+        Repository.getRepository().getAnonymousCourseFeedbackDao().writeAnonymousCourseFeedback(feedback);
         return persistentCsvWriteService.writeFeedback(feedback);
     }
 
@@ -129,6 +136,7 @@ public class ELearningPlatformService implements AdminInterface {
         }
         TeachingAssistant teachingAssistant = new TeachingAssistant(name, date, teacher, address, phoneNumber);
         users.add(teachingAssistant);
+        Repository.getRepository().getTeachingAssistantDao().writeTeachingAssistant(teachingAssistant);
         return persistentCsvWriteService.writeTeachingAssistant(teachingAssistant);
     }
 

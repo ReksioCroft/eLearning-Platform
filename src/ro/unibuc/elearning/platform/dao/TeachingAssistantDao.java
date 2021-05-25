@@ -1,9 +1,15 @@
 package ro.unibuc.elearning.platform.dao;
 
+import ro.unibuc.elearning.platform.pojo.Teacher;
+import ro.unibuc.elearning.platform.pojo.TeachingAssistant;
+import ro.unibuc.elearning.platform.util.ELearningPlatformService;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public final class TeachingAssistantDao extends Dao {
+public final class TeachingAssistantDao extends UserDao {
     private static TeachingAssistantDao teachingAssistantDao;
 
     private TeachingAssistantDao() {
@@ -31,5 +37,49 @@ public final class TeachingAssistantDao extends Dao {
             teachingAssistantDao = new TeachingAssistantDao();
         return teachingAssistantDao;
     }
+
+    public void writeTeachingAssistant(TeachingAssistant teachingAssistant) {
+        try {
+            writeUser(teachingAssistant);
+            final String query = "INSERT INTO TeachingAssistant(id,supervisorTeacherId ) values(?,?)";
+
+            PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement1.setInt(1, teachingAssistant.getId());
+            preparedStatement1.setInt(2, teachingAssistant.getSupervisorTeacher().getId());
+            preparedStatement1.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+            final String query = "SELECT t.id, t.supervisorTeacherId, u.userName, u.birthDate, u.address, u.phoneNumber FROM User u, TeachingAssistant t where u.id=t.id";
+            Statement statement = databaseConnection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                synchronized (eLearningPlatformService.users) {
+                    eLearningPlatformService.users.add(mapToTeachingAssistant(resultSet));
+                }
+            }
+        } catch (SQLException | InterruptedException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private TeachingAssistant mapToTeachingAssistant(ResultSet resultSet) throws SQLException, InterruptedException {
+        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+        Teacher supervisorTeacher = null;
+        while (supervisorTeacher == null) {
+            supervisorTeacher = (Teacher) eLearningPlatformService.findUserById(resultSet.getInt(2));
+            if (supervisorTeacher == null)
+                Thread.sleep(500);
+        }
+        return new TeachingAssistant(resultSet.getInt(1), resultSet.getString(3), resultSet.getDate(4), supervisorTeacher, resultSet.getString(5), resultSet.getString(6));
+    }
+
 
 }

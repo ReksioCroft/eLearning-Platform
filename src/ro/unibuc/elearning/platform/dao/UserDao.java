@@ -1,12 +1,13 @@
 package ro.unibuc.elearning.platform.dao;
 
+import ro.unibuc.elearning.platform.pojo.User;
+
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public final class UserDao extends Dao {
-    private static UserDao userDao;
-
-    private UserDao() {
+abstract class UserDao extends Dao {
+    UserDao() {
         super();
         createTable();
     }
@@ -27,10 +28,20 @@ public final class UserDao extends Dao {
         }
     }
 
-    static UserDao getUserDao() {
-        if (userDao == null)
-            userDao = new UserDao();
-        return userDao;
+    void writeUser(User user) {
+        final String query = "INSERT INTO User(id,userName,birthDate,address,phoneNumber) values (?,?,?,?,?)";
+
+        try {
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.setString(2, user.getUserName());
+            preparedStatement.setDate(3, user.getBirthDate());
+            preparedStatement.setString(4, user.getAddress());
+            preparedStatement.setString(5, user.getPhoneNumber());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
 }

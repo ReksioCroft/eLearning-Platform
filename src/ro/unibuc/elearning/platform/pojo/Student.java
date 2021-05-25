@@ -2,7 +2,7 @@ package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
+import java.sql.Date;
 
 public final class Student extends User {
 
@@ -28,5 +28,4 @@ public final class Student extends User {
     public String toStringCsv() {
         return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + address + '\'' + ", " + phoneNumber;
     }
-
 }

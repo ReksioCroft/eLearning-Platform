@@ -3,7 +3,7 @@ package ro.unibuc.elearning.platform.pojo;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 import static java.lang.Math.max;

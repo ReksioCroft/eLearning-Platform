@@ -2,28 +2,28 @@ package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.Objects;
 
 public final class Teacher extends User {
-    @NotNull String rank;
+    @NotNull String ranking;
 
     public Teacher(@NotNull String userName, @NotNull Date birthDate, @NotNull String rank, @NotNull String address, @NotNull String phoneNumber) {
         super(userName, birthDate, address, phoneNumber);
-        this.rank = rank;
+        this.ranking = rank;
     }
 
     public Teacher(int id, @NotNull String userName, @NotNull Date birthDate, @NotNull String rank, @NotNull String address, @NotNull String phoneNumber) {
         super(id, userName, birthDate, address, phoneNumber);
-        this.rank = rank;
+        this.ranking = rank;
     }
 
     public @NotNull String getRank() {
-        return rank;
+        return ranking;
     }
 
     public void setRank(@NotNull String rank) {
-        this.rank = rank;
+        this.ranking = rank;
     }
 
     @Override
@@ -32,12 +32,12 @@ public final class Teacher extends User {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Teacher teacher = (Teacher) o;
-        return rank.equals(teacher.rank);
+        return ranking.equals(teacher.ranking);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), rank);
+        return Objects.hash(super.hashCode(), ranking);
     }
 
     @Override
@@ -45,7 +45,7 @@ public final class Teacher extends User {
         return "Teacher{" +
                 "userName='" + userName + '\'' +
                 ", id=" + id +
-                ", rank='" + rank + '\'' +
+                ", ranking='" + ranking + '\'' +
                 ", birthDate=" + simpleDateFormat.format(birthDate) +
                 ", address='" + address + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
@@ -53,6 +53,6 @@ public final class Teacher extends User {
     }
 
     public String toStringCsv() {
-        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + rank + ", " + address + ", " + phoneNumber;
+        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + ranking + ", " + address + ", " + phoneNumber;
     }
 }

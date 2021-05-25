@@ -2,23 +2,25 @@ package ro.unibuc.elearning.platform.util;
 
 import ro.unibuc.elearning.platform.pojo.*;
 
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public interface AdminInterface {
-    ArrayList<Course> courses = new ArrayList<>();
-    ArrayList<Quiz> quizzes = new ArrayList<>();
-    ArrayList<UserCourseRepartition> userCourseRepartitions = new ArrayList<>();
-    ArrayList<User> users = new ArrayList<>();
-    ArrayList<AnonymousCourseFeedback> feedbacks = new ArrayList<>();
+    List<Course> courses = Collections.synchronizedList(new ArrayList<>());
+    List<Quiz> quizzes = Collections.synchronizedList(new ArrayList<>());
+    List<UserCourseRepartition> userCourseRepartitions = Collections.synchronizedList(new ArrayList<>());
+    List<User> users = Collections.synchronizedList(new ArrayList<>());
+    List<AnonymousCourseFeedback> feedbacks = Collections.synchronizedList(new ArrayList<>());
 
     default Date parseDate(Scanner cin) {
         try {
             String date = cin.next();
-            return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
         } catch (ParseException e) {
             return null;
         }
@@ -26,7 +28,7 @@ public interface AdminInterface {
 
     default Date parseDate(String date) {
         try {
-            return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
         } catch (ParseException e) {
             return null;
         }

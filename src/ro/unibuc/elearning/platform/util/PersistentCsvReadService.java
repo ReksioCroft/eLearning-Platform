@@ -3,7 +3,7 @@ package ro.unibuc.elearning.platform.util;
 import ro.unibuc.elearning.platform.pojo.*;
 
 import java.io.FileInputStream;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Scanner;
 
 public class PersistentCsvReadService {
