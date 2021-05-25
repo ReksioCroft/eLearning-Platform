@@ -2,6 +2,7 @@ package ro.unibuc.elearning.platform.dao;
 
 import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.User;
+import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.io.IOException;
@@ -70,6 +71,9 @@ public abstract class UserDao extends Dao {
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, userId);
             preparedStatement.execute();
+
+            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+            AdminInterface.users.remove(eLearningPlatformService.findUserById(userId));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

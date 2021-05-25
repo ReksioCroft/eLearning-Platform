@@ -1,6 +1,7 @@
 package ro.unibuc.elearning.platform.dao;
 
 import ro.unibuc.elearning.platform.pojo.*;
+import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.PreparedStatement;
@@ -61,6 +62,7 @@ public final class UserCourseRepartitionDao extends Dao {
             preparedStatement1.setInt(2, userCourseRepartition.getCourse().getId());
             preparedStatement1.setDate(3, userCourseRepartition.getStartDate());
             preparedStatement1.execute();
+            AdminInterface.userCourseRepartitions.remove(userCourseRepartition);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

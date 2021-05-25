@@ -3,6 +3,7 @@ package ro.unibuc.elearning.platform.dao;
 import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.Course;
 import ro.unibuc.elearning.platform.pojo.Quiz;
+import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.*;
@@ -75,6 +76,7 @@ public final class QuizDao extends Dao {
             preparedStatement1.setInt(1, quiz.getId());
             preparedStatement1.setInt(2, quiz.getCourse().getId());
             preparedStatement1.execute();
+            AdminInterface.quizzes.remove(quiz);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

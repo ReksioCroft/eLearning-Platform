@@ -3,6 +3,7 @@ package ro.unibuc.elearning.platform.dao;
 import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.Course;
 import ro.unibuc.elearning.platform.pojo.Teacher;
+import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.*;
@@ -74,6 +75,9 @@ public final class CourseDao extends Dao {
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, courseId);
             preparedStatement.execute();
+
+            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+            AdminInterface.courses.remove(eLearningPlatformService.findCourseById(courseId));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

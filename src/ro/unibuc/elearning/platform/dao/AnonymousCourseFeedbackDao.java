@@ -2,6 +2,7 @@ package ro.unibuc.elearning.platform.dao;
 
 import ro.unibuc.elearning.platform.pojo.AnonymousCourseFeedback;
 import ro.unibuc.elearning.platform.pojo.Course;
+import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.PreparedStatement;
@@ -59,6 +60,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             preparedStatement1.setInt(1, anonymousCourseFeedback.getId());
             preparedStatement1.setInt(2, anonymousCourseFeedback.getCourse().getId());
             preparedStatement1.execute();
+            AdminInterface.feedbacks.remove(anonymousCourseFeedback);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
