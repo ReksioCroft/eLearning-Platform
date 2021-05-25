@@ -3,6 +3,7 @@ package ro.unibuc.elearning.platform.util;
 import ro.unibuc.elearning.platform.dao.Repository;
 import ro.unibuc.elearning.platform.pojo.*;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -16,7 +17,7 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public Teacher addTeacher(Scanner in) throws Exception {
+    public Teacher addTeacher(Scanner in) throws IOException {
         System.out.println("name");
         String name = in.next();
 
@@ -32,7 +33,7 @@ public class ELearningPlatformService implements AdminInterface {
         System.out.println("phone");
         String phoneNumber = in.next();
         if (!phoneNumber.matches("[0-9]{10}")) {
-            throw new Exception("incorrect phone number");
+            throw new IOException("incorrect phone number");
         }
 
         Teacher teacher = new Teacher(name, date, rank, address, phoneNumber);

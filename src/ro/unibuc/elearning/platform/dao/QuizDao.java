@@ -1,13 +1,11 @@
 package ro.unibuc.elearning.platform.dao;
 
+import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.Course;
 import ro.unibuc.elearning.platform.pojo.Quiz;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public final class QuizDao extends Dao {
     private static QuizDao quizDao;
@@ -15,14 +13,14 @@ public final class QuizDao extends Dao {
     private QuizDao() {
         super();
         createTable();
+        createUpdateProcedure();
     }
 
     private void createTable() {
         final String query = "CREATE TABLE IF NOT EXISTS Quiz (\n" +
-                "id INT,\n" +
+                "id INT PRIMARY KEY ,\n" +
                 "courseId Int,\n" +
                 "quiz VARCHAR(1024) Not NULL,\n" +
-                "PRIMARY KEY (courseId, id),\n" +
                 "FOREIGN KEY (courseId) REFERENCES Course (id))";
 
         try {
@@ -32,6 +30,23 @@ public final class QuizDao extends Dao {
             throwables.printStackTrace();
         }
     }
+
+    private void createUpdateProcedure() {
+        final String query = "CREATE OR REPLACE PROCEDURE updateQuizContent (IN id1 INT, IN quiz1 VARCHAR(1024) ) " +
+                "BEGIN " +
+                "update Quiz " +
+                "set quiz=quiz1 " +
+                "where id=id1; " +
+                "end";
+        try {
+            Statement statement = databaseConnection.createStatement();
+            statement.execute(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
 
     static QuizDao getQuizDao() {
         if (quizDao == null)
@@ -92,5 +107,22 @@ public final class QuizDao extends Dao {
                 Thread.sleep(500);
         }
         return new Quiz(resultSet.getInt(1), course, resultSet.getString(3));
+    }
+
+    public void updateQuizContent(int quizId, @NotNull String content) {
+        try {
+            final String query = "{call updateQuizContent(?,?)}";
+            CallableStatement callableStatement = databaseConnection.prepareCall(query);
+
+            callableStatement.setInt(1, quizId);
+            callableStatement.setString(2, content);
+            callableStatement.executeUpdate();
+
+            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+            Quiz quiz = eLearningPlatformService.findQuizById(quizId);
+            quiz.setQuiz(content);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

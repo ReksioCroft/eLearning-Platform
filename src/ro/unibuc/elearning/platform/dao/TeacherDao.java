@@ -1,12 +1,10 @@
 package ro.unibuc.elearning.platform.dao;
 
+import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.Teacher;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public final class TeacherDao extends UserDao {
     private static TeacherDao teacherDao;
@@ -14,6 +12,7 @@ public final class TeacherDao extends UserDao {
     private TeacherDao() {
         super();
         createTable();
+        createUpdateProcedure();
     }
 
     private void createTable() {
@@ -25,6 +24,39 @@ public final class TeacherDao extends UserDao {
         try {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void createUpdateProcedure() {
+        final String query = "CREATE OR REPLACE PROCEDURE updateTeacherRanking (IN id1 INT, IN ranking1 VARCHAR(1024) ) " +
+                "BEGIN " +
+                "update Teacher " +
+                "set ranking=ranking1 " +
+                "where id=id1; " +
+                "end";
+        try {
+            Statement statement = databaseConnection.createStatement();
+            statement.execute(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void updateTeacherRanking(int teacherId, @NotNull String ranking) {
+        try {
+            final String query = "{call updateTeacherRanking(?,?)}";
+            CallableStatement callableStatement = databaseConnection.prepareCall(query);
+
+            callableStatement.setInt(1, teacherId);
+            callableStatement.setString(2, ranking);
+            callableStatement.executeUpdate();
+
+            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+            Teacher teacher = (Teacher) eLearningPlatformService.findUserById(teacherId);
+            teacher.setRank(ranking);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

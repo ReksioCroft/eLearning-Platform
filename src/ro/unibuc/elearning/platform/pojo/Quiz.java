@@ -47,6 +47,10 @@ public final class Quiz {
         return id;
     }
 
+    public void setQuiz(@NotNull String quiz) {
+        this.quiz = quiz;
+    }
+
     @Override
     public String toString() {
         return "Quiz{" +

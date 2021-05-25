@@ -1,13 +1,11 @@
 package ro.unibuc.elearning.platform.dao;
 
+import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.Course;
 import ro.unibuc.elearning.platform.pojo.Teacher;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public final class CourseDao extends Dao {
     private static CourseDao courseDao;
@@ -19,6 +17,19 @@ public final class CourseDao extends Dao {
     }
 
     private void createUpdateProcedure() {
+        final String query = "CREATE OR REPLACE PROCEDURE updateCourseDesc (IN id1 INT, IN description1 VARCHAR(1024) ) " +
+                "BEGIN " +
+                "update Course " +
+                "set description=description1 " +
+                "where id=id1; " +
+                "end";
+        try {
+            Statement statement = databaseConnection.createStatement();
+            statement.execute(query);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
     private void createTable() {
@@ -63,6 +74,23 @@ public final class CourseDao extends Dao {
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, courseId);
             preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void updateCourseDescription(int id, @NotNull String desc) {
+        try {
+            final String query = "{call updateCourseDesc(?,?)}";
+            CallableStatement callableStatement = databaseConnection.prepareCall(query);
+
+            callableStatement.setInt(1, id);
+            callableStatement.setString(2, desc);
+            callableStatement.executeUpdate();
+
+            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
+            Course course= eLearningPlatformService.findCourseById(id);
+            course.setDescription(desc);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -79,7 +79,7 @@ public class Main {
                         System.out.println("show repartitions to a course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        TreeMap<Integer,UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
+                        TreeMap<Integer, UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
                         System.out.println(userCourseRepartitions.toString());
                         break;
                     }
@@ -87,7 +87,7 @@ public class Main {
                         System.out.println("show repartitions of a specific student");
                         System.out.println("Type id student");
                         int id = cin.nextInt();
-                        TreeMap<Integer,UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
+                        TreeMap<Integer, UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
                         System.out.println(userCourseRepartitions.toString());
                         break;
                     }
@@ -137,10 +137,27 @@ public class Main {
                         break;
                     case 22:
                         System.out.println("Delete repartition by CourseId and StudentId");
-                        TreeMap<Integer,UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(cin.nextInt());
+                        TreeMap<Integer, UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(cin.nextInt());
                         System.out.println(userCourseRepartitions);
                         UserCourseRepartition userCourseRepartition = userCourseRepartitions.get(cin.nextInt());
                         repository.getUserCourseRepartitionDao().deleteUserCourseRepartition(userCourseRepartition);
+                        break;
+                    case 23:
+                        System.out.println("Update Course Description by id (format: id\\n desc\\n)");
+                        repository.getCourseDao().updateCourseDescription(cin.nextInt(), cin.next());
+                        break;
+                    case 24:
+                        System.out.println("Update Quiz by Id  (format: quizId\\n content\\n)");
+                        repository.getQuizDao().updateQuizContent(cin.nextInt(), cin.next());
+                        break;
+                    case 25:
+                        System.out.println("Update Teacher Ranking by Id (format: quizId\\n content\\n)");
+                        repository.getTeacherDao().updateTeacherRanking(cin.nextInt(), cin.next());
+                        break;
+                    case 26:
+                        System.out.println("Update User Address and PhoneNumber (format: userId\\n address\\n phoneNumber\\n)");
+                        System.out.println("enter '*' to address or phoneNumber to not update that value");
+                        repository.getStudentDao().updateUserPhoneAddress(cin.nextInt(), cin.next(), cin.next());
                         break;
                     default:
                         System.out.println("Invalid option");
