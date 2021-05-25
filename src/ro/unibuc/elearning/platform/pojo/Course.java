@@ -62,12 +62,12 @@ public final class Course {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Course course = (Course) o;
-        return id == course.id && teacher.equals(course.teacher) && courseName.equals(course.courseName) && description.equals(course.description);
+        return id == course.id && teacher.equals(course.teacher) && courseName.equals(course.courseName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, teacher, courseName, description);
+        return Objects.hash(id, teacher, courseName);
     }
 
     public @NotNull User getTeacher() {

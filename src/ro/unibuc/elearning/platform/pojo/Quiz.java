@@ -31,10 +31,6 @@ public final class Quiz {
         Quiz.co = co;
     }
 
-    public void updateQuiz(@NotNull String quiz) {
-        this.quiz = quiz;
-    }
-
     public @NotNull Course getCourse() {
         return course;
     }

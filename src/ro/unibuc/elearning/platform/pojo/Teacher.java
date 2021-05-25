@@ -3,7 +3,6 @@ package ro.unibuc.elearning.platform.pojo;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
-import java.util.Objects;
 
 public final class Teacher extends User {
     @NotNull String ranking;
@@ -24,20 +23,6 @@ public final class Teacher extends User {
 
     public void setRank(@NotNull String rank) {
         this.ranking = rank;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Teacher teacher = (Teacher) o;
-        return ranking.equals(teacher.ranking);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), ranking);
     }
 
     @Override

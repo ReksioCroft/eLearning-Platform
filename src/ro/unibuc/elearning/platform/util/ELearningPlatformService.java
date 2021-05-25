@@ -184,7 +184,7 @@ public class ELearningPlatformService implements AdminInterface {
                 new TreeSet<>((userCourseRepartition, t1) -> userCourseRepartition.getStartDate().compareTo(t1.getStartDate()));
         for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
             if (userCourseRepartition.getCourse().getId() == courseId)
-                repartitions.add( userCourseRepartition);
+                repartitions.add(userCourseRepartition);
         }
         return repartitions;
     }

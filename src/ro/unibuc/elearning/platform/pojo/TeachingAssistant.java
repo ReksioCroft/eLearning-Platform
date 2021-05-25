@@ -3,7 +3,6 @@ package ro.unibuc.elearning.platform.pojo;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.Date;
-import java.util.Objects;
 
 public final class TeachingAssistant extends User {
     @NotNull
@@ -17,20 +16,6 @@ public final class TeachingAssistant extends User {
     public TeachingAssistant(int id, @NotNull String userName, @NotNull Date birthDate, @NotNull Teacher supervisorTeacher, @NotNull String address, @NotNull String phoneNumber) {
         super(id, userName, birthDate, address, phoneNumber);
         this.supervisorTeacher = supervisorTeacher;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        TeachingAssistant that = (TeachingAssistant) o;
-        return supervisorTeacher.equals(that.supervisorTeacher);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), supervisorTeacher);
     }
 
     public @NotNull Teacher getSupervisorTeacher() {

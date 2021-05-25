@@ -66,6 +66,6 @@ public final class AnonymousCourseFeedback {
     }
 
     public String toStringCsv() {
-        return id + "," + course.id + ", " + feedback;
+        return id + ", " + course.id + ", " + feedback;
     }
 }

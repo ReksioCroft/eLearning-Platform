@@ -89,7 +89,7 @@ public final class CourseDao extends Dao {
             callableStatement.executeUpdate();
 
             ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-            Course course= eLearningPlatformService.findCourseById(id);
+            Course course = eLearningPlatformService.findCourseById(id);
             course.setDescription(desc);
         } catch (SQLException throwables) {
             throwables.printStackTrace();

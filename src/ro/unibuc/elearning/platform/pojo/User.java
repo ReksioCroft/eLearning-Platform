@@ -2,8 +2,8 @@ package ro.unibuc.elearning.platform.pojo;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.text.SimpleDateFormat;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Objects;
 
 import static java.lang.Math.max;
@@ -88,13 +88,13 @@ public abstract class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
         User user = (User) o;
-        return id == user.id && userName.equals(user.userName) && birthDate.equals(user.birthDate) && address.equals(user.address) && phoneNumber.equals(user.phoneNumber);
+        return id == user.id && userName.equals(user.userName) && birthDate.equals(user.birthDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(userName, id, birthDate, address, phoneNumber);
+        return Objects.hash(userName, id, birthDate);
     }
 }
