@@ -52,6 +52,18 @@ public final class TeachingAssistantDao extends UserDao {
         }
     }
 
+    public void deleteTeachingAssistant(int teachingAssistantId) {
+        try {
+            final String query = "DELETE FROM TeachingAssistant WHERE id=?";
+            PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement1.setInt(1, teachingAssistantId);
+            preparedStatement1.execute();
+            deleteUser(teachingAssistantId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         try {

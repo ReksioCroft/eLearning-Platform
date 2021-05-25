@@ -53,6 +53,19 @@ public final class UserCourseRepartitionDao extends Dao {
         }
     }
 
+    public void deleteUserCourseRepartition(UserCourseRepartition userCourseRepartition) {
+        try {
+            final String query = "DELETE FROM UserCourseRepartition where userId=? and courseId=? and startDate=?";
+            PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement1.setInt(1, userCourseRepartition.getUser().getId());
+            preparedStatement1.setInt(2, userCourseRepartition.getCourse().getId());
+            preparedStatement1.setDate(3, userCourseRepartition.getStartDate());
+            preparedStatement1.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         try {

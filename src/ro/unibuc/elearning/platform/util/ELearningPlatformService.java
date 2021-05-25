@@ -3,9 +3,10 @@ package ro.unibuc.elearning.platform.util;
 import ro.unibuc.elearning.platform.dao.Repository;
 import ro.unibuc.elearning.platform.pojo.*;
 
-import java.util.ArrayList;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class ELearningPlatformService implements AdminInterface {
     private final PersistentCsvWriteService persistentCsvWriteService;
@@ -168,23 +169,23 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public ArrayList<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId) {
-        ArrayList<UserCourseRepartition> ans = new ArrayList<>();
+    public TreeMap<Integer, UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId) {
+        TreeMap<Integer, UserCourseRepartition> repartitions = new TreeMap<>();
         for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
             if (userCourseRepartition.getUser().getId() == userId)
-                ans.add(userCourseRepartition);
+                repartitions.put(userCourseRepartition.getCourse().getId(), userCourseRepartition);
         }
-        return ans;
+        return repartitions;
     }
 
     @Override
-    public ArrayList<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId) {
-        ArrayList<UserCourseRepartition> ans = new ArrayList<>();
+    public TreeMap<Integer, UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId) {
+        TreeMap<Integer, UserCourseRepartition> repartitions = new TreeMap<>();
         for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
             if (userCourseRepartition.getCourse().getId() == courseId)
-                ans.add(userCourseRepartition);
+                repartitions.put(userCourseRepartition.getUser().getId(), userCourseRepartition);
         }
-        return ans;
+        return repartitions;
     }
 
     @Override

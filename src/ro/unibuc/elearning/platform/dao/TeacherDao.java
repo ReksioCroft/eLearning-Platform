@@ -38,14 +38,26 @@ public final class TeacherDao extends UserDao {
 
 
     public void writeTeacher(Teacher teacher) {
-        final String query = "INSERT INTO Teacher(id,ranking) values(?,?)";
         try {
+            final String query = "INSERT INTO Teacher(id,ranking) values(?,?)";
             writeUser(teacher);
 
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, teacher.getId());
             preparedStatement.setString(2, teacher.getRank());
             preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void deleteTeacher(int teacherId) {
+        try {
+            final String query = "DELETE FROM Teacher WHERE id=?";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, teacherId);
+            preparedStatement.execute();
+            deleteUser(teacherId);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

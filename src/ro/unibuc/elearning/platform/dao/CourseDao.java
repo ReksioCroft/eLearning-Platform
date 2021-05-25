@@ -15,6 +15,10 @@ public final class CourseDao extends Dao {
     private CourseDao() {
         super();
         createTable();
+        createUpdateProcedure();
+    }
+
+    private void createUpdateProcedure() {
     }
 
     private void createTable() {
@@ -40,13 +44,24 @@ public final class CourseDao extends Dao {
     }
 
     public void writeCourse(Course course) {
-        final String query = "INSERT INTO Course(id,teacherId, courseName, description) values(?,?,?,?)";
         try {
+            final String query = "INSERT INTO Course(id,teacherId, courseName, description) values(?,?,?,?)";
             PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
             preparedStatement.setInt(1, course.getId());
             preparedStatement.setInt(2, course.getTeacher().getId());
             preparedStatement.setString(3, course.getCourseName());
             preparedStatement.setString(4, course.getDescription());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void deleteCourse(int courseId) {
+        try {
+            final String query = "DELETE FROM Course WHERE id=?";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, courseId);
             preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

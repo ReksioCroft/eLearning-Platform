@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-abstract class UserDao extends Dao {
+public abstract class UserDao extends Dao {
     UserDao() {
         super();
         createTable();
@@ -38,6 +38,17 @@ abstract class UserDao extends Dao {
             preparedStatement.setDate(3, user.getBirthDate());
             preparedStatement.setString(4, user.getAddress());
             preparedStatement.setString(5, user.getPhoneNumber());
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    void deleteUser(int userId) {
+        try {
+            final String query = "DELETE FROM User WHERE ID = ?";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, userId);
             preparedStatement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

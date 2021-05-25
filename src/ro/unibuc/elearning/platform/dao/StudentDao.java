@@ -48,6 +48,19 @@ public final class StudentDao extends UserDao {
         }
     }
 
+    public void deleteStudent(int studentId) {
+        try {
+            final String query = "DELETE FROM Student WHERE id=?";
+            PreparedStatement preparedStatement = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement.setInt(1, studentId);
+            preparedStatement.execute();
+            deleteUser(studentId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
     @Override
     public void run() {
         try {

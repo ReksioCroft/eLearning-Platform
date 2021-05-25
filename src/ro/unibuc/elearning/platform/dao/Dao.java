@@ -2,7 +2,7 @@ package ro.unibuc.elearning.platform.dao;
 
 import java.sql.*;
 
-public abstract class Dao extends Thread {
+abstract class Dao extends Thread {
     protected static Connection databaseConnection;
 
     Dao() {

@@ -6,6 +6,7 @@ import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class Main {
     public static void main(String[] args) {
@@ -78,7 +79,7 @@ public class Main {
                         System.out.println("show repartitions to a course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        ArrayList<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
+                        TreeMap<Integer,UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
                         System.out.println(userCourseRepartitions.toString());
                         break;
                     }
@@ -86,7 +87,7 @@ public class Main {
                         System.out.println("show repartitions of a specific student");
                         System.out.println("Type id student");
                         int id = cin.nextInt();
-                        ArrayList<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
+                        TreeMap<Integer,UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
                         System.out.println(userCourseRepartitions.toString());
                         break;
                     }
@@ -105,6 +106,41 @@ public class Main {
                     case 15:
                         System.out.println("Courses: ");
                         System.out.println(ELearningPlatformService.courses);
+                        break;
+                    case 16:
+                        System.out.println("Delete student by id");
+                        repository.getStudentDao().deleteStudent(cin.nextInt());
+                        break;
+                    case 17:
+                        System.out.println("Delete Teacher by Id");
+                        repository.getTeacherDao().deleteTeacher(cin.nextInt());
+                        break;
+                    case 18:
+                        System.out.println("Delete Teaching assistant by Id");
+                        repository.getTeachingAssistantDao().deleteTeachingAssistant(cin.nextInt());
+                        break;
+                    case 19:
+                        System.out.println("Delete Course by Id");
+                        repository.getCourseDao().deleteCourse(cin.nextInt());
+                        break;
+                    case 20:
+                        System.out.println("Delete Quiz by Id");
+                        Quiz quiz = eLearningPlatformService.findQuizById(cin.nextInt());
+                        repository.getQuizDao().deleteQuiz(quiz);
+                        break;
+                    case 21:
+                        System.out.println("Delete Feedback by CourseId and Index");
+                        ArrayList<AnonymousCourseFeedback> feedbacks = eLearningPlatformService.findFeedbacksByCourseId(cin.nextInt());
+                        System.out.println(feedbacks);
+                        AnonymousCourseFeedback feedback = feedbacks.get(cin.nextInt());
+                        repository.getAnonymousCourseFeedbackDao().deleteAnonymousCourseFeedback(feedback);
+                        break;
+                    case 22:
+                        System.out.println("Delete repartition by CourseId and StudentId");
+                        TreeMap<Integer,UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(cin.nextInt());
+                        System.out.println(userCourseRepartitions);
+                        UserCourseRepartition userCourseRepartition = userCourseRepartitions.get(cin.nextInt());
+                        repository.getUserCourseRepartitionDao().deleteUserCourseRepartition(userCourseRepartition);
                         break;
                     default:
                         System.out.println("Invalid option");

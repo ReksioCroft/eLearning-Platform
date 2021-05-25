@@ -5,10 +5,7 @@ import ro.unibuc.elearning.platform.pojo.*;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public interface AdminInterface {
     List<Course> courses = Collections.synchronizedList(new ArrayList<>());
@@ -62,9 +59,9 @@ public interface AdminInterface {
 
     User findUserById(int userId);
 
-    ArrayList<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId);
+    TreeMap<Integer,UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId);
 
-    ArrayList<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
+    TreeMap<Integer,UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
 
     ArrayList<AnonymousCourseFeedback> findFeedbacksByCourseId(int courseId);
 }

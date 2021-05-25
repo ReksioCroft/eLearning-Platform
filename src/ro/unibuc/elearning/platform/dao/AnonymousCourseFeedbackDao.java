@@ -52,6 +52,18 @@ public final class AnonymousCourseFeedbackDao extends Dao {
         }
     }
 
+    public void deleteAnonymousCourseFeedback(AnonymousCourseFeedback anonymousCourseFeedback) {
+        try {
+            final String query = "DELETE FROM AnonymousCourseFeedback WHERE id=? and courseId=?";
+            PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement1.setInt(1, anonymousCourseFeedback.getId());
+            preparedStatement1.setInt(2, anonymousCourseFeedback.getCourse().getId());
+            preparedStatement1.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         try {

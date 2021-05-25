@@ -53,6 +53,18 @@ public final class QuizDao extends Dao {
         }
     }
 
+    public void deleteQuiz(Quiz quiz) {
+        try {
+            final String query = "DELETE FROM Quiz WHERE id=? and courseId=?";
+            PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
+            preparedStatement1.setInt(1, quiz.getId());
+            preparedStatement1.setInt(2, quiz.getCourse().getId());
+            preparedStatement1.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     @Override
     public void run() {
         try {
