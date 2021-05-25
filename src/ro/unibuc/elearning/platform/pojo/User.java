@@ -9,9 +9,9 @@ import java.util.Objects;
 import static java.lang.Math.max;
 
 public abstract class User {
-    @NotNull
-    protected String userName;
     protected final int id;
+    @NotNull
+    protected final String userName;
     @NotNull
     protected final Date birthDate;
     @NotNull
@@ -40,10 +40,6 @@ public abstract class User {
 
     public @NotNull String getUserName() {
         return userName;
-    }
-
-    public void setUserName(@NotNull String userName) {
-        this.userName = userName;
     }
 
     public int getId() {
