@@ -6,7 +6,7 @@ import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
@@ -79,7 +79,7 @@ public class Main {
                         System.out.println("show repartitions to a course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        TreeMap<Integer, UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
+                        TreeSet<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
                         System.out.println(userCourseRepartitions.toString());
                         break;
                     }
@@ -87,7 +87,7 @@ public class Main {
                         System.out.println("show repartitions of a specific student");
                         System.out.println("Type id student");
                         int id = cin.nextInt();
-                        TreeMap<Integer, UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
+                        TreeSet<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
                         System.out.println(userCourseRepartitions.toString());
                         break;
                     }
@@ -136,8 +136,9 @@ public class Main {
                         repository.getAnonymousCourseFeedbackDao().deleteAnonymousCourseFeedback(feedback);
                         break;
                     case 22:
-                        System.out.println("Delete repartition by CourseId and StudentId");
-                        TreeMap<Integer, UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(cin.nextInt());
+                        System.out.println("Delete repartition by CourseId and index");
+                        TreeSet<UserCourseRepartition> userCourseRepartitionTreeSet = eLearningPlatformService.findUserCourseRepartitionByCourseId(cin.nextInt());
+                        ArrayList<UserCourseRepartition> userCourseRepartitions = new ArrayList<>(userCourseRepartitionTreeSet);
                         System.out.println(userCourseRepartitions);
                         UserCourseRepartition userCourseRepartition = userCourseRepartitions.get(cin.nextInt());
                         repository.getUserCourseRepartitionDao().deleteUserCourseRepartition(userCourseRepartition);

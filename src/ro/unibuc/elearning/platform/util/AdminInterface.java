@@ -59,9 +59,9 @@ public interface AdminInterface {
 
     User findUserById(int userId);
 
-    TreeMap<Integer,UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId);
+    TreeSet<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId);
 
-    TreeMap<Integer,UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
+    TreeSet<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
 
     ArrayList<AnonymousCourseFeedback> findFeedbacksByCourseId(int courseId);
 }

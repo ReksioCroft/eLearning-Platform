@@ -5,9 +5,7 @@ import ro.unibuc.elearning.platform.pojo.*;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ELearningPlatformService implements AdminInterface {
     private final PersistentCsvWriteService persistentCsvWriteService;
@@ -170,21 +168,23 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public TreeMap<Integer, UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId) {
-        TreeMap<Integer, UserCourseRepartition> repartitions = new TreeMap<>();
+    public TreeSet<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId) {
+        TreeSet<UserCourseRepartition> repartitions =
+                new TreeSet<>((userCourseRepartition, t1) -> userCourseRepartition.getStartDate().compareTo(t1.getStartDate()));
         for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
             if (userCourseRepartition.getUser().getId() == userId)
-                repartitions.put(userCourseRepartition.getCourse().getId(), userCourseRepartition);
+                repartitions.add(userCourseRepartition);
         }
         return repartitions;
     }
 
     @Override
-    public TreeMap<Integer, UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId) {
-        TreeMap<Integer, UserCourseRepartition> repartitions = new TreeMap<>();
+    public TreeSet<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId) {
+        TreeSet<UserCourseRepartition> repartitions =
+                new TreeSet<>((userCourseRepartition, t1) -> userCourseRepartition.getStartDate().compareTo(t1.getStartDate()));
         for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
             if (userCourseRepartition.getCourse().getId() == courseId)
-                repartitions.put(userCourseRepartition.getUser().getId(), userCourseRepartition);
+                repartitions.add( userCourseRepartition);
         }
         return repartitions;
     }
