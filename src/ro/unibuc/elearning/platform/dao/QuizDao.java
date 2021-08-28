@@ -28,7 +28,7 @@ public final class QuizDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in QuizDao.java: createTable: " + throwables);
         }
     }
 
@@ -43,9 +43,8 @@ public final class QuizDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in QuizDao.java: createUpdateProcedure: " + throwables);
         }
-
     }
 
 
@@ -65,7 +64,7 @@ public final class QuizDao extends Dao {
             preparedStatement1.setString(3, quiz.getQuiz());
             preparedStatement1.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in QuizDao.java: writeQuiz: " + throwables);
         }
     }
 
@@ -78,7 +77,7 @@ public final class QuizDao extends Dao {
             preparedStatement1.execute();
             AdminInterface.quizzes.remove(quiz);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in QuizDao.java: deleteQuiz: " + throwables);
         }
     }
 
@@ -96,7 +95,7 @@ public final class QuizDao extends Dao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in QuizDao.java: run: " + throwables);
         }
     }
 
@@ -124,7 +123,7 @@ public final class QuizDao extends Dao {
             Quiz quiz = eLearningPlatformService.findQuizById(quizId);
             quiz.setQuiz(content);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in QuizDao.java: updateQuizContent: " + throwables);
         }
     }
 }

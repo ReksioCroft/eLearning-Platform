@@ -26,7 +26,7 @@ public class AuditCsvService {
             try {
                 instance = new AuditCsvService();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("Exception in AuditCsvService.java: getInstance: " + e);
             }
         }
         return instance;

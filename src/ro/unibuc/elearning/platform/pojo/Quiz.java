@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import static java.lang.Math.max;
-
 public final class Quiz {
     final int id;
     @NotNull
@@ -24,7 +22,8 @@ public final class Quiz {
         this.course = course;
         this.quiz = quiz;
         this.id = id;
-        co = max(id + 1, co);
+        if (id > co)
+            co = id;
     }
 
     public static void setCo(int co) {

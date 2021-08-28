@@ -25,7 +25,7 @@ public final class StudentDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in StudentDao.java: createTable: " + throwables);
         }
     }
 
@@ -44,7 +44,7 @@ public final class StudentDao extends UserDao {
             preparedStatement.setInt(1, student.getId());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in StudentDao.java: writeStudent: " + throwables);
         }
     }
 
@@ -56,7 +56,7 @@ public final class StudentDao extends UserDao {
             preparedStatement.execute();
             deleteUser(studentId);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in StudentDao.java: deleteStudent: " + throwables);
         }
     }
 
@@ -75,7 +75,7 @@ public final class StudentDao extends UserDao {
                 }
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in StudentDao.java: run: " + throwables);
         }
     }
 

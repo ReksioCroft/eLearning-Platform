@@ -13,7 +13,7 @@ abstract class Dao extends Thread {
                 databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/elearning", "root", "root");
             }
         } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in Dao.java: " + throwables);
         }
     }
 
@@ -25,16 +25,15 @@ abstract class Dao extends Thread {
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in Dao.java: createDatabase(create): " + throwables);
         } finally {
             try {
                 if (connection != null) {
                     connection.close();
                 }
             } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                System.out.println("Exception in Dao.java: createDatabase(close): " + throwables);
             }
         }
-
     }
 }

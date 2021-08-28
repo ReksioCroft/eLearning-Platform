@@ -42,7 +42,7 @@ public class PersistentCsvReadService {
             }
             fin.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception in PersistentCsvReadService.java: ReadFeedbacks: " + e);
         }
     }
 
@@ -61,7 +61,7 @@ public class PersistentCsvReadService {
             }
             fin.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception in PersistentCsvReadService.java: readTeachingAssistants: " + e);
         }
     }
 
@@ -79,7 +79,7 @@ public class PersistentCsvReadService {
             }
             fin.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception in PersistentCsvReadService.java: readQuizzes: " + e);
         }
     }
 
@@ -101,7 +101,7 @@ public class PersistentCsvReadService {
             }
             fin.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception in PersistentCsvReadService.java: readUserCourseRepartition: " + e);
         }
     }
 
@@ -119,7 +119,7 @@ public class PersistentCsvReadService {
             }
             fin.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception in PersistentCsvReadService.java: readCourses: " + e);
         }
     }
 
@@ -136,7 +136,7 @@ public class PersistentCsvReadService {
             }
             fin.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception in PersistentCsvReadService.java: readStudents: " + e);
         }
     }
 
@@ -153,7 +153,7 @@ public class PersistentCsvReadService {
             }
             fin.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Exception in PersistentCsvReadService.java: readTeachers: " + e);
         }
     }
 

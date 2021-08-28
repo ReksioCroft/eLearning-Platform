@@ -76,7 +76,7 @@ public class PersistentCsvWriteService {
             try {
                 instance = new PersistentCsvWriteService();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("Exception in PersistentCsvWriteService.java: getInstance: " + e);
             }
         }
         return instance;

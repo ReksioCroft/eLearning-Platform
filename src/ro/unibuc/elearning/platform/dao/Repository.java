@@ -49,7 +49,7 @@ public final class Repository {
             try {
                 repository = new Repository();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                System.out.println("Exception in Repository.java: getRepository: " + e);
                 return getRepository();
             }
         }

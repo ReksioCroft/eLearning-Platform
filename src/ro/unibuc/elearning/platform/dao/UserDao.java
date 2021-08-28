@@ -30,7 +30,7 @@ public abstract class UserDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserDao.java: createTable: " + throwables);
         }
     }
 
@@ -45,7 +45,7 @@ public abstract class UserDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserDao.java: createUpdateProcedure: " + throwables);
         }
     }
 
@@ -61,7 +61,7 @@ public abstract class UserDao extends Dao {
             preparedStatement.setString(5, user.getPhoneNumber());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserDao.java: writeUser: " + throwables);
         }
     }
 
@@ -75,7 +75,7 @@ public abstract class UserDao extends Dao {
             ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             AdminInterface.users.remove(eLearningPlatformService.findUserById(userId));
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserDao.java: deleteUser: " + throwables);
         }
     }
 
@@ -101,7 +101,7 @@ public abstract class UserDao extends Dao {
             user.setAddress(address);
             user.setPhoneNumber(phoneNumber);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserDao.java: updateUserPhoneAddress: " + throwables);
         }
     }
 

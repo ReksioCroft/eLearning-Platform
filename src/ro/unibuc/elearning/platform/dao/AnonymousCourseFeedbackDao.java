@@ -29,7 +29,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in AnonymousCourseFeedbackDao.java: createTable: " + throwables);
         }
     }
 
@@ -49,7 +49,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             preparedStatement1.setString(3, anonymousCourseFeedback.getFeedback());
             preparedStatement1.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in AnonymousCourseFeedbackDao.java: writeAnonymousCourseFeedback: " + throwables);
         }
     }
 
@@ -62,7 +62,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             preparedStatement1.execute();
             AdminInterface.feedbacks.remove(anonymousCourseFeedback);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in AnonymousCourseFeedbackDao.java: deleteAnonymousCourseFeedback: " + throwables);
         }
     }
 
@@ -80,7 +80,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in AnonymousCourseFeedbackDao.java: run: " + throwables);
         }
     }
 

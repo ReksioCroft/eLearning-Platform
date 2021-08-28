@@ -28,7 +28,7 @@ public final class TeachingAssistantDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeachingAssistantDao.java: createTable: " + throwables);
         }
     }
 
@@ -48,7 +48,7 @@ public final class TeachingAssistantDao extends UserDao {
             preparedStatement1.setInt(2, teachingAssistant.getSupervisorTeacher().getId());
             preparedStatement1.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeachingAssistantDao.java: writeTeachingAssistant: " + throwables);
         }
     }
 
@@ -60,7 +60,7 @@ public final class TeachingAssistantDao extends UserDao {
             preparedStatement1.execute();
             deleteUser(teachingAssistantId);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeachingAssistantDao.java: deleteTeachingAssistant: " + throwables);
         }
     }
 
@@ -78,7 +78,7 @@ public final class TeachingAssistantDao extends UserDao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeachingAssistantDao.java: run: " + throwables);
         }
     }
 
@@ -92,6 +92,5 @@ public final class TeachingAssistantDao extends UserDao {
         }
         return new TeachingAssistant(resultSet.getInt(1), resultSet.getString(3), resultSet.getDate(4), supervisorTeacher, resultSet.getString(5), resultSet.getString(6));
     }
-
 
 }

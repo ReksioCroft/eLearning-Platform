@@ -25,7 +25,7 @@ public final class TeacherDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeacherDao.java: createTable: " + throwables);
         }
     }
 
@@ -40,7 +40,7 @@ public final class TeacherDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeacherDao.java: createUpdateProcedure: " + throwables);
         }
 
     }
@@ -58,7 +58,7 @@ public final class TeacherDao extends UserDao {
             Teacher teacher = (Teacher) eLearningPlatformService.findUserById(teacherId);
             teacher.setRank(ranking);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeacherDao.java: updateTeacherRanking: " + throwables);
         }
     }
 
@@ -79,7 +79,7 @@ public final class TeacherDao extends UserDao {
             preparedStatement.setString(2, teacher.getRank());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeacherDao.java: writeTeacher: " + throwables);
         }
     }
 
@@ -91,7 +91,7 @@ public final class TeacherDao extends UserDao {
             preparedStatement.execute();
             deleteUser(teacherId);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeacherDao.java: deleteTeacher: " + throwables);
         }
     }
 
@@ -109,7 +109,7 @@ public final class TeacherDao extends UserDao {
                 }
             }
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in TeacherDao.java: run: " + throwables);
         }
     }
 

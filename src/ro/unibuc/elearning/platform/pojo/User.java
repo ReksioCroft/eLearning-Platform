@@ -6,20 +6,18 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
 
-import static java.lang.Math.max;
-
 public abstract class User {
-    protected final int id;
+    final int id;
     @NotNull
-    protected final String userName;
+    final String userName;
     @NotNull
-    protected final Date birthDate;
+    final Date birthDate;
     @NotNull
-    protected String address;
+    String address;
     @NotNull
-    protected String phoneNumber;
+    String phoneNumber;
     private static int co = 0;
-    protected static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public User(@NotNull String userName, @NotNull Date birthDate, @NotNull String address, @NotNull String phoneNumber) {
         this.userName = userName;
@@ -35,7 +33,8 @@ public abstract class User {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.id = id;
-        co = max(co, id + 1);
+        if (id > co)
+            co = id;
     }
 
     public @NotNull String getUserName() {

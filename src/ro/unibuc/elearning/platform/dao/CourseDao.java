@@ -28,7 +28,7 @@ public final class CourseDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in CourseDao.java: createUpdateProcedure: " + throwables);
         }
 
     }
@@ -45,7 +45,7 @@ public final class CourseDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in CourseDao.java: createTable: " + throwables);
         }
     }
 
@@ -65,7 +65,7 @@ public final class CourseDao extends Dao {
             preparedStatement.setString(4, course.getDescription());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in CourseDao.java: writeCourse: " + throwables);
         }
     }
 
@@ -79,7 +79,7 @@ public final class CourseDao extends Dao {
             ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             AdminInterface.courses.remove(eLearningPlatformService.findCourseById(courseId));
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in CourseDao.java: deleteCourse: " + throwables);
         }
     }
 
@@ -96,7 +96,7 @@ public final class CourseDao extends Dao {
             Course course = eLearningPlatformService.findCourseById(id);
             course.setDescription(desc);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in CourseDao.java: updateCourseDescription: " + throwables);
         }
     }
 
@@ -114,7 +114,7 @@ public final class CourseDao extends Dao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in CourseDao.java: run: " + throwables);
         }
     }
 

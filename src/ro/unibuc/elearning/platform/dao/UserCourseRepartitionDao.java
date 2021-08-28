@@ -30,7 +30,7 @@ public final class UserCourseRepartitionDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserCourseRepartitionDao.java: createTable: " + throwables);
         }
     }
 
@@ -50,7 +50,7 @@ public final class UserCourseRepartitionDao extends Dao {
             preparedStatement1.setDate(3, userCourseRepartition.getStartDate());
             preparedStatement1.execute();
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserCourseRepartitionDao.java: writeUserCourseRepartition: " + throwables);
         }
     }
 
@@ -64,7 +64,7 @@ public final class UserCourseRepartitionDao extends Dao {
             preparedStatement1.execute();
             AdminInterface.userCourseRepartitions.remove(userCourseRepartition);
         } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserCourseRepartitionDao.java: deleteUserCourseRepartition: " + throwables);
         }
     }
 
@@ -82,7 +82,7 @@ public final class UserCourseRepartitionDao extends Dao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            throwables.printStackTrace();
+            System.out.println("Exception in UserCourseRepartitionDao.java: run: " + throwables);
         }
     }
 

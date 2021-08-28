@@ -11,8 +11,8 @@ import java.util.TreeSet;
 public class Main {
     public static void main(String[] args) {
         Scanner cin = new Scanner(System.in);
-        // PersistentCsvReadService persistentCsvReadService = PersistentCsvReadService.getInstance();
-        //ELearningPlatformService eLearningPlatformService = persistentCsvReadService.eLearningPlatformService;
+//        PersistentCsvReadService persistentCsvReadService = PersistentCsvReadService.getInstance();
+//        ELearningPlatformService eLearningPlatformService = persistentCsvReadService.eLearningPlatformService;
         ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
         Repository repository = Repository.getRepository();
         System.out.println("Type option");
@@ -165,7 +165,7 @@ public class Main {
                         break;
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Exception in Main.java: " + e);
             }
             System.out.println("Type option");
             opt = cin.nextInt();
