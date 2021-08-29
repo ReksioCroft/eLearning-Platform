@@ -2,6 +2,7 @@ package ro.unibuc.elearning;
 
 import ro.unibuc.elearning.platform.dao.Repository;
 import ro.unibuc.elearning.platform.pojo.*;
+import ro.unibuc.elearning.platform.util.AuditCsvService;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.util.ArrayList;
@@ -11,12 +12,13 @@ import java.util.TreeSet;
 public class Main {
     public static void main(String[] args) {
         final Scanner cin = new Scanner(System.in);
+        final AuditCsvService auditCsvService = AuditCsvService.getInstance();
         final ELearningPlatformService eLearningPlatformService = ELearningPlatformService.getInstance();
         final Repository repository = Repository.getInstance();
         eLearningPlatformService.readFromCsv(cin);
 
         System.out.println("Type option");
-        int opt;
+        int opt = -1;
         do {
             try {
                 printMenuOptions();
@@ -56,27 +58,21 @@ public class Main {
                         System.out.println("Find User");
                         System.out.println("Type id user");
                         int id = cin.nextInt();
-                        User user = ELearningPlatformService.findUserById(id);
-                        if (user != null)
-                            System.out.println(user);
+                        System.out.println(ELearningPlatformService.findUserById(id));
                         break;
                     }
                     case 9: {
                         System.out.println("Find Course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        Course course = ELearningPlatformService.findCourseById(id);
-                        if (course != null)
-                            System.out.println(course);
+                        System.out.println(ELearningPlatformService.findCourseById(id));
                         break;
                     }
                     case 10: {
                         System.out.println("Find Quiz");
                         System.out.println("Type id quiz");
                         int id = cin.nextInt();
-                        Quiz quiz = ELearningPlatformService.findQuizById(id);
-                        if (quiz != null)
-                            System.out.println(quiz);
+                        System.out.println(ELearningPlatformService.findQuizById(id));
                         break;
                     }
                     case 11: {
@@ -168,8 +164,8 @@ public class Main {
                         break;
                 }
             } catch (Exception e) {
-                System.out.println("Exception in Main.java: " + e);
-                break;
+                auditCsvService.writeCsv("Exception in Main.java: " + e);
+                cin.nextLine();
             }
         } while (opt != 0);
         System.out.println("Good Bye!");

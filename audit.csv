@@ -186,3 +186,15 @@ Loading database in memory using jdbc, 2021-08-29 03:08:57.088
 Loading csv files in memory, 2021-08-29 03:09:04.484
 Loading database in memory using jdbc, 2021-08-29 04:07:01.795
 Loading csv files in memory, 2021-08-29 04:07:05.184
+Loading database in memory using jdbc, 2021-08-29 16:07:14.674
+Loading csv files in memory, 2021-08-29 16:07:21.322
+Loading database in memory using jdbc, 2021-08-29 16:08:02.318
+Loading csv files in memory, 2021-08-29 16:08:04.767
+Loading database in memory using jdbc, 2021-08-29 17:53:57.173
+No csv read, 2021-08-29 17:54:00.223
+Loading database in memory using jdbc, 2021-08-29 17:54:26.297
+Loading csv files in memory, 2021-08-29 17:54:28.862
+Loading database in memory using jdbc, 2021-08-29 18:03:41.599
+Loading csv files in memory, 2021-08-29 18:03:44.981
+Exception in UserDao.java: updateUserPhoneAddress: java.lang.NullPointerException: Exception in ELearningPlatformService.java: findUserById: no user found, 2021-08-29 18:04:12.159
+New Teacher Added, 2021-08-29 18:05:01.37

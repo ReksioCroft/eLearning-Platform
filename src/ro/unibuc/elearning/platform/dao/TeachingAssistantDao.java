@@ -15,10 +15,11 @@ public final class TeachingAssistantDao extends UserDao {
 
     private TeachingAssistantDao() {
         super();
-        createTable();
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
+        super.createTable();
         final String query = "CREATE TABLE IF NOT EXISTS TeachingAssistant (\n" +
                 "id INT PRIMARY KEY,\n" +
                 "supervisorTeacherId INT NOT NULL,\n" +
@@ -29,7 +30,7 @@ public final class TeachingAssistantDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeachingAssistantDao.java: createTable: " + throwables);
+            auditCsvService.writeCsv("Exception in TeachingAssistantDao.java: createTable: " + throwables);
         }
     }
 
@@ -49,7 +50,7 @@ public final class TeachingAssistantDao extends UserDao {
             preparedStatement1.setInt(2, teachingAssistant.getSupervisorTeacher().getId());
             preparedStatement1.execute();
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeachingAssistantDao.java: writeTeachingAssistant: " + throwables);
+            auditCsvService.writeCsv("Exception in TeachingAssistantDao.java: writeTeachingAssistant: " + throwables);
         }
     }
 
@@ -61,7 +62,7 @@ public final class TeachingAssistantDao extends UserDao {
             preparedStatement1.execute();
             deleteUser(teachingAssistantId);
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeachingAssistantDao.java: deleteTeachingAssistant: " + throwables);
+            auditCsvService.writeCsv("Exception in TeachingAssistantDao.java: deleteTeachingAssistant: " + throwables);
         }
     }
 
@@ -78,16 +79,18 @@ public final class TeachingAssistantDao extends UserDao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            System.out.println("Exception in TeachingAssistantDao.java: run: " + throwables);
+            auditCsvService.writeCsv("Exception in TeachingAssistantDao.java: run: " + throwables);
         }
     }
 
     private TeachingAssistant mapToTeachingAssistant(ResultSet resultSet) throws SQLException, InterruptedException {
         Teacher supervisorTeacher = null;
         while (supervisorTeacher == null) {
-            supervisorTeacher = (Teacher) ELearningPlatformService.findUserById(resultSet.getInt(2));
-            if (supervisorTeacher == null)
+            try {
+                supervisorTeacher = (Teacher) ELearningPlatformService.findUserById(resultSet.getInt(2));
+            } catch (NullPointerException e) {
                 Thread.sleep(500);
+            }
         }
         return new TeachingAssistant(resultSet.getInt(1), resultSet.getString(3), resultSet.getDate(4), supervisorTeacher, resultSet.getString(5), resultSet.getString(6));
     }

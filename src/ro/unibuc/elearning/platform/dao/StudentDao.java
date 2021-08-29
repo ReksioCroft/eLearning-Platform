@@ -13,10 +13,11 @@ public final class StudentDao extends UserDao {
 
     private StudentDao() {
         super();
-        createTable();
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
+        super.createTable();
         final String query = "CREATE TABLE IF NOT EXISTS Student (\n" +
                 "id INT PRIMARY KEY,\n" +
                 "FOREIGN KEY (id) REFERENCES User (id))";
@@ -25,7 +26,7 @@ public final class StudentDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in StudentDao.java: createTable: " + throwables);
+            auditCsvService.writeCsv("Exception in StudentDao.java: createTable: " + throwables);
         }
     }
 
@@ -44,7 +45,7 @@ public final class StudentDao extends UserDao {
             preparedStatement.setInt(1, student.getId());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            System.out.println("Exception in StudentDao.java: writeStudent: " + throwables);
+            auditCsvService.writeCsv("Exception in StudentDao.java: writeStudent: " + throwables);
         }
     }
 
@@ -56,7 +57,7 @@ public final class StudentDao extends UserDao {
             preparedStatement.execute();
             deleteUser(studentId);
         } catch (SQLException throwables) {
-            System.out.println("Exception in StudentDao.java: deleteStudent: " + throwables);
+            auditCsvService.writeCsv("Exception in StudentDao.java: deleteStudent: " + throwables);
         }
     }
 
@@ -74,7 +75,7 @@ public final class StudentDao extends UserDao {
                 }
             }
         } catch (SQLException throwables) {
-            System.out.println("Exception in StudentDao.java: run: " + throwables);
+            auditCsvService.writeCsv("Exception in StudentDao.java: run: " + throwables);
         }
     }
 

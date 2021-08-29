@@ -3,9 +3,9 @@ package ro.unibuc.elearning.platform.dao;
 import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.User;
 import ro.unibuc.elearning.platform.util.AdminInterface;
+import ro.unibuc.elearning.platform.util.Dao;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,11 +14,11 @@ import java.sql.Statement;
 public abstract class UserDao extends Dao {
     UserDao() {
         super();
-        createTable();
         createUpdateProcedure();
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
         final String query = "CREATE TABLE IF NOT EXISTS User (\n" +
                 "id INT PRIMARY KEY,\n" +
                 "userName VARCHAR(64) NOT NULL,\n" +
@@ -30,7 +30,7 @@ public abstract class UserDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in UserDao.java: createTable: " + throwables);
+            auditCsvService.writeCsv("Exception in UserDao.java: createTable: " + throwables);
         }
     }
 
@@ -45,7 +45,7 @@ public abstract class UserDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in UserDao.java: createUpdateProcedure: " + throwables);
+            auditCsvService.writeCsv("Exception in UserDao.java: createUpdateProcedure: " + throwables);
         }
     }
 
@@ -61,7 +61,7 @@ public abstract class UserDao extends Dao {
             preparedStatement.setString(5, user.getPhoneNumber());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            System.out.println("Exception in UserDao.java: writeUser: " + throwables);
+            auditCsvService.writeCsv("Exception in UserDao.java: writeUser: " + throwables);
         }
     }
 
@@ -73,12 +73,12 @@ public abstract class UserDao extends Dao {
             preparedStatement.execute();
 
             AdminInterface.users.remove(ELearningPlatformService.findUserById(userId));
-        } catch (SQLException throwables) {
-            System.out.println("Exception in UserDao.java: deleteUser: " + throwables);
+        } catch (SQLException | NullPointerException throwables) {
+            auditCsvService.writeCsv("Exception in UserDao.java: deleteUser: " + throwables);
         }
     }
 
-    public void updateUserPhoneAddress(int userId, @NotNull String address, @NotNull String phoneNumber) throws IOException {
+    public void updateUserPhoneAddress(int userId, @NotNull String address, @NotNull String phoneNumber) throws IllegalArgumentException {
         try {
             User user = ELearningPlatformService.findUserById(userId);
             if (address.equals("*"))
@@ -86,7 +86,7 @@ public abstract class UserDao extends Dao {
             if (phoneNumber.equals("*"))
                 phoneNumber = user.getPhoneNumber();
             else if (!phoneNumber.matches("[0-9]{10}"))
-                throw new IOException("incorrect phone number");
+                throw new IllegalArgumentException("incorrect phone number");
 
             final String query = "{call updateUserPhoneAddress(?,?,?)}";
             CallableStatement callableStatement = databaseConnection.prepareCall(query);
@@ -98,8 +98,8 @@ public abstract class UserDao extends Dao {
 
             user.setAddress(address);
             user.setPhoneNumber(phoneNumber);
-        } catch (SQLException throwables) {
-            System.out.println("Exception in UserDao.java: updateUserPhoneAddress: " + throwables);
+        } catch (SQLException | NullPointerException throwables) {
+            auditCsvService.writeCsv("Exception in UserDao.java: updateUserPhoneAddress: " + throwables);
         }
     }
 

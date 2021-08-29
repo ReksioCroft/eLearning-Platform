@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.Course;
 import ro.unibuc.elearning.platform.pojo.Teacher;
 import ro.unibuc.elearning.platform.util.AdminInterface;
+import ro.unibuc.elearning.platform.util.Dao;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.*;
@@ -13,7 +14,6 @@ public final class CourseDao extends Dao {
 
     private CourseDao() {
         super();
-        createTable();
         createUpdateProcedure();
     }
 
@@ -28,12 +28,13 @@ public final class CourseDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in CourseDao.java: createUpdateProcedure: " + throwables);
+            auditCsvService.writeCsv("Exception in CourseDao.java: createUpdateProcedure: " + throwables);
         }
 
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
         final String query = "CREATE TABLE IF NOT EXISTS Course (\n" +
                 "id INT PRIMARY KEY,\n" +
                 "teacherId INT NOT NULL,\n" +
@@ -45,7 +46,7 @@ public final class CourseDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in CourseDao.java: createTable: " + throwables);
+            auditCsvService.writeCsv("Exception in CourseDao.java: createTable: " + throwables);
         }
     }
 
@@ -65,7 +66,7 @@ public final class CourseDao extends Dao {
             preparedStatement.setString(4, course.getDescription());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            System.out.println("Exception in CourseDao.java: writeCourse: " + throwables);
+            auditCsvService.writeCsv("Exception in CourseDao.java: writeCourse: " + throwables);
         }
     }
 
@@ -77,8 +78,8 @@ public final class CourseDao extends Dao {
             preparedStatement.execute();
 
             AdminInterface.courses.remove(ELearningPlatformService.findCourseById(courseId));
-        } catch (SQLException throwables) {
-            System.out.println("Exception in CourseDao.java: deleteCourse: " + throwables);
+        } catch (SQLException | NullPointerException throwables) {
+            auditCsvService.writeCsv("Exception in CourseDao.java: deleteCourse: " + throwables);
         }
     }
 
@@ -93,8 +94,8 @@ public final class CourseDao extends Dao {
 
             Course course = ELearningPlatformService.findCourseById(id);
             course.setDescription(desc);
-        } catch (SQLException throwables) {
-            System.out.println("Exception in CourseDao.java: updateCourseDescription: " + throwables);
+        } catch (SQLException | NullPointerException throwables) {
+            auditCsvService.writeCsv("Exception in CourseDao.java: updateCourseDescription: " + throwables);
         }
     }
 
@@ -111,16 +112,18 @@ public final class CourseDao extends Dao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            System.out.println("Exception in CourseDao.java: run: " + throwables);
+            auditCsvService.writeCsv("Exception in CourseDao.java: run: " + throwables);
         }
     }
 
     private Course mapToCourse(ResultSet resultSet) throws SQLException, InterruptedException {
         Teacher teacher = null;
         while (teacher == null) {
-            teacher = (Teacher) ELearningPlatformService.findUserById(resultSet.getInt(2));
-            if (teacher == null)
+            try {
+                teacher = (Teacher) ELearningPlatformService.findUserById(resultSet.getInt(2));
+            } catch (NullPointerException e) {
                 Thread.sleep(500);
+            }
         }
         return new Course(resultSet.getInt(1), teacher, resultSet.getString(3), resultSet.getString(4));
     }

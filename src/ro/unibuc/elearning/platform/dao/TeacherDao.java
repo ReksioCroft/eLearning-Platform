@@ -12,11 +12,12 @@ public final class TeacherDao extends UserDao {
 
     private TeacherDao() {
         super();
-        createTable();
         createUpdateProcedure();
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
+        super.createTable();
         final String query = "CREATE TABLE IF NOT EXISTS Teacher (\n" +
                 "id INT PRIMARY KEY,\n" +
                 "ranking VARCHAR(32) NOT NULL,\n" +
@@ -26,7 +27,7 @@ public final class TeacherDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeacherDao.java: createTable: " + throwables);
+            auditCsvService.writeCsv("Exception in TeacherDao.java: createTable: " + throwables);
         }
     }
 
@@ -41,7 +42,7 @@ public final class TeacherDao extends UserDao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeacherDao.java: createUpdateProcedure: " + throwables);
+            auditCsvService.writeCsv("Exception in TeacherDao.java: createUpdateProcedure: " + throwables);
         }
 
     }
@@ -57,8 +58,8 @@ public final class TeacherDao extends UserDao {
 
             Teacher teacher = (Teacher) ELearningPlatformService.findUserById(teacherId);
             teacher.setRank(ranking);
-        } catch (SQLException throwables) {
-            System.out.println("Exception in TeacherDao.java: updateTeacherRanking: " + throwables);
+        } catch (SQLException | NullPointerException throwables) {
+            auditCsvService.writeCsv("Exception in TeacherDao.java: updateTeacherRanking: " + throwables);
         }
     }
 
@@ -79,7 +80,7 @@ public final class TeacherDao extends UserDao {
             preparedStatement.setString(2, teacher.getRank());
             preparedStatement.execute();
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeacherDao.java: writeTeacher: " + throwables);
+            auditCsvService.writeCsv("Exception in TeacherDao.java: writeTeacher: " + throwables);
         }
     }
 
@@ -91,7 +92,7 @@ public final class TeacherDao extends UserDao {
             preparedStatement.execute();
             deleteUser(teacherId);
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeacherDao.java: deleteTeacher: " + throwables);
+            auditCsvService.writeCsv("Exception in TeacherDao.java: deleteTeacher: " + throwables);
         }
     }
 
@@ -108,7 +109,7 @@ public final class TeacherDao extends UserDao {
                 }
             }
         } catch (SQLException throwables) {
-            System.out.println("Exception in TeacherDao.java: run: " + throwables);
+            auditCsvService.writeCsv("Exception in TeacherDao.java: run: " + throwables);
         }
     }
 

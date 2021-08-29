@@ -1,11 +1,16 @@
-package ro.unibuc.elearning.platform.dao;
+package ro.unibuc.elearning.platform.util;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-abstract class Dao extends Thread {
+public abstract class Dao extends Thread {
     protected static Connection databaseConnection;
+    protected final AuditCsvService auditCsvService;
 
-    Dao() {
+    protected Dao() {
+        auditCsvService = AuditCsvService.getInstance();
         try {
             if (databaseConnection == null || databaseConnection.isClosed()) {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -13,8 +18,9 @@ abstract class Dao extends Thread {
                 databaseConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/elearning", "root", "root");
             }
         } catch (SQLException | ClassNotFoundException throwables) {
-            System.out.println("Exception in Dao.java: " + throwables);
+            auditCsvService.writeCsv("Exception in Dao.java: constructor: " + throwables);
         }
+        createTable();
     }
 
     private void createDatabase() {
@@ -25,15 +31,17 @@ abstract class Dao extends Thread {
             Statement statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in Dao.java: createDatabase(create): " + throwables);
+            auditCsvService.writeCsv("Exception in Dao.java: createDatabase(create): " + throwables);
         } finally {
             try {
                 if (connection != null) {
                     connection.close();
                 }
             } catch (SQLException throwables) {
-                System.out.println("Exception in Dao.java: createDatabase(close): " + throwables);
+                auditCsvService.writeCsv("Exception in Dao.java: createDatabase(close): " + throwables);
             }
         }
     }
+
+    protected abstract void createTable();
 }

@@ -3,6 +3,7 @@ package ro.unibuc.elearning.platform.dao;
 import ro.unibuc.elearning.platform.pojo.AnonymousCourseFeedback;
 import ro.unibuc.elearning.platform.pojo.Course;
 import ro.unibuc.elearning.platform.util.AdminInterface;
+import ro.unibuc.elearning.platform.util.Dao;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.PreparedStatement;
@@ -15,10 +16,10 @@ public final class AnonymousCourseFeedbackDao extends Dao {
 
     private AnonymousCourseFeedbackDao() {
         super();
-        createTable();
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
         final String query = "CREATE TABLE IF NOT EXISTS AnonymousCourseFeedback (\n" +
                 "id INT,\n" +
                 "courseId INT,\n" +
@@ -29,7 +30,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in AnonymousCourseFeedbackDao.java: createTable: " + throwables);
+            auditCsvService.writeCsv("Exception in AnonymousCourseFeedbackDao.java: createTable: " + throwables);
         }
     }
 
@@ -49,7 +50,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             preparedStatement1.setString(3, anonymousCourseFeedback.getFeedback());
             preparedStatement1.execute();
         } catch (SQLException throwables) {
-            System.out.println("Exception in AnonymousCourseFeedbackDao.java: writeAnonymousCourseFeedback: " + throwables);
+            auditCsvService.writeCsv("Exception in AnonymousCourseFeedbackDao.java: writeAnonymousCourseFeedback: " + throwables);
         }
     }
 
@@ -62,7 +63,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             preparedStatement1.execute();
             AdminInterface.feedbacks.remove(anonymousCourseFeedback);
         } catch (SQLException throwables) {
-            System.out.println("Exception in AnonymousCourseFeedbackDao.java: deleteAnonymousCourseFeedback: " + throwables);
+            auditCsvService.writeCsv("Exception in AnonymousCourseFeedbackDao.java: deleteAnonymousCourseFeedback: " + throwables);
         }
     }
 
@@ -79,16 +80,18 @@ public final class AnonymousCourseFeedbackDao extends Dao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            System.out.println("Exception in AnonymousCourseFeedbackDao.java: run: " + throwables);
+            auditCsvService.writeCsv("Exception in AnonymousCourseFeedbackDao.java: run: " + throwables);
         }
     }
 
     private AnonymousCourseFeedback mapToAnonymousCourseFeedback(ResultSet resultSet) throws SQLException, InterruptedException {
         Course course = null;
         while (course == null) {
-            course = ELearningPlatformService.findCourseById(resultSet.getInt(2));
-            if (course == null)
+            try {
+                course = ELearningPlatformService.findCourseById(resultSet.getInt(2));
+            } catch (NullPointerException e) {
                 Thread.sleep(500);
+            }
         }
         return new AnonymousCourseFeedback(resultSet.getInt(1), course, resultSet.getString(3));
     }

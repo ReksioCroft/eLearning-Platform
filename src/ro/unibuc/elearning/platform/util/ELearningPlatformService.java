@@ -1,15 +1,16 @@
 package ro.unibuc.elearning.platform.util;
 
+import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.dao.Repository;
 import ro.unibuc.elearning.platform.pojo.*;
 
 import java.sql.Date;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeSet;
 
 public class ELearningPlatformService implements AdminInterface {
+    private final AuditCsvService auditCsvService;
     private final PersistentCsvWriteService persistentCsvWriteService;
     private final Repository repository;
     private static ELearningPlatformService instance = null;
@@ -22,6 +23,7 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     private ELearningPlatformService() {
+        auditCsvService = AuditCsvService.getInstance();
         persistentCsvWriteService = PersistentCsvWriteService.getInstance();
         repository = Repository.getInstance();
     }
@@ -30,19 +32,18 @@ public class ELearningPlatformService implements AdminInterface {
         try {
             System.out.println("Do you want to read from csv too? y/N");
             String ans = cin.nextLine();
-            if (ans.strip().toLowerCase().charAt(0) == 'y') {
-                System.out.println("Csv read");
+            if (ans.strip().toLowerCase().charAt(0) == 'y')
                 PersistentCsvReadService.getInstance();
-            } else
-                System.out.println("No csv read");
+            else
+                auditCsvService.writeCsv("No csv read");
         } catch (Exception e) {
-            System.out.println("No csv read because of: " + e);
+            auditCsvService.writeCsv("No csv read because of: " + e);
         }
     }
 
     @Override
-    public Teacher addTeacher(Scanner in) throws ParseException {
-        System.out.println("name");
+    public Teacher addTeacher(Scanner in) throws RuntimeException {
+        System.out.println("teacher name");
         String name = in.next();
 
         System.out.println("Date yyyy-MM-dd");
@@ -57,7 +58,7 @@ public class ELearningPlatformService implements AdminInterface {
         System.out.println("phone");
         String phoneNumber = in.next();
         if (!phoneNumber.matches("[0-9]{10}")) {
-            throw new ParseException("incorrect phone number", 0);
+            throw new IllegalArgumentException("incorrect phone number");
         }
 
         Teacher teacher = new Teacher(name, date, rank, address, phoneNumber);
@@ -67,7 +68,7 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public Course addCourse(Scanner in) {
+    public Course addCourse(Scanner in) throws RuntimeException {
         System.out.println("id prof");
         int teacherId = in.nextInt();
         User teacher = findUserById(teacherId);
@@ -82,7 +83,7 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public Quiz addQuiz(Scanner in) {
+    public Quiz addQuiz(Scanner in) throws RuntimeException {
         System.out.println("id curs");
         int courseId = in.nextInt();
         Course course = findCourseById(courseId);
@@ -95,17 +96,19 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public Student addStudent(Scanner in) throws ParseException {
+    public Student addStudent(Scanner in) throws RuntimeException {
         System.out.println("username");
         String userName = in.next();
+
         System.out.println("date yyyy-MM-dd");
         Date birthDate = parseDate(in);
+
         System.out.println("address");
         String address = in.next();
         System.out.println("phone");
         String phoneNumber = in.next();
         if (!phoneNumber.matches("[0-9]{10}")) {
-            throw new ParseException("incorrect phone number", 0);
+            throw new IllegalArgumentException("incorrect phone number");
         }
         Student student = new Student(userName, birthDate, address, phoneNumber);
         users.add(student);
@@ -114,7 +117,7 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public UserCourseRepartition addUserCourseRepartition(Scanner in) throws ParseException {
+    public UserCourseRepartition addUserCourseRepartition(Scanner in) throws RuntimeException {
         System.out.println("id curs");
         int idCourse = in.nextInt();
         Course course = findCourseById(idCourse);
@@ -132,7 +135,7 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public AnonymousCourseFeedback addFeedback(Scanner in) {
+    public AnonymousCourseFeedback addFeedback(Scanner in) throws RuntimeException {
         System.out.println("id curs");
         int courseId = in.nextInt();
         Course course = findCourseById(courseId);
@@ -145,11 +148,13 @@ public class ELearningPlatformService implements AdminInterface {
     }
 
     @Override
-    public TeachingAssistant addTeachingAssistant(Scanner in) throws ParseException {
+    public TeachingAssistant addTeachingAssistant(Scanner in) throws RuntimeException {
         System.out.println("name");
         String name = in.next();
+
         System.out.println("Date yyyy-MM-dd");
         Date date = parseDate(in);
+
         System.out.println("teacherId");
         int teacherId = in.nextInt();
         Teacher teacher = (Teacher) findUserById(teacherId);
@@ -158,7 +163,7 @@ public class ELearningPlatformService implements AdminInterface {
         System.out.println("phone");
         String phoneNumber = in.next();
         if (!phoneNumber.matches("[0-9]{10}")) {
-            throw new ParseException("incorrect phone number", 0);
+            throw new IllegalArgumentException("incorrect phone number");
         }
         TeachingAssistant teachingAssistant = new TeachingAssistant(name, date, teacher, address, phoneNumber);
         users.add(teachingAssistant);
@@ -166,28 +171,28 @@ public class ELearningPlatformService implements AdminInterface {
         return persistentCsvWriteService.writeTeachingAssistant(teachingAssistant);
     }
 
-    public static Quiz findQuizById(int quizId) {
+    public static @NotNull Quiz findQuizById(int quizId) throws NullPointerException {
         for (Quiz quiz : quizzes) {
             if (quiz.getId() == quizId)
                 return quiz;
         }
-        return null;
+        throw new NullPointerException("Exception in ELearningPlatformService.java: findQuizById: no quiz found");
     }
 
-    public static Course findCourseById(int courseId) {
+    public static Course findCourseById(int courseId) throws NullPointerException {
         for (Course course : courses) {
             if (course.getId() == courseId)
                 return course;
         }
-        return null;
+        throw new NullPointerException("Exception in ELearningPlatformService.java: findCourseById: no course found");
     }
 
-    public static User findUserById(int userId) {
+    public static User findUserById(int userId) throws NullPointerException {
         for (User user : users) {
             if (user.getId() == userId)
                 return user;
         }
-        return null;
+        throw new NullPointerException("Exception in ELearningPlatformService.java: findUserById: no user found");
     }
 
     public static TreeSet<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId) {

@@ -2,6 +2,7 @@ package ro.unibuc.elearning.platform.dao;
 
 import ro.unibuc.elearning.platform.pojo.*;
 import ro.unibuc.elearning.platform.util.AdminInterface;
+import ro.unibuc.elearning.platform.util.Dao;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.PreparedStatement;
@@ -14,10 +15,10 @@ public final class UserCourseRepartitionDao extends Dao {
 
     private UserCourseRepartitionDao() {
         super();
-        createTable();
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
         final String query = "CREATE TABLE IF NOT EXISTS UserCourseRepartition (\n" +
                 "userId Int,\n" +
                 "courseId INT,\n" +
@@ -30,7 +31,7 @@ public final class UserCourseRepartitionDao extends Dao {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
         } catch (SQLException throwables) {
-            System.out.println("Exception in UserCourseRepartitionDao.java: createTable: " + throwables);
+            auditCsvService.writeCsv("Exception in UserCourseRepartitionDao.java: createTable: " + throwables);
         }
     }
 
@@ -50,7 +51,7 @@ public final class UserCourseRepartitionDao extends Dao {
             preparedStatement1.setDate(3, userCourseRepartition.getStartDate());
             preparedStatement1.execute();
         } catch (SQLException throwables) {
-            System.out.println("Exception in UserCourseRepartitionDao.java: writeUserCourseRepartition: " + throwables);
+            auditCsvService.writeCsv("Exception in UserCourseRepartitionDao.java: writeUserCourseRepartition: " + throwables);
         }
     }
 
@@ -64,7 +65,7 @@ public final class UserCourseRepartitionDao extends Dao {
             preparedStatement1.execute();
             AdminInterface.userCourseRepartitions.remove(userCourseRepartition);
         } catch (SQLException throwables) {
-            System.out.println("Exception in UserCourseRepartitionDao.java: deleteUserCourseRepartition: " + throwables);
+            auditCsvService.writeCsv("Exception in UserCourseRepartitionDao.java: deleteUserCourseRepartition: " + throwables);
         }
     }
 
@@ -81,22 +82,26 @@ public final class UserCourseRepartitionDao extends Dao {
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
-            System.out.println("Exception in UserCourseRepartitionDao.java: run: " + throwables);
+            auditCsvService.writeCsv("Exception in UserCourseRepartitionDao.java: run: " + throwables);
         }
     }
 
     private UserCourseRepartition mapToUserCourseRepartition(ResultSet resultSet) throws SQLException, InterruptedException {
         User user = null;
         while (user == null) {
-            user = ELearningPlatformService.findUserById(resultSet.getInt(1));
-            if (user == null)
+            try {
+                user = ELearningPlatformService.findUserById(resultSet.getInt(1));
+            } catch (NullPointerException e) {
                 Thread.sleep(500);
+            }
         }
         Course course = null;
         while (course == null) {
-            course = ELearningPlatformService.findCourseById(resultSet.getInt(2));
-            if (course == null)
+            try {
+                course = ELearningPlatformService.findCourseById(resultSet.getInt(2));
+            } catch (NullPointerException e) {
                 Thread.sleep(500);
+            }
         }
         return new UserCourseRepartition(resultSet.getDate(3), course, user);
     }

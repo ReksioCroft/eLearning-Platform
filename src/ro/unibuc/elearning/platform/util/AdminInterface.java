@@ -15,9 +15,13 @@ public interface AdminInterface {
     List<User> users = Collections.synchronizedList(new ArrayList<>());
     List<AnonymousCourseFeedback> feedbacks = Collections.synchronizedList(new ArrayList<>());
 
-    default @NotNull Date parseDate(Scanner cin) throws ParseException {
+    default @NotNull Date parseDate(Scanner cin) throws RuntimeException {
         String date = cin.next();
-        return parseDate(date,"yyyy-MM-dd");
+        try {
+            return parseDate(date, "yyyy-MM-dd");
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     static @NotNull Date parseDate(String date, String pattern) throws ParseException {
@@ -32,17 +36,17 @@ public interface AdminInterface {
         feedbacks.clear();
     }
 
-    Teacher addTeacher(Scanner in) throws Exception;
+    Teacher addTeacher(Scanner in) throws RuntimeException;
 
-    Course addCourse(Scanner in) throws Exception;
+    Course addCourse(Scanner in) throws RuntimeException;
 
-    Quiz addQuiz(Scanner in) throws Exception;
+    Quiz addQuiz(Scanner in) throws RuntimeException;
 
-    Student addStudent(Scanner in) throws Exception;
+    Student addStudent(Scanner in) throws RuntimeException;
 
-    UserCourseRepartition addUserCourseRepartition(Scanner in) throws Exception;
+    UserCourseRepartition addUserCourseRepartition(Scanner in) throws RuntimeException;
 
-    AnonymousCourseFeedback addFeedback(Scanner in) throws Exception;
+    AnonymousCourseFeedback addFeedback(Scanner in) throws RuntimeException;
 
-    TeachingAssistant addTeachingAssistant(Scanner in) throws Exception;
+    TeachingAssistant addTeachingAssistant(Scanner in) throws RuntimeException;
 }

@@ -48,7 +48,7 @@ public final class Repository {
             try {
                 instance = new Repository();
             } catch (InterruptedException e) {
-                System.out.println("Exception in Repository.java: getRepository: " + e);
+                AuditCsvService.getInstance().writeCsv("Exception in Repository.java: getRepository: " + e);
                 return getInstance();      //Repository is mandatory for the program to work
             }
         }

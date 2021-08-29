@@ -19,6 +19,7 @@ public class AuditCsvService {
 
     public void writeCsv(@NotNull String actionName) {
         fout.println(actionName + ", " + new Timestamp((new Date()).getTime()));
+        System.out.println(actionName);
     }
 
     public static AuditCsvService getInstance() {
