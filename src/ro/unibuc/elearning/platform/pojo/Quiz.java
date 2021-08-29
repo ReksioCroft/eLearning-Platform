@@ -26,10 +26,6 @@ public final class Quiz {
             co = id;
     }
 
-    public static void setCo(int co) {
-        Quiz.co = co;
-    }
-
     public @NotNull Course getCourse() {
         return course;
     }

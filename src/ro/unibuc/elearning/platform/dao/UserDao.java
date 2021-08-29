@@ -72,8 +72,7 @@ public abstract class UserDao extends Dao {
             preparedStatement.setInt(1, userId);
             preparedStatement.execute();
 
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-            AdminInterface.users.remove(eLearningPlatformService.findUserById(userId));
+            AdminInterface.users.remove(ELearningPlatformService.findUserById(userId));
         } catch (SQLException throwables) {
             System.out.println("Exception in UserDao.java: deleteUser: " + throwables);
         }
@@ -81,8 +80,7 @@ public abstract class UserDao extends Dao {
 
     public void updateUserPhoneAddress(int userId, @NotNull String address, @NotNull String phoneNumber) throws IOException {
         try {
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-            User user = eLearningPlatformService.findUserById(userId);
+            User user = ELearningPlatformService.findUserById(userId);
             if (address.equals("*"))
                 address = user.getAddress();
             if (phoneNumber.equals("*"))

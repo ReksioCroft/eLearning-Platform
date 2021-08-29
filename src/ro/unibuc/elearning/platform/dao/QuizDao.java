@@ -68,14 +68,13 @@ public final class QuizDao extends Dao {
         }
     }
 
-    public void deleteQuiz(Quiz quiz) {
+    public void deleteQuiz(int quizId) {
         try {
-            final String query = "DELETE FROM Quiz WHERE id=? and courseId=?";
+            final String query = "DELETE FROM Quiz WHERE id=?";
             PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement1.setInt(1, quiz.getId());
-            preparedStatement1.setInt(2, quiz.getCourse().getId());
+            preparedStatement1.setInt(1, quizId);
             preparedStatement1.execute();
-            AdminInterface.quizzes.remove(quiz);
+            AdminInterface.quizzes.remove(ELearningPlatformService.findQuizById(quizId));
         } catch (SQLException throwables) {
             System.out.println("Exception in QuizDao.java: deleteQuiz: " + throwables);
         }
@@ -84,14 +83,13 @@ public final class QuizDao extends Dao {
     @Override
     public void run() {
         try {
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             final String query = "SELECT id, courseId, quiz FROM Quiz";
             Statement statement = databaseConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                synchronized (eLearningPlatformService.quizzes) {
-                    eLearningPlatformService.quizzes.add(mapToQuiz(resultSet));
+                synchronized (AdminInterface.quizzes) {
+                    AdminInterface.quizzes.add(mapToQuiz(resultSet));
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
@@ -100,10 +98,9 @@ public final class QuizDao extends Dao {
     }
 
     private Quiz mapToQuiz(ResultSet resultSet) throws SQLException, InterruptedException {
-        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
         Course course = null;
         while (course == null) {
-            course = eLearningPlatformService.findCourseById(resultSet.getInt(2));
+            course = ELearningPlatformService.findCourseById(resultSet.getInt(2));
             if (course == null)
                 Thread.sleep(500);
         }
@@ -119,8 +116,7 @@ public final class QuizDao extends Dao {
             callableStatement.setString(2, content);
             callableStatement.executeUpdate();
 
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-            Quiz quiz = eLearningPlatformService.findQuizById(quizId);
+            Quiz quiz = ELearningPlatformService.findQuizById(quizId);
             quiz.setQuiz(content);
         } catch (SQLException throwables) {
             System.out.println("Exception in QuizDao.java: updateQuizContent: " + throwables);

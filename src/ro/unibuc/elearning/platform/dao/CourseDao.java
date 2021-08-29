@@ -76,8 +76,7 @@ public final class CourseDao extends Dao {
             preparedStatement.setInt(1, courseId);
             preparedStatement.execute();
 
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-            AdminInterface.courses.remove(eLearningPlatformService.findCourseById(courseId));
+            AdminInterface.courses.remove(ELearningPlatformService.findCourseById(courseId));
         } catch (SQLException throwables) {
             System.out.println("Exception in CourseDao.java: deleteCourse: " + throwables);
         }
@@ -92,8 +91,7 @@ public final class CourseDao extends Dao {
             callableStatement.setString(2, desc);
             callableStatement.executeUpdate();
 
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-            Course course = eLearningPlatformService.findCourseById(id);
+            Course course = ELearningPlatformService.findCourseById(id);
             course.setDescription(desc);
         } catch (SQLException throwables) {
             System.out.println("Exception in CourseDao.java: updateCourseDescription: " + throwables);
@@ -103,14 +101,13 @@ public final class CourseDao extends Dao {
     @Override
     public void run() {
         try {
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             final String query = "SELECT id, teacherId, courseName, description FROM Course";
             Statement statement = databaseConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                synchronized (eLearningPlatformService.courses) {
-                    eLearningPlatformService.courses.add(mapToCourse(resultSet));
+                synchronized (AdminInterface.courses) {
+                    AdminInterface.courses.add(mapToCourse(resultSet));
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
@@ -119,10 +116,9 @@ public final class CourseDao extends Dao {
     }
 
     private Course mapToCourse(ResultSet resultSet) throws SQLException, InterruptedException {
-        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
         Teacher teacher = null;
         while (teacher == null) {
-            teacher = (Teacher) eLearningPlatformService.findUserById(resultSet.getInt(2));
+            teacher = (Teacher) ELearningPlatformService.findUserById(resultSet.getInt(2));
             if (teacher == null)
                 Thread.sleep(500);
         }

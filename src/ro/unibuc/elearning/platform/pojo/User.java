@@ -65,10 +65,6 @@ public abstract class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public static void setCo(int co) {
-        User.co = co;
-    }
-
     @Override
     public String toString() {
         return "User{" +

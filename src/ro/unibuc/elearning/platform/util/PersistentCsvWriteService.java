@@ -71,7 +71,7 @@ public class PersistentCsvWriteService {
         return feedback;
     }
 
-    public static PersistentCsvWriteService getInstance() {
+    static PersistentCsvWriteService getInstance() {
         if (instance == null) {
             try {
                 instance = new PersistentCsvWriteService();

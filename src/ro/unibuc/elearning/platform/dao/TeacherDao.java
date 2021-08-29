@@ -2,6 +2,7 @@ package ro.unibuc.elearning.platform.dao;
 
 import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.Teacher;
+import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 import java.sql.*;
@@ -54,8 +55,7 @@ public final class TeacherDao extends UserDao {
             callableStatement.setString(2, ranking);
             callableStatement.executeUpdate();
 
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-            Teacher teacher = (Teacher) eLearningPlatformService.findUserById(teacherId);
+            Teacher teacher = (Teacher) ELearningPlatformService.findUserById(teacherId);
             teacher.setRank(ranking);
         } catch (SQLException throwables) {
             System.out.println("Exception in TeacherDao.java: updateTeacherRanking: " + throwables);
@@ -98,14 +98,13 @@ public final class TeacherDao extends UserDao {
     @Override
     public void run() {
         try {
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             final String query = "SELECT t.id, u.userName, u.birthDate, t.ranking, u.address, u.phoneNumber FROM User u, Teacher t where u.id=t.id";
             Statement statement = databaseConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                synchronized (eLearningPlatformService.users) {
-                    eLearningPlatformService.users.add(mapToTeacher(resultSet));
+                synchronized (AdminInterface.users) {
+                    AdminInterface.users.add(mapToTeacher(resultSet));
                 }
             }
         } catch (SQLException throwables) {

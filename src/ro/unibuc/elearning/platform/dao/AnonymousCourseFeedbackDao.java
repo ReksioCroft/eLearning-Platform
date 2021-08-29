@@ -69,14 +69,13 @@ public final class AnonymousCourseFeedbackDao extends Dao {
     @Override
     public void run() {
         try {
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             final String query = "SELECT id, courseId, feedback FROM AnonymousCourseFeedback";
             Statement statement = databaseConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                synchronized (eLearningPlatformService.feedbacks) {
-                    eLearningPlatformService.feedbacks.add(mapToAnonymousCourseFeedback(resultSet));
+                synchronized (AdminInterface.feedbacks) {
+                    AdminInterface.feedbacks.add(mapToAnonymousCourseFeedback(resultSet));
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
@@ -85,10 +84,9 @@ public final class AnonymousCourseFeedbackDao extends Dao {
     }
 
     private AnonymousCourseFeedback mapToAnonymousCourseFeedback(ResultSet resultSet) throws SQLException, InterruptedException {
-        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
         Course course = null;
         while (course == null) {
-            course = eLearningPlatformService.findCourseById(resultSet.getInt(2));
+            course = ELearningPlatformService.findCourseById(resultSet.getInt(2));
             if (course == null)
                 Thread.sleep(500);
         }

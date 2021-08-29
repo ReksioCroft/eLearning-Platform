@@ -10,105 +10,109 @@ import java.util.TreeSet;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner cin = new Scanner(System.in);
-//        PersistentCsvReadService persistentCsvReadService = PersistentCsvReadService.getInstance();
-//        ELearningPlatformService eLearningPlatformService = persistentCsvReadService.eLearningPlatformService;
-        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-        Repository repository = Repository.getRepository();
+        final Scanner cin = new Scanner(System.in);
+        final ELearningPlatformService eLearningPlatformService = ELearningPlatformService.getInstance();
+        final Repository repository = Repository.getInstance();
+        eLearningPlatformService.readFromCsv(cin);
+
         System.out.println("Type option");
-        int opt = cin.nextInt();
-        while (opt > 0) {
+        int opt;
+        do {
             try {
+                printMenuOptions();
+                opt = cin.nextInt();
                 switch (opt) {
+                    case 0:
+                        break;
                     case 1:
-                        System.out.println("add teacher");
-                        eLearningPlatformService.addTeacher(cin);
+                        System.out.println("Add Teacher");
+                        System.out.println(eLearningPlatformService.addTeacher(cin));
                         break;
                     case 2:
-                        System.out.println("add student");
-                        eLearningPlatformService.addStudent(cin);
+                        System.out.println("Add Student");
+                        System.out.println(eLearningPlatformService.addStudent(cin));
                         break;
                     case 3:
-                        System.out.println("add teaching assistant");
-                        eLearningPlatformService.addTeachingAssistant(cin);
+                        System.out.println("Add Teaching Assistant");
+                        System.out.println(eLearningPlatformService.addTeachingAssistant(cin));
                         break;
                     case 4:
-                        System.out.println("add course");
-                        eLearningPlatformService.addCourse(cin);
+                        System.out.println("Add Course");
+                        System.out.println(eLearningPlatformService.addCourse(cin));
                         break;
                     case 5:
-                        System.out.println("add quiz");
-                        eLearningPlatformService.addQuiz(cin);
+                        System.out.println("Add Quiz");
+                        System.out.println(eLearningPlatformService.addQuiz(cin));
                         break;
                     case 6:
-                        System.out.println("add Feedback");
-                        eLearningPlatformService.addFeedback(cin);
+                        System.out.println("Add Feedback");
+                        System.out.println(eLearningPlatformService.addFeedback(cin));
                         break;
                     case 7:
-                        System.out.println("add a repartition of an user to a course");
-                        eLearningPlatformService.addUserCourseRepartition(cin);
+                        System.out.println("Add a Repartition of an User to a Course");
+                        System.out.println(eLearningPlatformService.addUserCourseRepartition(cin));
                         break;
                     case 8: {
-                        System.out.println("find user");
+                        System.out.println("Find User");
                         System.out.println("Type id user");
                         int id = cin.nextInt();
-                        User user = eLearningPlatformService.findUserById(id);
+                        User user = ELearningPlatformService.findUserById(id);
                         if (user != null)
                             System.out.println(user);
                         break;
                     }
                     case 9: {
-                        System.out.println("find course");
+                        System.out.println("Find Course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        Course course = eLearningPlatformService.findCourseById(id);
+                        Course course = ELearningPlatformService.findCourseById(id);
                         if (course != null)
                             System.out.println(course);
                         break;
                     }
                     case 10: {
-                        System.out.println("find quiz");
+                        System.out.println("Find Quiz");
                         System.out.println("Type id quiz");
                         int id = cin.nextInt();
-                        Quiz quiz = eLearningPlatformService.findQuizById(id);
+                        Quiz quiz = ELearningPlatformService.findQuizById(id);
                         if (quiz != null)
                             System.out.println(quiz);
                         break;
                     }
                     case 11: {
-                        System.out.println("show repartitions to a course");
+                        System.out.println("Show Repartitions to a Course");
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
-                        TreeSet<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findUserCourseRepartitionByCourseId(id);
-                        System.out.println(userCourseRepartitions.toString());
+                        TreeSet<UserCourseRepartition> userCourseRepartitions = ELearningPlatformService.findUserCourseRepartitionByCourseId(id);
+                        System.out.println(userCourseRepartitions);
                         break;
                     }
                     case 12: {
-                        System.out.println("show repartitions of a specific student");
+                        System.out.println("Show Repartitions of a Specific Student");
                         System.out.println("Type id student");
                         int id = cin.nextInt();
-                        TreeSet<UserCourseRepartition> userCourseRepartitions = eLearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
-                        System.out.println(userCourseRepartitions.toString());
+                        TreeSet<UserCourseRepartition> userCourseRepartitions = ELearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
+                        System.out.println(userCourseRepartitions);
                         break;
                     }
                     case 13: {
-                        System.out.println("show feedbacks of a specific course");
+                        System.out.println("Show Feedbacks to a Specific Course");
                         System.out.println("Type id course");
                         int id = cin.nextInt();
-                        ArrayList<AnonymousCourseFeedback> feedbacks = eLearningPlatformService.findFeedbacksByCourseId(id);
-                        System.out.println(feedbacks.toString());
+                        ArrayList<AnonymousCourseFeedback> feedbacks = ELearningPlatformService.findFeedbacksByCourseId(id);
+                        System.out.println(feedbacks);
                         break;
                     }
                     case 14:
-                        System.out.println("Users: ");
+                        System.out.println("Show All Users");
                         System.out.println(ELearningPlatformService.users);
                         break;
                     case 15:
-                        System.out.println("Courses: ");
+                        System.out.println("Show All Courses");
                         System.out.println(ELearningPlatformService.courses);
                         break;
                     case 16:
-                        System.out.println("Delete student by id");
+                        System.out.println("Delete Student by Id");
                         repository.getStudentDao().deleteStudent(cin.nextInt());
                         break;
                     case 17:
@@ -116,7 +120,7 @@ public class Main {
                         repository.getTeacherDao().deleteTeacher(cin.nextInt());
                         break;
                     case 18:
-                        System.out.println("Delete Teaching assistant by Id");
+                        System.out.println("Delete Teaching Assistant by Id");
                         repository.getTeachingAssistantDao().deleteTeachingAssistant(cin.nextInt());
                         break;
                     case 19:
@@ -125,26 +129,25 @@ public class Main {
                         break;
                     case 20:
                         System.out.println("Delete Quiz by Id");
-                        Quiz quiz = eLearningPlatformService.findQuizById(cin.nextInt());
-                        repository.getQuizDao().deleteQuiz(quiz);
+                        repository.getQuizDao().deleteQuiz(cin.nextInt());
                         break;
                     case 21:
                         System.out.println("Delete Feedback by CourseId and Index");
-                        ArrayList<AnonymousCourseFeedback> feedbacks = eLearningPlatformService.findFeedbacksByCourseId(cin.nextInt());
+                        ArrayList<AnonymousCourseFeedback> feedbacks = ELearningPlatformService.findFeedbacksByCourseId(cin.nextInt());
                         System.out.println(feedbacks);
                         AnonymousCourseFeedback feedback = feedbacks.get(cin.nextInt());
                         repository.getAnonymousCourseFeedbackDao().deleteAnonymousCourseFeedback(feedback);
                         break;
                     case 22:
-                        System.out.println("Delete repartition by CourseId and index");
-                        TreeSet<UserCourseRepartition> userCourseRepartitionTreeSet = eLearningPlatformService.findUserCourseRepartitionByCourseId(cin.nextInt());
+                        System.out.println("Delete repartition by CourseId and Index");
+                        TreeSet<UserCourseRepartition> userCourseRepartitionTreeSet = ELearningPlatformService.findUserCourseRepartitionByCourseId(cin.nextInt());
                         ArrayList<UserCourseRepartition> userCourseRepartitions = new ArrayList<>(userCourseRepartitionTreeSet);
                         System.out.println(userCourseRepartitions);
                         UserCourseRepartition userCourseRepartition = userCourseRepartitions.get(cin.nextInt());
                         repository.getUserCourseRepartitionDao().deleteUserCourseRepartition(userCourseRepartition);
                         break;
                     case 23:
-                        System.out.println("Update Course Description by id (format: id\\n desc\\n)");
+                        System.out.println("Update Course Description by Id (format: id\\n desc\\n)");
                         repository.getCourseDao().updateCourseDescription(cin.nextInt(), cin.next());
                         break;
                     case 24:
@@ -166,10 +169,40 @@ public class Main {
                 }
             } catch (Exception e) {
                 System.out.println("Exception in Main.java: " + e);
+                break;
             }
-            System.out.println("Type option");
-            opt = cin.nextInt();
-        }
+        } while (opt != 0);
         System.out.println("Good Bye!");
+    }
+
+    private static void printMenuOptions() {
+        System.out.println("0. Exit");
+        System.out.println("1. Add Teacher");
+        System.out.println("2. Add Student");
+        System.out.println("3. Add Teaching Assistant");
+        System.out.println("4. Add Course");
+        System.out.println("5. Add Quiz");
+        System.out.println("6. Add Feedback");
+        System.out.println("7. Add a Repartition of an User to a Course");
+        System.out.println("8. Find User");
+        System.out.println("9. Find Course");
+        System.out.println("10. Find Quiz");
+        System.out.println("11. Show Repartitions to a Course");
+        System.out.println("12. Show Repartitions of a Specific Student");
+        System.out.println("13. Show Feedbacks to a Specific Course");
+        System.out.println("14. Show All Users");
+        System.out.println("15. Show All Courses");
+        System.out.println("16. Delete Student by Id");
+        System.out.println("17. Delete Teacher by Id");
+        System.out.println("18. Delete Teaching Assistant by Id");
+        System.out.println("19. Delete Course by Id");
+        System.out.println("20. Delete Quiz by Id");
+        System.out.println("21. Delete Feedback by CourseId and Index");
+        System.out.println("22. Delete repartition by CourseId and Index");
+        System.out.println("23. Update Course Description by Id");
+        System.out.println("24. Update Quiz by Id");
+        System.out.println("25. Update Teacher Ranking by Id");
+        System.out.println("26. Update User Address and PhoneNumber");
+        System.out.print("Your option is: ");
     }
 }

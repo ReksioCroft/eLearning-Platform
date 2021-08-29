@@ -26,10 +26,6 @@ public final class AnonymousCourseFeedback {
             co = id;
     }
 
-    public static void setCo(int co) {
-        AnonymousCourseFeedback.co = co;
-    }
-
     public @NotNull Course getCourse() {
         return course;
     }

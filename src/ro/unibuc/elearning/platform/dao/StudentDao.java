@@ -1,7 +1,7 @@
 package ro.unibuc.elearning.platform.dao;
 
 import ro.unibuc.elearning.platform.pojo.Student;
-import ro.unibuc.elearning.platform.util.ELearningPlatformService;
+import ro.unibuc.elearning.platform.util.AdminInterface;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -64,14 +64,13 @@ public final class StudentDao extends UserDao {
     @Override
     public void run() {
         try {
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             final String query = "SELECT u.id, u.userName, u.birthDate, u.address, u.phoneNumber FROM User u where u.id in (select id from Student)";
             Statement statement = databaseConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                synchronized (eLearningPlatformService.users) {
-                    eLearningPlatformService.users.add(mapToStudent(resultSet));
+                synchronized (AdminInterface.users) {
+                    AdminInterface.users.add(mapToStudent(resultSet));
                 }
             }
         } catch (SQLException throwables) {

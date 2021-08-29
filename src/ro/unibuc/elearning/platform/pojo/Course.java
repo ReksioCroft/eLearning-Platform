@@ -30,10 +30,6 @@ public final class Course {
             co = id;
     }
 
-    public static void setCo(int co) {
-        Course.co = co;
-    }
-
     public @NotNull String getDescription() {
         return description;
     }

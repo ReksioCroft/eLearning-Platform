@@ -1,5 +1,6 @@
 package ro.unibuc.elearning.platform.util;
 
+import org.jetbrains.annotations.NotNull;
 import ro.unibuc.elearning.platform.pojo.*;
 
 import java.sql.Date;
@@ -14,24 +15,16 @@ public interface AdminInterface {
     List<User> users = Collections.synchronizedList(new ArrayList<>());
     List<AnonymousCourseFeedback> feedbacks = Collections.synchronizedList(new ArrayList<>());
 
-    default Date parseDate(Scanner cin) {
-        try {
-            String date = cin.next();
-            return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
-        } catch (ParseException e) {
-            return null;
-        }
+    default @NotNull Date parseDate(Scanner cin) throws ParseException {
+        String date = cin.next();
+        return parseDate(date,"yyyy-MM-dd");
     }
 
-    default Date parseDate(String date) {
-        try {
-            return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
-        } catch (ParseException e) {
-            return null;
-        }
+    static @NotNull Date parseDate(String date, String pattern) throws ParseException {
+        return new Date(new SimpleDateFormat(pattern).parse(date).getTime());
     }
 
-    default void clearALL() {
+    static void clearALL() {
         courses.clear();
         quizzes.clear();
         userCourseRepartitions.clear();
@@ -41,27 +34,15 @@ public interface AdminInterface {
 
     Teacher addTeacher(Scanner in) throws Exception;
 
-    Course addCourse(Scanner in);
+    Course addCourse(Scanner in) throws Exception;
 
-    Quiz addQuiz(Scanner in);
+    Quiz addQuiz(Scanner in) throws Exception;
 
     Student addStudent(Scanner in) throws Exception;
 
-    UserCourseRepartition addUserCourseRepartition(Scanner in);
+    UserCourseRepartition addUserCourseRepartition(Scanner in) throws Exception;
 
-    AnonymousCourseFeedback addFeedback(Scanner in);
+    AnonymousCourseFeedback addFeedback(Scanner in) throws Exception;
 
     TeachingAssistant addTeachingAssistant(Scanner in) throws Exception;
-
-    Course findCourseById(int courseId);
-
-    Quiz findQuizById(int quizId);
-
-    User findUserById(int userId);
-
-    TreeSet<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId);
-
-    TreeSet<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId);
-
-    ArrayList<AnonymousCourseFeedback> findFeedbacksByCourseId(int courseId);
 }

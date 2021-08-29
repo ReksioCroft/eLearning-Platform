@@ -71,14 +71,13 @@ public final class UserCourseRepartitionDao extends Dao {
     @Override
     public void run() {
         try {
-            ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
             final String query = "SELECT userId, courseId, startDate FROM UserCourseRepartition";
             Statement statement = databaseConnection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                synchronized (eLearningPlatformService.userCourseRepartitions) {
-                    eLearningPlatformService.userCourseRepartitions.add(mapToUserCourseRepartition(resultSet));
+                synchronized (AdminInterface.userCourseRepartitions) {
+                    AdminInterface.userCourseRepartitions.add(mapToUserCourseRepartition(resultSet));
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
@@ -87,16 +86,15 @@ public final class UserCourseRepartitionDao extends Dao {
     }
 
     private UserCourseRepartition mapToUserCourseRepartition(ResultSet resultSet) throws SQLException, InterruptedException {
-        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
         User user = null;
         while (user == null) {
-            user = eLearningPlatformService.findUserById(resultSet.getInt(1));
+            user = ELearningPlatformService.findUserById(resultSet.getInt(1));
             if (user == null)
                 Thread.sleep(500);
         }
         Course course = null;
         while (course == null) {
-            course = eLearningPlatformService.findCourseById(resultSet.getInt(2));
+            course = ELearningPlatformService.findCourseById(resultSet.getInt(2));
             if (course == null)
                 Thread.sleep(500);
         }

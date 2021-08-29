@@ -1,10 +1,10 @@
 package ro.unibuc.elearning.platform.dao;
 
+import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.AuditCsvService;
-import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
 public final class Repository {
-    private static Repository repository = null;
+    private static Repository instance = null;
     private final StudentDao studentDao;
     private final TeacherDao teacherDao;
     private final TeachingAssistantDao teachingAssistantDao;
@@ -17,8 +17,7 @@ public final class Repository {
         AuditCsvService auditCsvService = AuditCsvService.getInstance();
         auditCsvService.writeCsv("Loading database in memory using jdbc");
 
-        ELearningPlatformService eLearningPlatformService = new ELearningPlatformService();
-        eLearningPlatformService.clearALL();
+        AdminInterface.clearALL();
 
         teacherDao = TeacherDao.getTeacherDao();
         teacherDao.start();
@@ -44,22 +43,21 @@ public final class Repository {
         anonymousCourseFeedbackDao.join();
     }
 
-    public static Repository getRepository() {
-        if (repository == null) {
+    public static Repository getInstance() {
+        if (instance == null) {
             try {
-                repository = new Repository();
+                instance = new Repository();
             } catch (InterruptedException e) {
                 System.out.println("Exception in Repository.java: getRepository: " + e);
-                return getRepository();
+                return getInstance();      //Repository is mandatory for the program to work
             }
         }
-        return repository;
+        return instance;
     }
 
     public StudentDao getStudentDao() {
         return studentDao;
     }
-
 
     public TeacherDao getTeacherDao() {
         return teacherDao;
