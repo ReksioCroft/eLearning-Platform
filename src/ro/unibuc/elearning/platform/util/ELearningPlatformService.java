@@ -179,7 +179,7 @@ public class ELearningPlatformService implements AdminInterface {
         throw new NullPointerException("Exception in ELearningPlatformService.java: findQuizById: no quiz found");
     }
 
-    public static Course findCourseById(int courseId) throws NullPointerException {
+    public static @NotNull Course findCourseById(int courseId) throws NullPointerException {
         for (Course course : courses) {
             if (course.getId() == courseId)
                 return course;
@@ -187,7 +187,7 @@ public class ELearningPlatformService implements AdminInterface {
         throw new NullPointerException("Exception in ELearningPlatformService.java: findCourseById: no course found");
     }
 
-    public static User findUserById(int userId) throws NullPointerException {
+    public static @NotNull User findUserById(int userId) throws NullPointerException {
         for (User user : users) {
             if (user.getId() == userId)
                 return user;
@@ -195,7 +195,7 @@ public class ELearningPlatformService implements AdminInterface {
         throw new NullPointerException("Exception in ELearningPlatformService.java: findUserById: no user found");
     }
 
-    public static TreeSet<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId) {
+    public static @NotNull TreeSet<UserCourseRepartition> findSpecificStudentCourseRepartitionsByStudentId(int userId) {
         TreeSet<UserCourseRepartition> repartitions =
                 new TreeSet<>((userCourseRepartition, t1) -> userCourseRepartition.getStartDate().compareTo(t1.getStartDate()));
         for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
@@ -205,7 +205,7 @@ public class ELearningPlatformService implements AdminInterface {
         return repartitions;
     }
 
-    public static TreeSet<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId) {
+    public static @NotNull TreeSet<UserCourseRepartition> findUserCourseRepartitionByCourseId(int courseId) {
         TreeSet<UserCourseRepartition> repartitions =
                 new TreeSet<>((userCourseRepartition, t1) -> userCourseRepartition.getStartDate().compareTo(t1.getStartDate()));
         for (UserCourseRepartition userCourseRepartition : userCourseRepartitions) {
@@ -215,7 +215,7 @@ public class ELearningPlatformService implements AdminInterface {
         return repartitions;
     }
 
-    public static ArrayList<AnonymousCourseFeedback> findFeedbacksByCourseId(int courseId) {
+    public static @NotNull ArrayList<AnonymousCourseFeedback> findFeedbacksByCourseId(int courseId) {
         ArrayList<AnonymousCourseFeedback> ans = new ArrayList<>();
         for (AnonymousCourseFeedback feedback : feedbacks) {
             if (feedback.getCourse().getId() == courseId)
