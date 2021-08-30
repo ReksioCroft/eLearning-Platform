@@ -23,7 +23,7 @@ public final class QuizDao extends Dao {
                 "id INT PRIMARY KEY ,\n" +
                 "courseId Int,\n" +
                 "quiz VARCHAR(1024) Not NULL,\n" +
-                "FOREIGN KEY (courseId) REFERENCES Course (id))";
+                "FOREIGN KEY (courseId) REFERENCES Course (id) ON DELETE CASCADE)";
 
         try {
             Statement statement = databaseConnection.createStatement();
@@ -75,6 +75,7 @@ public final class QuizDao extends Dao {
             preparedStatement1.setInt(1, quizId);
             preparedStatement1.execute();
             AdminInterface.quizzes.remove(ELearningPlatformService.findQuizById(quizId));
+            auditCsvService.writeCsv("quiz " + quizId + " deleted from database");
         } catch (SQLException | NullPointerException throwables) {
             auditCsvService.writeCsv("Exception in QuizDao.java: deleteQuiz: " + throwables);
         }
@@ -88,8 +89,9 @@ public final class QuizDao extends Dao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                Quiz quiz = mapToQuiz(resultSet);
                 synchronized (AdminInterface.quizzes) {
-                    AdminInterface.quizzes.add(mapToQuiz(resultSet));
+                    AdminInterface.quizzes.add(quiz);
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
@@ -120,6 +122,7 @@ public final class QuizDao extends Dao {
 
             Quiz quiz = ELearningPlatformService.findQuizById(quizId);
             quiz.setQuiz(content);
+            auditCsvService.writeCsv("quiz " + quizId + " updated");
         } catch (SQLException throwables) {
             auditCsvService.writeCsv("Exception in QuizDao.java: updateQuizContent: " + throwables);
         }

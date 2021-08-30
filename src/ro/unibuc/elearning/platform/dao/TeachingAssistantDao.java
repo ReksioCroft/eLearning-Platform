@@ -24,7 +24,7 @@ public final class TeachingAssistantDao extends UserDao {
                 "id INT PRIMARY KEY,\n" +
                 "supervisorTeacherId INT NOT NULL,\n" +
                 "FOREIGN KEY (supervisorTeacherId) REFERENCES Teacher (id),\n" +
-                "FOREIGN KEY (id) REFERENCES User(id))";
+                "FOREIGN KEY (id) REFERENCES User(id) ON DELETE CASCADE)";
 
         try {
             Statement statement = databaseConnection.createStatement();
@@ -61,6 +61,7 @@ public final class TeachingAssistantDao extends UserDao {
             preparedStatement1.setInt(1, teachingAssistantId);
             preparedStatement1.execute();
             deleteUser(teachingAssistantId);
+            auditCsvService.writeCsv("teaching assistant " + teachingAssistantId + " deleted from database");
         } catch (SQLException throwables) {
             auditCsvService.writeCsv("Exception in TeachingAssistantDao.java: deleteTeachingAssistant: " + throwables);
         }
@@ -74,8 +75,9 @@ public final class TeachingAssistantDao extends UserDao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                TeachingAssistant teachingAssistant = mapToTeachingAssistant(resultSet);
                 synchronized (AdminInterface.users) {
-                    AdminInterface.users.add(mapToTeachingAssistant(resultSet));
+                    AdminInterface.users.add(teachingAssistant);
                 }
             }
         } catch (SQLException | InterruptedException throwables) {

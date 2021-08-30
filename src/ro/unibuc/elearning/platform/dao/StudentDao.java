@@ -20,7 +20,7 @@ public final class StudentDao extends UserDao {
         super.createTable();
         final String query = "CREATE TABLE IF NOT EXISTS Student (\n" +
                 "id INT PRIMARY KEY,\n" +
-                "FOREIGN KEY (id) REFERENCES User (id))";
+                "FOREIGN KEY (id) REFERENCES User (id) ON DELETE CASCADE)";
 
         try {
             Statement statement = databaseConnection.createStatement();
@@ -56,6 +56,7 @@ public final class StudentDao extends UserDao {
             preparedStatement.setInt(1, studentId);
             preparedStatement.execute();
             deleteUser(studentId);
+            auditCsvService.writeCsv("student " + studentId + " deleted from database");
         } catch (SQLException throwables) {
             auditCsvService.writeCsv("Exception in StudentDao.java: deleteStudent: " + throwables);
         }
@@ -70,8 +71,9 @@ public final class StudentDao extends UserDao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                Student student = mapToStudent(resultSet);
                 synchronized (AdminInterface.users) {
-                    AdminInterface.users.add(mapToStudent(resultSet));
+                    AdminInterface.users.add(student);
                 }
             }
         } catch (SQLException throwables) {

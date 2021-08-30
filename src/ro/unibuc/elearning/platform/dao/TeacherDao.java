@@ -21,7 +21,7 @@ public final class TeacherDao extends UserDao {
         final String query = "CREATE TABLE IF NOT EXISTS Teacher (\n" +
                 "id INT PRIMARY KEY,\n" +
                 "ranking VARCHAR(32) NOT NULL,\n" +
-                "FOREIGN KEY (id) REFERENCES User (id))";
+                "FOREIGN KEY (id) REFERENCES User (id) ON DELETE CASCADE)";
 
         try {
             Statement statement = databaseConnection.createStatement();
@@ -58,6 +58,7 @@ public final class TeacherDao extends UserDao {
 
             Teacher teacher = (Teacher) ELearningPlatformService.findUserById(teacherId);
             teacher.setRank(ranking);
+            auditCsvService.writeCsv("teacher " + teacher + " rank updated");
         } catch (SQLException | NullPointerException throwables) {
             auditCsvService.writeCsv("Exception in TeacherDao.java: updateTeacherRanking: " + throwables);
         }
@@ -91,6 +92,7 @@ public final class TeacherDao extends UserDao {
             preparedStatement.setInt(1, teacherId);
             preparedStatement.execute();
             deleteUser(teacherId);
+            auditCsvService.writeCsv("teacher " + teacherId + " deleted from database");
         } catch (SQLException throwables) {
             auditCsvService.writeCsv("Exception in TeacherDao.java: deleteTeacher: " + throwables);
         }
@@ -104,8 +106,9 @@ public final class TeacherDao extends UserDao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                Teacher teacher = mapToTeacher(resultSet);
                 synchronized (AdminInterface.users) {
-                    AdminInterface.users.add(mapToTeacher(resultSet));
+                    AdminInterface.users.add(teacher);
                 }
             }
         } catch (SQLException throwables) {

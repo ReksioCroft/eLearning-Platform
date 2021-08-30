@@ -25,7 +25,8 @@ public final class Student extends User {
                 '}';
     }
 
+    @Override
     public String toStringCsv() {
-        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + address + '\'' + ", " + phoneNumber;
+        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + address + ", " + phoneNumber;
     }
 }

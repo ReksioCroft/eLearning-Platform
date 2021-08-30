@@ -37,6 +37,7 @@ public final class Teacher extends User {
                 '}';
     }
 
+    @Override
     public String toStringCsv() {
         return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + ranking + ", " + address + ", " + phoneNumber;
     }

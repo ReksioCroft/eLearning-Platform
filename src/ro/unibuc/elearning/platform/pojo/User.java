@@ -88,4 +88,6 @@ public abstract class User {
     public int hashCode() {
         return Objects.hash(userName, id, birthDate);
     }
+
+    abstract public String toStringCsv();
 }

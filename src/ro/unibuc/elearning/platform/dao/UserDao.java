@@ -98,6 +98,7 @@ public abstract class UserDao extends Dao {
 
             user.setAddress(address);
             user.setPhoneNumber(phoneNumber);
+            auditCsvService.writeCsv("user " + userId + " info updated");
         } catch (SQLException | NullPointerException throwables) {
             auditCsvService.writeCsv("Exception in UserDao.java: updateUserPhoneAddress: " + throwables);
         }

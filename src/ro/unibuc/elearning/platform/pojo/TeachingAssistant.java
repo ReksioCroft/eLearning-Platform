@@ -34,7 +34,8 @@ public final class TeachingAssistant extends User {
                 '}';
     }
 
+    @Override
     public String toStringCsv() {
-        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + supervisorTeacher.id + " ," + address + ", " + phoneNumber;
+        return id + ", " + userName + ", " + simpleDateFormat.format(birthDate) + ", " + supervisorTeacher.id + ", " + address + ", " + phoneNumber;
     }
 }

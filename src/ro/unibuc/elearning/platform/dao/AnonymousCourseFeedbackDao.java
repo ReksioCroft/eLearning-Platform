@@ -25,7 +25,7 @@ public final class AnonymousCourseFeedbackDao extends Dao {
                 "courseId INT,\n" +
                 "feedback VARCHAR(1024) NOT NULL,\n" +
                 "PRIMARY KEY (id,courseId),\n" +
-                "FOREIGN KEY (courseId) REFERENCES Course (id))";
+                "FOREIGN KEY (courseId) REFERENCES Course (id) ON DELETE CASCADE)";
         try {
             Statement statement = databaseConnection.createStatement();
             statement.execute(query);
@@ -58,10 +58,13 @@ public final class AnonymousCourseFeedbackDao extends Dao {
         try {
             final String query = "DELETE FROM AnonymousCourseFeedback WHERE id=? and courseId=?";
             PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement1.setInt(1, anonymousCourseFeedback.getId());
-            preparedStatement1.setInt(2, anonymousCourseFeedback.getCourse().getId());
+            int id = anonymousCourseFeedback.getId();
+            int courseId = anonymousCourseFeedback.getCourse().getId();
+            preparedStatement1.setInt(1, id);
+            preparedStatement1.setInt(2, courseId);
             preparedStatement1.execute();
             AdminInterface.feedbacks.remove(anonymousCourseFeedback);
+            auditCsvService.writeCsv("feedback " + id + "(course " + courseId + ") deleted from database");
         } catch (SQLException throwables) {
             auditCsvService.writeCsv("Exception in AnonymousCourseFeedbackDao.java: deleteAnonymousCourseFeedback: " + throwables);
         }
@@ -75,8 +78,9 @@ public final class AnonymousCourseFeedbackDao extends Dao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                AnonymousCourseFeedback anonymousCourseFeedback = mapToAnonymousCourseFeedback(resultSet);
                 synchronized (AdminInterface.feedbacks) {
-                    AdminInterface.feedbacks.add(mapToAnonymousCourseFeedback(resultSet));
+                    AdminInterface.feedbacks.add(anonymousCourseFeedback);
                 }
             }
         } catch (SQLException | InterruptedException throwables) {

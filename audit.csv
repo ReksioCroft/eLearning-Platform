@@ -198,3 +198,157 @@ Loading database in memory using jdbc, 2021-08-29 18:03:41.599
 Loading csv files in memory, 2021-08-29 18:03:44.981
 Exception in UserDao.java: updateUserPhoneAddress: java.lang.NullPointerException: Exception in ELearningPlatformService.java: findUserById: no user found, 2021-08-29 18:04:12.159
 New Teacher Added, 2021-08-29 18:05:01.37
+Loading database in memory using jdbc, 2021-08-29 21:58:44.344
+No csv read, 2021-08-29 21:58:46.625
+New Teacher Added, 2021-08-29 21:59:10.859
+New Course Added, 2021-08-29 22:00:04.696
+Exception in Main.java: java.util.InputMismatchException, 2021-08-29 22:00:04.728
+Loading database in memory using jdbc, 2021-08-29 22:02:23.763
+No csv read, 2021-08-29 22:02:26.035
+Exception in Main.java: java.lang.IllegalArgumentException: java.text.ParseException: Unparseable date: "wert", 2021-08-29 22:02:49.281
+Loading database in memory using jdbc, 2021-08-29 22:03:58.771
+No csv read, 2021-08-29 22:04:01.825
+New Teacher Added, 2021-08-29 22:04:38.303
+Loading database in memory using jdbc, 2021-08-29 22:05:58.314
+No csv read, 2021-08-29 22:05:59.714
+New Teacher Added, 2021-08-29 22:06:25.913
+Loading database in memory using jdbc, 2021-08-29 22:07:01.509
+Loading csv files in memory, 2021-08-29 22:07:03.415
+Loading database in memory using jdbc, 2021-08-29 22:09:13.553
+Loading csv files in memory, 2021-08-29 22:09:15.451
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:09:15.557
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:09:15.566
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:09:15.57
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:09:15.571
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:09:15.573
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:09:15.574
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:09:15.575
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:09:15.577
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:09:15.578
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:09:15.579
+Exception in PersistentCsvReadService.java: readTeachingAssistants: java.lang.NumberFormatException: For input string: " 1 ", 2021-08-29 22:09:15.581
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:09:15.583
+Exception in StudentDao.java: writeStudent: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Student`, CONSTRAINT `Student_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:09:15.584
+Exception in PersistentCsvReadService.java: readCourses: java.lang.NumberFormatException: For input string: " 1", 2021-08-29 22:09:15.585
+Exception in PersistentCsvReadService.java: readUserCourseRepartition: java.lang.NullPointerException: Exception in ELearningPlatformService.java: findCourseById: no course found, 2021-08-29 22:09:15.585
+Exception in PersistentCsvReadService.java: readQuizzes: java.lang.NumberFormatException: For input string: " 1", 2021-08-29 22:09:15.586
+Exception in PersistentCsvReadService.java: ReadFeedbacks: java.lang.NumberFormatException: For input string: " 1", 2021-08-29 22:09:15.586
+Loading database in memory using jdbc, 2021-08-29 22:29:14.121
+Loading csv files in memory, 2021-08-29 22:29:16.539
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:29:16.637
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:29:16.642
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:29:16.645
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:29:16.646
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:29:16.647
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:29:16.648
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:29:16.649
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:29:16.65
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:29:16.651
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:29:16.652
+Exception in TeachingAssistantDao.java: writeTeachingAssistant: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`TeachingAssistant`, CONSTRAINT `TeachingAssistant_ibfk_1` FOREIGN KEY (`supervisorTeacherId`) REFERENCES `Teacher` (`id`)), 2021-08-29 22:29:16.657
+Exception in CourseDao.java: writeCourse: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Course`, CONSTRAINT `Course_ibfk_1` FOREIGN KEY (`teacherId`) REFERENCES `Teacher` (`id`)), 2021-08-29 22:29:16.665
+Exception in CourseDao.java: writeCourse: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Course`, CONSTRAINT `Course_ibfk_1` FOREIGN KEY (`teacherId`) REFERENCES `Teacher` (`id`)), 2021-08-29 22:29:16.666
+Exception in UserCourseRepartitionDao.java: writeUserCourseRepartition: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`UserCourseRepartition`, CONSTRAINT `UserCourseRepartition_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `Course` (`id`)), 2021-08-29 22:29:16.669
+Exception in QuizDao.java: writeQuiz: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Quiz`, CONSTRAINT `Quiz_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `Course` (`id`)), 2021-08-29 22:29:16.672
+Exception in AnonymousCourseFeedbackDao.java: writeAnonymousCourseFeedback: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`AnonymousCourseFeedback`, CONSTRAINT `AnonymousCourseFeedback_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `Course` (`id`)), 2021-08-29 22:29:16.675
+Loading database in memory using jdbc, 2021-08-29 22:30:00.307
+Loading csv files in memory, 2021-08-29 22:30:03.247
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:30:03.348
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:30:03.353
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:30:03.355
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:30:03.356
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:30:03.358
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:30:03.358
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:30:03.36
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:30:03.361
+Exception in UserDao.java: writeUser: com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Data too long for column 'phoneNumber' at row 1, 2021-08-29 22:30:03.362
+Exception in TeacherDao.java: writeTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-29 22:30:03.363
+Exception in UserDao.java: writeUser: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '3' for key 'PRIMARY', 2021-08-29 22:30:03.366
+Exception in TeachingAssistantDao.java: writeTeachingAssistant: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`elearning`.`TeachingAssistant`, CONSTRAINT `TeachingAssistant_ibfk_1` FOREIGN KEY (`supervisorTeacherId`) REFERENCES `Teacher` (`id`)), 2021-08-29 22:30:03.368
+Exception in CourseDao.java: writeCourse: java.sql.SQLSyntaxErrorException: Table 'elearning.Course' doesn't exist, 2021-08-29 22:31:01.466
+Exception in CourseDao.java: writeCourse: java.sql.SQLSyntaxErrorException: Table 'elearning.Course' doesn't exist, 2021-08-29 22:31:01.467
+Exception in UserCourseRepartitionDao.java: writeUserCourseRepartition: java.sql.SQLSyntaxErrorException: Table 'elearning.UserCourseRepartition' doesn't exist, 2021-08-29 22:31:01.471
+Exception in QuizDao.java: writeQuiz: java.sql.SQLSyntaxErrorException: Table 'elearning.Quiz' doesn't exist, 2021-08-29 22:31:01.477
+Exception in AnonymousCourseFeedbackDao.java: writeAnonymousCourseFeedback: java.sql.SQLSyntaxErrorException: Table 'elearning.AnonymousCourseFeedback' doesn't exist, 2021-08-29 22:31:01.483
+Exception in Main.java: java.util.NoSuchElementException, 2021-08-29 22:31:01.49
+Loading database in memory using jdbc, 2021-08-29 22:31:03.271
+Loading csv files in memory, 2021-08-29 22:31:05.658
+Loading database in memory using jdbc, 2021-08-29 22:32:28.251
+Loading csv files in memory, 2021-08-29 22:32:30.136
+Exception in Main.java: java.util.NoSuchElementException, 2021-08-29 22:47:18.75
+Loading database in memory using jdbc, 2021-08-30 01:16:20.668
+No csv read, 2021-08-30 01:16:22.599
+New Teacher Added, 2021-08-30 01:17:04.322
+Exception in Main.java: java.lang.IllegalArgumentException: incorrect phone number, 2021-08-30 01:17:30.655
+New Student Added, 2021-08-30 01:17:52.464
+Loading database in memory using jdbc, 2021-08-30 01:25:01.877
+No csv read, 2021-08-30 01:25:04.482
+Loading database in memory using jdbc, 2021-08-30 01:25:19.607
+Loading csv files in memory, 2021-08-30 01:25:22.039
+New Teaching Assistant Added, 2021-08-30 01:29:53.084
+Exception in Main.java: java.lang.IllegalArgumentException: empty name, 2021-08-30 01:30:09.473
+Exception in Main.java: java.lang.IllegalArgumentException: empty address, 2021-08-30 01:30:28.984
+Exception in Main.java: java.lang.IllegalArgumentException: java.text.ParseException: Unparseable date: "gfe", 2021-08-30 01:30:38.394
+New Feedback Added, 2021-08-30 01:31:26.355
+New Course Added, 2021-08-30 01:32:10.144
+New Student Added, 2021-08-30 01:32:46.598
+Exception in Main.java: java.lang.ClassCastException: class ro.unibuc.elearning.platform.pojo.TeachingAssistant cannot be cast to class ro.unibuc.elearning.platform.pojo.Student (ro.unibuc.elearning.platform.pojo.TeachingAssistant and ro.unibuc.elearning.platform.pojo.Student are in unnamed module of loader 'app'), 2021-08-30 01:33:54.345
+Loading database in memory using jdbc, 2021-08-30 01:36:11.283
+Loading csv files in memory, 2021-08-30 01:36:14.234
+New Course Repartition Added, 2021-08-30 01:36:44.048
+Loading database in memory using jdbc, 2021-08-30 01:43:28.916
+Loading database in memory using jdbc, 2021-08-30 01:43:46.402
+Loading database in memory using jdbc, 2021-08-30 01:44:11.019
+No csv read, 2021-08-30 01:44:20.514
+Exception in Main.java: java.util.NoSuchElementException, 2021-08-30 01:44:22.984
+Loading database in memory using jdbc, 2021-08-30 01:44:25.724
+Loading database in memory using jdbc, 2021-08-30 01:44:57.227
+Loading csv files in memory, 2021-08-30 01:44:59.96
+Loading database in memory using jdbc, 2021-08-30 01:45:07.8
+Loading database in memory using jdbc, 2021-08-30 01:45:48.462
+Loading database in memory using jdbc, 2021-08-30 01:46:04.11
+Loading database in memory using jdbc, 2021-08-30 01:46:28.152
+Loading database in memory using jdbc, 2021-08-30 01:47:03.18
+Loading database in memory using jdbc, 2021-08-30 01:56:41.206
+Loading csv files in memory, 2021-08-30 01:56:44.47
+New Course Repartition Added, 2021-08-30 01:57:07.55
+Loading database in memory using jdbc, 2021-08-30 01:59:05.801
+Loading csv files in memory, 2021-08-30 01:59:08.077
+Exception in PersistentCsvReadService.java: readUserCourseRepartition: java.lang.NumberFormatException: For input string: "", 2021-08-30 01:59:08.089
+Loading database in memory using jdbc, 2021-08-30 01:59:24.138
+Loading csv files in memory, 2021-08-30 01:59:25.872
+Exception in PersistentCsvReadService.java: readUserCourseRepartition: java.lang.NumberFormatException: For input string: "", 2021-08-30 01:59:25.934
+Loading database in memory using jdbc, 2021-08-30 03:06:29.36
+Loading database in memory using jdbc, 2021-08-30 03:11:42.631
+Loading database in memory using jdbc, 2021-08-30 03:11:51.607
+Loading database in memory using jdbc, 2021-08-30 03:11:57.281
+Loading database in memory using jdbc, 2021-08-30 03:17:05.069
+Loading csv files in memory, 2021-08-30 03:17:07.867
+Exception in PersistentCsvReadService.java: readUserCourseRepartition: java.lang.NumberFormatException: For input string: "", 2021-08-30 03:17:07.878
+Exception in PersistentCsvReadService.java: readUserCourseRepartition: java.lang.NumberFormatException: For input string: "", 2021-08-30 03:17:07.878
+Exception in PersistentCsvReadService.java: readUserCourseRepartition: java.lang.NumberFormatException: For input string: "", 2021-08-30 03:17:07.879
+Loading database in memory using jdbc, 2021-08-30 03:28:01.807
+No csv read, 2021-08-30 03:28:04.167
+Exception in UserDao.java: deleteUser: java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-30 03:29:33.108
+Exception in UserDao.java: deleteUser: java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-30 03:30:28.737
+Loading database in memory using jdbc, 2021-08-30 03:32:44.7
+No csv read, 2021-08-30 03:32:47.517
+Exception in UserDao.java: deleteUser: java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-30 03:32:56.899
+Loading database in memory using jdbc, 2021-08-30 03:33:10.993
+Loading csv files in memory, 2021-08-30 03:33:12.921
+Exception in UserDao.java: deleteUser: java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`elearning`.`Teacher`, CONSTRAINT `Teacher_ibfk_1` FOREIGN KEY (`id`) REFERENCES `User` (`id`)), 2021-08-30 03:33:18.266
+Exception in Main.java: java.util.InputMismatchException, 2021-08-30 03:37:29.399
+Loading database in memory using jdbc, 2021-08-30 03:43:25.78
+No csv read, 2021-08-30 03:43:27.961
+Exception in Main.java: java.util.InputMismatchException, 2021-08-30 03:44:46.094
+Loading database in memory using jdbc, 2021-08-30 03:49:06.903
+No csv read, 2021-08-30 03:49:09.474
+Loading database in memory using jdbc, 2021-08-30 03:58:13.078
+Loading csv files in memory, 2021-08-30 03:58:15.101
+Exception in TeacherDao.java: deleteTeacher: java.sql.SQLIntegrityConstraintViolationException: Cannot delete or update a parent row: a foreign key constraint fails (`elearning`.`Course`, CONSTRAINT `Course_ibfk_1` FOREIGN KEY (`teacherId`) REFERENCES `Teacher` (`id`)), 2021-08-30 03:58:43.312
+Loading database in memory using jdbc, 2021-08-30 04:11:24.242
+No csv read, 2021-08-30 04:11:26.631
+user 1 info updated, 2021-08-30 04:11:39.067
+Loading database in memory using jdbc, 2021-08-30 04:12:43.786
+No csv read, 2021-08-30 04:12:46.23
+teacher 8 deleted from database, 2021-08-30 04:12:54.67

@@ -51,10 +51,6 @@ public final class Quiz {
                 '}';
     }
 
-    public String toStringCsv() {
-        return id + ", " + course.id + ", " + quiz;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -66,5 +62,9 @@ public final class Quiz {
     @Override
     public int hashCode() {
         return Objects.hash(id, course, quiz);
+    }
+
+    public String toStringCsv() {
+        return id + ", " + course.id + ", " + quiz;
     }
 }

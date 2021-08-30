@@ -5,7 +5,10 @@ import ro.unibuc.elearning.platform.pojo.*;
 
 import java.io.FileInputStream;
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class PersistentCsvReadService {
     private final AuditCsvService auditCsvService;
@@ -29,15 +32,19 @@ public class PersistentCsvReadService {
         try {
             Scanner fin = new Scanner(new FileInputStream("feedbacks.csv"));
             while (fin.hasNext()) {
-                String s = fin.nextLine();
-                String[] args = s.replaceAll(" ", "").split(",");
-                int id = Integer.parseInt(args[0]);
-                int courseId = Integer.parseInt(args[1]);
-                Course course = ELearningPlatformService.findCourseById(courseId);
-                AnonymousCourseFeedback feedback = new AnonymousCourseFeedback(id, course, args[2]);
-                if (!AdminInterface.feedbacks.contains(feedback)) {
-                    AdminInterface.feedbacks.add(feedback);
-                    repository.getAnonymousCourseFeedbackDao().writeAnonymousCourseFeedback(feedback);
+                final String s = fin.nextLine();
+                try {
+                    final List<String> args = Arrays.stream(s.split(",")).map(aux -> aux.strip()).collect(Collectors.toList());
+                    int courseId = Integer.parseInt(args.get(1));
+                    Course course = ELearningPlatformService.findCourseById(courseId);
+                    int feedbackId = Integer.parseInt(args.get(0));
+                    AnonymousCourseFeedback feedback = new AnonymousCourseFeedback(feedbackId, course, args.get(2));
+                    if (!AdminInterface.feedbacks.contains(feedback)) {
+                        AdminInterface.feedbacks.add(feedback);
+                        repository.getAnonymousCourseFeedbackDao().writeAnonymousCourseFeedback(feedback);
+                    }
+                } catch (Exception e) {
+                    auditCsvService.writeCsv("Exception in PersistentCsvReadService.java: ReadFeedbacks: " + e);
                 }
             }
             fin.close();
@@ -50,16 +57,20 @@ public class PersistentCsvReadService {
         try {
             Scanner fin = new Scanner(new FileInputStream("assistants.csv"));
             while (fin.hasNext()) {
-                String s = fin.nextLine();
-                String[] args = s.replaceAll(" ", "").split(",");
-                int id = Integer.parseInt(args[0]);
-                Date date = AdminInterface.parseDate(args[2], "yyyy-MM-dd");
-                int teacherId = Integer.parseInt(args[3]);
-                Teacher teacher = (Teacher) ELearningPlatformService.findUserById(teacherId);
-                TeachingAssistant teachingAssistant = new TeachingAssistant(id, args[1], date, teacher, args[4], args[5]);
-                if (!AdminInterface.users.contains(teachingAssistant)) {
-                    AdminInterface.users.add(teachingAssistant);
-                    repository.getTeachingAssistantDao().writeTeachingAssistant(teachingAssistant);
+                final String s = fin.nextLine();
+                try {
+                    final List<String> args = Arrays.stream(s.split(",")).map(aux -> aux.strip()).collect(Collectors.toList());
+                    int id = Integer.parseInt(args.get(0));
+                    Date date = AdminInterface.parseDate(args.get(2), "yyyy-MM-dd");
+                    int teacherId = Integer.parseInt(args.get(3));
+                    Teacher teacher = (Teacher) ELearningPlatformService.findUserById(teacherId);
+                    TeachingAssistant teachingAssistant = new TeachingAssistant(id, args.get(1), date, teacher, args.get(4), args.get(5));
+                    if (!AdminInterface.users.contains(teachingAssistant)) {
+                        AdminInterface.users.add(teachingAssistant);
+                        repository.getTeachingAssistantDao().writeTeachingAssistant(teachingAssistant);
+                    }
+                } catch (Exception e) {
+                    auditCsvService.writeCsv("Exception in PersistentCsvReadService.java: readTeachingAssistants: " + e);
                 }
             }
             fin.close();
@@ -72,15 +83,19 @@ public class PersistentCsvReadService {
         try {
             Scanner fin = new Scanner(new FileInputStream("quizzes.csv"));
             while (fin.hasNext()) {
-                String s = fin.nextLine();
-                String[] args = s.replaceAll(" ", "").split(",");
-                int id = Integer.parseInt(args[0]);
-                int courseId = Integer.parseInt(args[1]);
-                Course course = ELearningPlatformService.findCourseById(courseId);
-                Quiz quiz = new Quiz(id, course, args[2]);
-                if (!AdminInterface.quizzes.contains(quiz)) {
-                    AdminInterface.quizzes.add(quiz);
-                    repository.getQuizDao().writeQuiz(quiz);
+                final String s = fin.nextLine();
+                try {
+                    final List<String> args = Arrays.stream(s.split(",")).map(aux -> aux.strip()).collect(Collectors.toList());
+                    int quizId = Integer.parseInt(args.get(0));
+                    int courseId = Integer.parseInt(args.get(1));
+                    Course course = ELearningPlatformService.findCourseById(courseId);
+                    Quiz quiz = new Quiz(quizId, course, args.get(2));
+                    if (!AdminInterface.quizzes.contains(quiz)) {
+                        AdminInterface.quizzes.add(quiz);
+                        repository.getQuizDao().writeQuiz(quiz);
+                    }
+                } catch (Exception e) {
+                    auditCsvService.writeCsv("Exception in PersistentCsvReadService.java: readQuizzes: " + e);
                 }
             }
             fin.close();
@@ -93,18 +108,22 @@ public class PersistentCsvReadService {
         try {
             Scanner fin = new Scanner(new FileInputStream("repartitions.csv"));
             while (fin.hasNext()) {
-                String s = fin.nextLine();
-                String[] args = s.replaceAll(" ", "").split(",");
-                int courseId = Integer.parseInt(args[0]);
-                Course course = ELearningPlatformService.findCourseById(courseId);
-                Date date = AdminInterface.parseDate(args[1], "yyyy-MM-dd");
-                int userId = Integer.parseInt(args[2]);
-                User user = ELearningPlatformService.findUserById(userId);
+                final String s = fin.nextLine();
+                try {
+                    final List<String> args = Arrays.stream(s.split(",")).map(aux -> aux.strip()).collect(Collectors.toList());
+                    int courseId = Integer.parseInt(args.get(0));
+                    Course course = ELearningPlatformService.findCourseById(courseId);
+                    Date date = AdminInterface.parseDate(args.get(1), "yyyy-MM-dd");
+                    int userId = Integer.parseInt(args.get(2));
+                    User user = ELearningPlatformService.findUserById(userId);
 
-                UserCourseRepartition userCourseRepartition = new UserCourseRepartition(date, course, user);
-                if (!AdminInterface.userCourseRepartitions.contains(userCourseRepartition)) {
-                    AdminInterface.userCourseRepartitions.add(userCourseRepartition);
-                    repository.getUserCourseRepartitionDao().writeUserCourseRepartition(userCourseRepartition);
+                    UserCourseRepartition userCourseRepartition = new UserCourseRepartition(date, course, user);
+                    if (!AdminInterface.userCourseRepartitions.contains(userCourseRepartition)) {
+                        AdminInterface.userCourseRepartitions.add(userCourseRepartition);
+                        repository.getUserCourseRepartitionDao().writeUserCourseRepartition(userCourseRepartition);
+                    }
+                } catch (Exception e) {
+                    auditCsvService.writeCsv("Exception in PersistentCsvReadService.java: readUserCourseRepartition: " + e);
                 }
             }
             fin.close();
@@ -117,15 +136,19 @@ public class PersistentCsvReadService {
         try {
             Scanner fin = new Scanner(new FileInputStream("courses.csv"));
             while (fin.hasNext()) {
-                String s = fin.nextLine();
-                String[] args = s.replaceAll(" ", "").split(",");
-                int id = Integer.parseInt(args[0]);
-                int teacherId = Integer.parseInt(args[1]);
-                Teacher teacher = (Teacher) ELearningPlatformService.findUserById(teacherId);
-                Course course = new Course(id, teacher, args[2], args[3]);
-                if (!AdminInterface.courses.contains(course)) {
-                    AdminInterface.courses.add(course);
-                    repository.getCourseDao().writeCourse(course);
+                final String s = fin.nextLine();
+                try {
+                    final List<String> args = Arrays.stream(s.split(",")).map(aux -> aux.strip()).collect(Collectors.toList());
+                    int id = Integer.parseInt(args.get(0));
+                    int teacherId = Integer.parseInt(args.get(1));
+                    Teacher teacher = (Teacher) ELearningPlatformService.findUserById(teacherId);
+                    Course course = new Course(id, teacher, args.get(2), args.get(3));
+                    if (!AdminInterface.courses.contains(course)) {
+                        AdminInterface.courses.add(course);
+                        repository.getCourseDao().writeCourse(course);
+                    }
+                } catch (Exception e) {
+                    auditCsvService.writeCsv("Exception in PersistentCsvReadService.java: readCourses: " + e);
                 }
             }
             fin.close();
@@ -138,14 +161,18 @@ public class PersistentCsvReadService {
         try {
             Scanner fin = new Scanner(new FileInputStream("students.csv"));
             while (fin.hasNext()) {
-                String s = fin.nextLine();
-                String[] args = s.replaceAll(" ", "").split(",");
-                int id = Integer.parseInt(args[0]);
-                Date date = AdminInterface.parseDate(args[2], "yyyy-MM-dd");
-                Student student = new Student(id, args[1], date, args[3], args[4]);
-                if (!AdminInterface.users.contains(student)) {
-                    AdminInterface.users.add(student);
-                    repository.getStudentDao().writeStudent(student);
+                final String s = fin.nextLine();
+                try {
+                    final List<String> args = Arrays.stream(s.split(",")).map(aux -> aux.strip()).collect(Collectors.toList());
+                    int id = Integer.parseInt(args.get(0));
+                    Date date = AdminInterface.parseDate(args.get(2), "yyyy-MM-dd");
+                    Student student = new Student(id, args.get(1), date, args.get(3), args.get(4));
+                    if (!AdminInterface.users.contains(student)) {
+                        AdminInterface.users.add(student);
+                        repository.getStudentDao().writeStudent(student);
+                    }
+                } catch (Exception e) {
+                    auditCsvService.writeCsv("Exception in PersistentCsvReadService.java: readStudents: " + e);
                 }
             }
             fin.close();
@@ -158,14 +185,18 @@ public class PersistentCsvReadService {
         try {
             Scanner fin = new Scanner(new FileInputStream("teachers.csv"));
             while (fin.hasNext()) {
-                String s = fin.nextLine();
-                String[] args = s.replaceAll(" ", "").split(",");
-                int id = Integer.parseInt(args[0]);
-                Date date = AdminInterface.parseDate(args[2], "yyyy-MM-dd");
-                Teacher teacher = new Teacher(id, args[1], date, args[3], args[4], args[5]);
-                if (!AdminInterface.users.contains(teacher)) {
-                    AdminInterface.users.add(teacher);
-                    repository.getTeacherDao().writeTeacher(teacher);
+                final String s = fin.nextLine();
+                try {
+                    final List<String> args = Arrays.stream(s.split(",")).map(aux -> aux.strip()).collect(Collectors.toList());
+                    int id = Integer.parseInt(args.get(0));
+                    Date date = AdminInterface.parseDate(args.get(2).strip(), "yyyy-MM-dd");
+                    Teacher teacher = new Teacher(id, args.get(1), date, args.get(3), args.get(4), args.get(5));
+                    if (!AdminInterface.users.contains(teacher)) {
+                        AdminInterface.users.add(teacher);
+                        repository.getTeacherDao().writeTeacher(teacher);
+                    }
+                } catch (Exception e) {
+                    auditCsvService.writeCsv("Exception in PersistentCsvReadService.java: readTeachers: " + e);
                 }
             }
             fin.close();
@@ -174,9 +205,8 @@ public class PersistentCsvReadService {
         }
     }
 
-    static PersistentCsvReadService getInstance() {
+    static void init() {
         if (instance == null)
             instance = new PersistentCsvReadService();
-        return instance;
     }
 }

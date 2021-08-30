@@ -1,14 +1,13 @@
 package ro.unibuc.elearning.platform.dao;
 
-import ro.unibuc.elearning.platform.pojo.*;
+import ro.unibuc.elearning.platform.pojo.Course;
+import ro.unibuc.elearning.platform.pojo.User;
+import ro.unibuc.elearning.platform.pojo.UserCourseRepartition;
 import ro.unibuc.elearning.platform.util.AdminInterface;
 import ro.unibuc.elearning.platform.util.Dao;
 import ro.unibuc.elearning.platform.util.ELearningPlatformService;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public final class UserCourseRepartitionDao extends Dao {
     private static UserCourseRepartitionDao userCourseRepartitionDao;
@@ -24,8 +23,8 @@ public final class UserCourseRepartitionDao extends Dao {
                 "courseId INT,\n" +
                 "startDate Date Not NULL,\n" +
                 "PRIMARY KEY (courseId, userId, startDate),\n" +
-                "FOREIGN KEY (courseId) REFERENCES Course (id),\n" +
-                "FOREIGN KEY (userId) REFERENCES User (id))";
+                "FOREIGN KEY (courseId) REFERENCES Course (id) ON DELETE CASCADE,\n" +
+                "FOREIGN KEY (userId) REFERENCES User (id) ON DELETE CASCADE)";
 
         try {
             Statement statement = databaseConnection.createStatement();
@@ -59,11 +58,15 @@ public final class UserCourseRepartitionDao extends Dao {
         try {
             final String query = "DELETE FROM UserCourseRepartition where userId=? and courseId=? and startDate=?";
             PreparedStatement preparedStatement1 = databaseConnection.prepareStatement(query, Statement.NO_GENERATED_KEYS);
-            preparedStatement1.setInt(1, userCourseRepartition.getUser().getId());
-            preparedStatement1.setInt(2, userCourseRepartition.getCourse().getId());
+            int userId = userCourseRepartition.getUser().getId();
+            int courseId = userCourseRepartition.getCourse().getId();
+            Date date = userCourseRepartition.getStartDate();
+            preparedStatement1.setInt(1, userId);
+            preparedStatement1.setInt(2, courseId);
             preparedStatement1.setDate(3, userCourseRepartition.getStartDate());
             preparedStatement1.execute();
             AdminInterface.userCourseRepartitions.remove(userCourseRepartition);
+            auditCsvService.writeCsv("reparition (c " + courseId + "; u " + userId + "; d " + date + ") deleted from database");
         } catch (SQLException throwables) {
             auditCsvService.writeCsv("Exception in UserCourseRepartitionDao.java: deleteUserCourseRepartition: " + throwables);
         }
@@ -77,8 +80,9 @@ public final class UserCourseRepartitionDao extends Dao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                UserCourseRepartition userCourseRepartition = mapToUserCourseRepartition(resultSet);
                 synchronized (AdminInterface.userCourseRepartitions) {
-                    AdminInterface.userCourseRepartitions.add(mapToUserCourseRepartition(resultSet));
+                    AdminInterface.userCourseRepartitions.add(userCourseRepartition);
                 }
             }
         } catch (SQLException | InterruptedException throwables) {

@@ -48,10 +48,6 @@ public final class Course {
                 '}';
     }
 
-    public String toStringCsv() {
-        return id + ", " + teacher.id + ", " + courseName + ", " + description;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -75,5 +71,9 @@ public final class Course {
 
     public @NotNull String getCourseName() {
         return courseName;
+    }
+
+    public String toStringCsv() {
+        return id + ", " + teacher.id + ", " + courseName + ", " + description;
     }
 }

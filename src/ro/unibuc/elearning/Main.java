@@ -23,6 +23,7 @@ public class Main {
             try {
                 printMenuOptions();
                 opt = cin.nextInt();
+                cin.nextLine();
                 switch (opt) {
                     case 0:
                         break;
@@ -80,7 +81,7 @@ public class Main {
                         System.out.println("Type id curs");
                         int id = cin.nextInt();
                         TreeSet<UserCourseRepartition> userCourseRepartitions = ELearningPlatformService.findUserCourseRepartitionByCourseId(id);
-                        System.out.println(userCourseRepartitions);
+                        userCourseRepartitions.forEach(aux -> System.out.println(aux));
                         break;
                     }
                     case 12: {
@@ -88,7 +89,7 @@ public class Main {
                         System.out.println("Type id student");
                         int id = cin.nextInt();
                         TreeSet<UserCourseRepartition> userCourseRepartitions = ELearningPlatformService.findSpecificStudentCourseRepartitionsByStudentId(id);
-                        System.out.println(userCourseRepartitions);
+                        userCourseRepartitions.forEach(aux -> System.out.println(aux));
                         break;
                     }
                     case 13: {
@@ -96,16 +97,16 @@ public class Main {
                         System.out.println("Type id course");
                         int id = cin.nextInt();
                         ArrayList<AnonymousCourseFeedback> feedbacks = ELearningPlatformService.findFeedbacksByCourseId(id);
-                        System.out.println(feedbacks);
+                        feedbacks.forEach(aux -> System.out.println(aux));
                         break;
                     }
                     case 14:
                         System.out.println("Show All Users");
-                        System.out.println(ELearningPlatformService.users);
+                        ELearningPlatformService.users.forEach(aux -> System.out.println(aux));
                         break;
                     case 15:
                         System.out.println("Show All Courses");
-                        System.out.println(ELearningPlatformService.courses);
+                        ELearningPlatformService.courses.forEach(aux -> System.out.println(aux));
                         break;
                     case 16:
                         System.out.println("Delete Student by Id");
@@ -144,20 +145,42 @@ public class Main {
                         break;
                     case 23:
                         System.out.println("Update Course Description by Id (format: id\\n desc\\n)");
-                        repository.getCourseDao().updateCourseDescription(cin.nextInt(), cin.next());
+                        System.out.print("id: ");
+                        int id = cin.nextInt();
+                        cin.nextLine();
+                        System.out.print("description: ");
+                        String content = cin.nextLine().strip();
+                        repository.getCourseDao().updateCourseDescription(id, content);
                         break;
                     case 24:
                         System.out.println("Update Quiz by Id  (format: quizId\\n content\\n)");
-                        repository.getQuizDao().updateQuizContent(cin.nextInt(), cin.next());
+                        System.out.print("id: ");
+                        id = cin.nextInt();
+                        cin.nextLine();
+                        System.out.print("content: ");
+                        content = cin.nextLine().strip();
+                        repository.getQuizDao().updateQuizContent(id, content);
                         break;
                     case 25:
-                        System.out.println("Update Teacher Ranking by Id (format: quizId\\n content\\n)");
-                        repository.getTeacherDao().updateTeacherRanking(cin.nextInt(), cin.next());
+                        System.out.println("Update Teacher Ranking by Id (format: teacherId\\n rank\\n)");
+                        System.out.print("id: ");
+                        id = cin.nextInt();
+                        cin.nextLine();
+                        System.out.print("rank: ");
+                        content = cin.nextLine().strip();
+                        repository.getTeacherDao().updateTeacherRanking(id, content);
                         break;
                     case 26:
                         System.out.println("Update User Address and PhoneNumber (format: userId\\n address\\n phoneNumber\\n)");
                         System.out.println("enter '*' to address or phoneNumber to not update that value");
-                        repository.getStudentDao().updateUserPhoneAddress(cin.nextInt(), cin.next(), cin.next());
+                        System.out.print("id: ");
+                        id = cin.nextInt();
+                        cin.nextLine();
+                        System.out.print("address: ");
+                        content = cin.nextLine().strip();
+                        System.out.print("phone: ");
+                        String content2 = cin.nextLine().strip();
+                        repository.getStudentDao().updateUserPhoneAddress(id, content, content2);
                         break;
                     default:
                         System.out.println("Invalid option");
@@ -165,6 +188,8 @@ public class Main {
                 }
             } catch (Exception e) {
                 auditCsvService.writeCsv("Exception in Main.java: " + e);
+            } finally {
+                System.out.println("Please press enter");
                 cin.nextLine();
             }
         } while (opt != 0);

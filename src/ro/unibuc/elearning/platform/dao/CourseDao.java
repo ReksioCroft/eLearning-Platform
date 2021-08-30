@@ -40,7 +40,7 @@ public final class CourseDao extends Dao {
                 "teacherId INT NOT NULL,\n" +
                 "courseName VARCHAR(128) NOT NULL,\n" +
                 "description VARCHAR(1024) NOT NULL,\n" +
-                "FOREIGN KEY (teacherId) REFERENCES Teacher(id))";
+                "FOREIGN KEY (teacherId) REFERENCES Teacher(id) ON DELETE RESTRICT)";
 
         try {
             Statement statement = databaseConnection.createStatement();
@@ -78,6 +78,7 @@ public final class CourseDao extends Dao {
             preparedStatement.execute();
 
             AdminInterface.courses.remove(ELearningPlatformService.findCourseById(courseId));
+            auditCsvService.writeCsv("course " + courseId + " deleted from database");
         } catch (SQLException | NullPointerException throwables) {
             auditCsvService.writeCsv("Exception in CourseDao.java: deleteCourse: " + throwables);
         }
@@ -94,6 +95,7 @@ public final class CourseDao extends Dao {
 
             Course course = ELearningPlatformService.findCourseById(id);
             course.setDescription(desc);
+            auditCsvService.writeCsv("course " + id + " description updated");
         } catch (SQLException | NullPointerException throwables) {
             auditCsvService.writeCsv("Exception in CourseDao.java: updateCourseDescription: " + throwables);
         }
@@ -107,8 +109,9 @@ public final class CourseDao extends Dao {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
+                Course course = mapToCourse(resultSet);
                 synchronized (AdminInterface.courses) {
-                    AdminInterface.courses.add(mapToCourse(resultSet));
+                    AdminInterface.courses.add(course);
                 }
             }
         } catch (SQLException | InterruptedException throwables) {
